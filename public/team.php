@@ -13,24 +13,22 @@ require("header/cab.php");
                 Coordenador do Projeto
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-10">
                 <h4>Rene Faustino Gabriel Junior</h4>
                 Pesquisador
-            </div>
 
-            <div class="col-lg-12">
                 <h4>Jesús Pascual Mena Chalco</h4>
                 Pesquisador
-            </div>
 
-            <div class="col-lg-12">
                 <h4>Thiarles Klaza Ferreira</h4>
                 Bolsista Iniciação Científicas
-            </div>
 
-            <div class="col-lg-12">
                 <h4>Bolsista 2</h4>
                 Bolsista Iniciação Científicas
+            </div>
+
+            <div class="col-lg-2">
+                <img src="/assets/logo/logo_humanidados.png" class="img-fluid">
             </div>
         </div>
     </div>

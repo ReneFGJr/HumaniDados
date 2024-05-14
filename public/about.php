@@ -7,9 +7,7 @@ require("header/cab.php");
 
             <h1>Sobre o Projeto HumaniDados</h1>
         </div>
-        <div class="col-lg-2">
-            <img src="/assets/logo/logo_humanidados.png" class="img-fluid">
-        </div>
+
     </div>
 
     <?php
