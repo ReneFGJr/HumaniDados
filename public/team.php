@@ -4,6 +4,8 @@ require("header/cab.php");
 <div class="container">
     <div class="row">
         <div>
+            <img src="/assets/logo/logo_humanidados.png" class="img-fluid" style="height: 100px">
+
             <h1>Equipe do Projeto</h1>
 
             <div class="col-lg-12">
