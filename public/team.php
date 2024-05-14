@@ -6,20 +6,21 @@ require("header/cab.php");
         <div class="col-lg-10">
             <h1>Equipe do Projeto</h1>
 
+            <label>Coordenador do Projeto</label>
             <h4>Fábio Mascarenhas e Silva</h4>
-            Coordenador do Projeto
 
+            <label>Pesquisador</label>
             <h4>Rene Faustino Gabriel Junior</h4>
-            Pesquisador
 
+            <label>Pesquisador</label>
             <h4>Jesús Pascual Mena Chalco</h4>
-            Pesquisador
 
+            <label>Bolsista Iniciação Científicas</label>
             <h4>Thiarles Klaza Ferreira</h4>
-            Bolsista Iniciação Científicas
 
+            <label>Bolsista Iniciação Científicas</label>
             <h4>Bolsista 2</h4>
-            Bolsista Iniciação Científicas
+
         </div>
 
         <div class="col-lg-2">
