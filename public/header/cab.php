@@ -49,6 +49,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/about.php">Projeto</a></li>
+                            <li><a class="dropdown-item" href="/producao.php">Projeto</a></li>
                             <li><a class="dropdown-item" href="/team.php">Equipe</a></li>
                             <!--
                             <li>
