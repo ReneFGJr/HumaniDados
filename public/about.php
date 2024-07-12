@@ -21,6 +21,13 @@ require("header/cab.php");
             <p>Sucessivamente, correlacionou-se os dados obtidos por meio de cruzamentos como pesquisador e pesquisador, instituição e pesquisador, campo de atuação e pesquisador etc. Assim, os indicadores produzidos na criação do Portal foram: bibliográfica, formação, colaborações e produção técnica e artística. A primeira versão do HumaniDados, será disponibilizada para as entidades representativas (pessoas e instituições) do campo das Artes. Considerando aspectos de usabilidade e funcionalidade, a comunidade avaliará o Portal e, com o retorno desse processo, será possível obter a validação da plataforma e realizar ajustes com o feedback.
         </div>
 
+        <div class="col-lg-12">
+            Processo: 421072/2022-9<br />
+            Chamada nº 40/2022 - Linha 1B - Projetos em Rede - Pesquisa em temas livres em Ciências Humanas, Ciências Sociais<br />
+            Aplicadas e Linguística, Letras e Artes<br />
+            SIGLA: Pro-Humanidades 2022<br />
+        </div>
+
     </div>
 
     <?php
