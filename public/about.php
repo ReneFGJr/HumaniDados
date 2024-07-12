@@ -10,7 +10,7 @@ require("header/cab.php");
             <p>Em fase inicial, realizou-se uma pesquisa exploratória na área de humanidades, a saber mais sobre os pesquisadores e suas produções intelectuais. A princípio, foi considerada a área das Artes para análise, geração de indicadores, desenvolvimento do protótipo e validação da plataforma. Artes, seria um dos grandes campos de vulnerabilidade representativa tendo em vista seus produtos artístico-culturais, uma vez que dados bibliográficos, são mais facilmente contabilizados que dados técnicos e artísticos. Dessa forma, a área de Artes foi a escolhida como primeiro campo de análise, visando desenvolver o protótipo do Portal “HumaniDados”. Nesta fase, as plataformas Capes e Lattes/CNPq foram as fontes primárias de informação.</p>
             <p>Para possíveis extrapolações, foram elaborados três esquemas dos campos Artes Cênicas, Música e Artes Visuais, respectivamente. Nas figuras 1, 2 e 3 é possível visualizar a natureza, o tipo de evento e a atividade dos autores sobre a produção artística/cultural conforme encontram-se nos campos do Lattes.</p>
             <div class="text-center">
-                <img src="/assets/img/diagrama-artitica-cultural"><br />
+                <img src="/assets/img/diagrama-artitica-cultural.png"><br />
                 <img src="/assets/img/diagrama-artitica-cultural-artesvisuais.png"><br />
                 <img src="/assets/img/diagrama-artitica-cultural-musica.png"><br />
             </div>
