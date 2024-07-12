@@ -19,7 +19,7 @@ require("header/cab.php");
             <h4>Thiarles Klaza Ferreira</h4>
 
             <label class="mt-2">Bolsista Iniciação Científicas</label>
-            <h4>Bolsista 2</h4>
+            <h4>Luana Bomfim</h4>
 
         </div>
 
