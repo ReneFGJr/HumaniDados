@@ -1,7 +1,7 @@
 <?php
 require("header/cab.php");
 
-$indicadores = ['?ind=1' => 'Produção Científica', '?ind=2' => 'Produção Artistica'];
+$indicadores = ['?ind=1' => 'Produção Científica', '?ind=2' => 'Produção Artistica','?ind=3'=>'Produção Técnica'];
 ?>
 <div class="container">
     <div class="row">
