@@ -13,13 +13,18 @@ $indicadores = ['?ind=1' => 'Produção Científica', '?ind=2' => 'Produção Ar
         </div>
         <?php
         foreach ($indicadores as $link => $label) { ?>
-            <div class="col-12 col-sm-3">
+            <div class="box col-12 col-sm-3 border border-secondary shadown rounded p-5 big text-center m-3">
                 <?php echo $label; ?>
             </div>
         <?php } ?>
     </div>
 </div>
-
+<style>
+    .box:hover {
+        background-color: #F8F8F8;
+        cursor: pointer;
+    }
+</style>
 <?php
 require("header/foot.php");
 ?>
