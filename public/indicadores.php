@@ -6,7 +6,7 @@ $indicadores = ['?ind=1'=>'Produção Científica', '?ind=2' => 'Produção Arti
 <div class="container">
     <div class="row">
         <div class="text-center">
-            <img src="/assets/logo/logo_humanidados.png" class="img-fluid">
+            <img src="/assets/logo/logo_humanidados.png" style="height: 100px">
         </div>
         <?php
         foreach ($indicadores as $link => $label) { ?>
