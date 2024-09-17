@@ -16,11 +16,9 @@ if ($ind == '') {
             </div>
             <?php
             foreach ($indicadores as $link => $label) { ?>
-                <a href="#">
-                    <div class="box col-12 col-sm-3 border border-secondary shadown rounded p-5 big text-center m-3">
+                    <div class="box col-12 col-sm-3 border border-secondary shadown rounded p-5 big text-center m-3" onclick="goURL('<?php echo $link; ?>');">
                         <?php echo $label; ?>
                     </div>
-                </a>
             <?php } ?>
         </div>
     </div>
