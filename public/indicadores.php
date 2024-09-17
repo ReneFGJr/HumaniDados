@@ -15,22 +15,18 @@ switch($ind)
                         </div>
                         <div class="col-12 col-lg-9">
                             <h1 class="text-center">PAINEL</h1>
-                        </div>
-                        <?php
-                        foreach ($indicadores as $link => $label) { ?>
-                            <div class="box col-12 col-sm-3 border border-secondary shadow rounded p-5 big text-center m-3" onclick="goURL('<?php echo $link; ?>');">
-                                <?php echo $label; ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>';
+                        </div>';
+            foreach ($indicadores as $link => $label) {
+                echo '<div class="box col-12 col-sm-3 border border-secondary shadow rounded p-5 big text-center m-3" onclick="goURL(\''.$link.'\');">';
+                echo $label;
+                echo '</div>';
+                echo '</div>';
             break;
         case '0':
             echo '<h1>Pesquisador</h1>';
             break;
     }
-?>
-<?php
+
 require("header/foot.php");
 ?>
 
@@ -40,9 +36,9 @@ function goURL(url) {
 }
 </script>
 
-    <style>
-        .box:hover {
-            background-color: #F8F8F8;
-            cursor: pointer;
-        }
-    </style>
+<style>
+    .box:hover {
+        background-color: #F8F8F8;
+        cursor: pointer;
+    }
+</style>
