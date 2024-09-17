@@ -32,3 +32,10 @@ if ($ind == '') {
 }
 require("header/foot.php");
 ?>
+
+<script>
+    function goURL(url)
+        {
+            alert(url)
+        }
+</script>
