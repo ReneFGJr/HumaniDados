@@ -34,8 +34,13 @@ switch ($ind) {
         break;
     case '1':
         echo '<div class="container"><div class="row">';
+        echo '<div class="col-12">';
         echo '<h1>Produção Ciêntífica</h1>';
         echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="1600" width="800"></iframe>';
+        echo '</div>';
+        echo '<div class="col-12">';
+        echo '<a href="datasets/D_PRODUCAO.csv">MICRO DADOS</a>';
+        echo '</div>';
         echo '</div></div>';
         break;
     case '2':
@@ -46,8 +51,13 @@ switch ($ind) {
         break;
     case '3':
         echo '<div class="container"><div class="row">';
+        echo '<div class="col-12">';
         echo '<h1>Produção Técnica</h1>';
         echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="1600" width="800"></iframe>';
+        echo '</div>';
+        echo '<div class="col-12">';
+        echo '<a href="datasets/D_PRODUCAO.csv">MICRO DADOS</a>';
+        echo '</div>';
         echo '</div></div>';
         break;
 
