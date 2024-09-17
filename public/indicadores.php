@@ -36,7 +36,6 @@ require("header/foot.php");
 <script>
     function goURL(url)
         {
-            alert(url)
             window.location.href = "hhttps://humanidados.inf.br/indicadores.php" + url;
         }
 </script>
