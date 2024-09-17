@@ -4,7 +4,7 @@ require("header/cab.php");
 $ind = $_GET['ind'];
 
 if ($ind == '') {
-    $indicadores = ['?ind=1' => 'Produção Científica', '?ind=2' => 'Produção Artistica', '?ind=3' => 'Produção Técnica'];
+    $indicadores = ['?ind=0' => 'Pesquisadores', '?ind=1' => 'Produção Científica', '?ind=2' => 'Produção Artistica', '?ind=3' => 'Produção Técnica'];
 ?>
     <div class="container">
         <div class="row">
@@ -16,9 +16,11 @@ if ($ind == '') {
             </div>
             <?php
             foreach ($indicadores as $link => $label) { ?>
-                <div class="box col-12 col-sm-3 border border-secondary shadown rounded p-5 big text-center m-3">
-                    <?php echo $label; ?>
-                </div>
+                <a href="#">
+                    <div class="box col-12 col-sm-3 border border-secondary shadown rounded p-5 big text-center m-3">
+                        <?php echo $label; ?>
+                    </div>
+                </a>
             <?php } ?>
         </div>
     </div>
