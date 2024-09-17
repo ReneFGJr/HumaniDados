@@ -29,7 +29,7 @@ switch ($ind) {
     case '0':
         echo '<div class="container"><div class="row">';
         echo '<h1>Pesquisador</h1>';
-        echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="600" width="800"></iframe>';
+        echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="1600" width="800"></iframe>';
         echo '</div></div>';
         break;
 }
