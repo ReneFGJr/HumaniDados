@@ -32,6 +32,25 @@ switch ($ind) {
         echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="1600" width="800"></iframe>';
         echo '</div></div>';
         break;
+    case '1':
+        echo '<div class="container"><div class="row">';
+        echo '<h1>Produção Ciêntífica</h1>';
+        echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="1600" width="800"></iframe>';
+        echo '</div></div>';
+        break;
+    case '2':
+        echo '<div class="container"><div class="row">';
+        echo '<h1>Produção Artística</h1>';
+        echo '<iframe src="https://dashboard.brapci.inf.br/goto/5c630380-7524-11ef-8ce1-a98ecc8d01af" height="600" width="800"></iframe>';
+        echo '</div></div>';
+        break;
+    case '3':
+        echo '<div class="container"><div class="row">';
+        echo '<h1>Produção Técnica</h1>';
+        echo '<iframe src="https://dashboard.brapci.inf.br/goto/2c166350-7521-11ef-8ce1-a98ecc8d01af" height="1600" width="800"></iframe>';
+        echo '</div></div>';
+        break;
+
 }
 
 echo '<div style="height: 500px;"></div>';
