@@ -34,7 +34,7 @@ switch ($ind) {
         break;
 }
 
-
+echo '<div style="height: 500px;"></div>';
 require("header/foot.php");
 ?>
 
