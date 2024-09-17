@@ -16,9 +16,9 @@ if ($ind == '') {
             </div>
             <?php
             foreach ($indicadores as $link => $label) { ?>
-                    <div class="box col-12 col-sm-3 border border-secondary shadown rounded p-5 big text-center m-3" onclick="goURL('<?php echo $link; ?>');">
-                        <?php echo $label; ?>
-                    </div>
+                <div class="box col-12 col-sm-3 border border-secondary shadow rounded p-5 big text-center m-3" onclick="goURL('<?php echo $link; ?>');">
+                    <?php echo $label; ?>
+                </div>
             <?php } ?>
         </div>
     </div>
@@ -34,8 +34,7 @@ require("header/foot.php");
 ?>
 
 <script>
-    function goURL(url)
-        {
-            window.location.href = "hhttps://humanidados.inf.br/indicadores.php" + url;
-        }
+function goURL(url) {
+    window.location.href = url;
+}
 </script>
