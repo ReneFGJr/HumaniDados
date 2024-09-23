@@ -18,11 +18,11 @@ require("header/cab.php");
             <h4>Jesús Pascual Mena Chalco</h4>
             <p><a href="http://lattes.cnpq.br/4727357182510680"> Currículo Lattes</a></p>
 
-            <label class="mt-2">Bolsista Iniciação Científicas</label>
+            <label class="mt-2">Bolsista Iniciação Científica</label>
             <h4>Thiarles Klaza Ferreira</h4>
             <p><a href="http://lattes.cnpq.br/9844500379884281"> Currículo Lattes</a></p>
 
-            <label class="mt-2">Bolsista Iniciação Científicas</label>
+            <label class="mt-2">Bolsista Iniciação Científica</label>
             <h4>Luana Bomfim</h4>
             <p><a href="http://lattes.cnpq.br/6765749494836819"> Currículo Lattes</a></p>
             
