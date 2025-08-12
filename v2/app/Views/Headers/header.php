@@ -48,9 +48,10 @@
                             Sobre
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/about.php">Projeto</a></li>
-                            <li><a class="dropdown-item" href="/producao.php">Publicações do Projeto</a></li>
-                            <li><a class="dropdown-item" href="/team.php">Equipe</a></li>
+                            <li><a class="dropdown-item" href="/about">Projeto</a></li>
+                            <li><a class="dropdown-item" href="/cyracris">Projeto CyraCris</a></li>
+                            <li><a class="dropdown-item" href="/production">Publicações do Projeto</a></li>
+                            <li><a class="dropdown-item" href="/team">Equipe</a></li>
                             <!--
                             <li>
                                 <hr class="dropdown-divider">

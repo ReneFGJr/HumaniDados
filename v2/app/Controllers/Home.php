@@ -6,6 +6,33 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('welcome_message');
+        $sx = view('headers/header');
+        $sx .= view('welcome_message');
+        $sx .= view('headers/footer');
+        return $sx;
+    }
+
+    public function page($arg1='',$arg2='')
+        {
+            $sx = view('headers/header');
+            switch($arg1)
+                {
+                    case 'about':
+                        $sx .= view('Pages/about');
+                        break;
+                    case 'cyracris':
+                        $sx .= view('Pages/cyracris');
+                        break;
+                    case 'production':
+                        $sx .= view('Pages/production');
+                        break;
+                    case 'team':
+                        $sx .= view('Pages/team');
+                        break;
+                    default:
+                        //$sx .= view('404');
+                }
+            $sx .= view('headers/footer');
+        return $sx;
     }
 }
