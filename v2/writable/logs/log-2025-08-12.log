@@ -34,3 +34,116 @@ in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
  7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
  8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:02:29 --> TypeError: App\Libraries\XsdParser::children(): Argument #1 ($ctx) must be of type SimpleXMLElement, array given, called in D:\www\HumaniDados\v2\app\Libraries\XsdParser.php on line 44
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 77.
+ 1 APPPATH\Libraries\XsdParser.php(44): App\Libraries\XsdParser->children([], 'complexType')
+ 2 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:02:42 --> TypeError: App\Libraries\XsdParser::children(): Argument #1 ($ctx) must be of type SimpleXMLElement, array given, called in D:\www\HumaniDados\v2\app\Libraries\XsdParser.php on line 44
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 77.
+ 1 APPPATH\Libraries\XsdParser.php(44): App\Libraries\XsdParser->children([], 'complexType')
+ 2 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:02:44 --> TypeError: App\Libraries\XsdParser::children(): Argument #1 ($ctx) must be of type SimpleXMLElement, array given, called in D:\www\HumaniDados\v2\app\Libraries\XsdParser.php on line 44
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 77.
+ 1 APPPATH\Libraries\XsdParser.php(44): App\Libraries\XsdParser->children([], 'complexType')
+ 2 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:03:14 --> TypeError: App\Libraries\XsdParser::children(): Argument #1 ($ctx) must be of type SimpleXMLElement, array given, called in D:\www\HumaniDados\v2\app\Libraries\XsdParser.php on line 44
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 77.
+ 1 APPPATH\Libraries\XsdParser.php(44): App\Libraries\XsdParser->children([], 'complexType')
+ 2 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:05:18 --> RuntimeException: Elemento <schema> não encontrado no XSD.
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 44.
+ 1 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:05:21 --> RuntimeException: Elemento <schema> não encontrado no XSD.
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 44.
+ 1 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:05:30 --> RuntimeException: Elemento <schema> não encontrado no XSD.
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 44.
+ 1 APPPATH\Controllers\XsdViewer.php(29): App\Libraries\XsdParser->build()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:06:17 --> RuntimeException: Elemento <schema> não encontrado no XSD.
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 44.
+ 1 APPPATH\Controllers\XsdViewer.php(30): App\Libraries\XsdParser->build()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:06:34 --> RuntimeException: Elemento <schema> não encontrado no XSD.
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 44.
+ 1 APPPATH\Controllers\XsdViewer.php(30): App\Libraries\XsdParser->build()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:06:35 --> RuntimeException: Elemento <schema> não encontrado no XSD.
+[Method: GET, Route: xsd]
+in APPPATH\Libraries\XsdParser.php on line 44.
+ 1 APPPATH\Controllers\XsdViewer.php(30): App\Libraries\XsdParser->build()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 20:15:10 --> Error: Class "App\Controllers\DOMDocument" not found
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

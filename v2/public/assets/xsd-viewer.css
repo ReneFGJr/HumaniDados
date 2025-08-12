@@ -1,0 +1,71 @@
+:root {
+  --bg: #0b1020;
+  --fg: #e8eef7;
+  --muted: #9fb0c7;
+  --accent: #21b0a6;
+  --accent2: #ff9f45;
+  --card: #121a33;
+  --border: #213057;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
+}
+.xv-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border); background: #0d1430;
+  display: grid; gap: 10px; grid-template-columns: 1fr; align-items: center;
+}
+.xv-header h1 { margin: 0; font-size: 18px; letter-spacing: .3px; }
+.xv-meta { display: flex; gap: 16px; color: var(--muted); flex-wrap: wrap; }
+.xv-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.xv-actions input, .xv-actions button {
+  border: 1px solid var(--border); background: var(--card); color: var(--fg);
+  padding: 8px 10px; border-radius: 8px;
+}
+.xv-actions button:hover { border-color: var(--accent); cursor: pointer; }
+
+.xv-error { margin: 20px; padding: 12px; border: 1px solid #f66; background: #2b0c0c; color: #ffdede; border-radius: 8px; }
+
+.xv-tree { padding: 12px 18px; }
+.xv-tree ul { list-style: none; padding-left: 20px; margin: 4px 0 0 10px; border-left: 1px dashed var(--border); }
+.xv-node > .xv-row {
+  display: grid; grid-template-columns: 24px minmax(120px, auto) max-content; gap: 8px;
+  align-items: center; padding: 6px 8px; border-radius: 8px;
+}
+.xv-row:hover { background: rgba(255,255,255,.04); }
+.xv-toggle {
+  width: 20px; height: 20px; border: 1px solid var(--border); background: var(--card);
+  border-radius: 4px; position: relative;
+}
+.xv-toggle::before, .xv-toggle::after {
+  content: ""; position: absolute; background: var(--muted);
+}
+.xv-toggle::before { width: 10px; height: 2px; top: 9px; left: 4px; }
+.xv-toggle::after  { width: 2px; height: 10px; top: 4px; left: 9px; transition: transform .15s ease; }
+.xv-node.is-open > .xv-row .xv-toggle::after { transform: scaleY(0); }
+
+.xv-name { font-weight: 600; }
+.xv-badge {
+  color: var(--accent2); background: rgba(255,159,69,.08);
+  border: 1px solid rgba(255,159,69,.35); border-radius: 999px; padding: 1px 8px;
+  font-size: 12px; justify-self: start;
+}
+
+.xv-props {
+  margin: 2px 0 6px 32px; background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; display: none;
+}
+.xv-node.is-open > .xv-props { display: block; }
+.xv-props table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.xv-props td { padding: 3px 6px; border-bottom: 1px dashed var(--border); color: var(--muted); }
+.xv-props td:first-child { width: 180px; color: var(--fg); }
+
+.xv-children { display: none; margin-left: 8px; }
+.xv-node.is-open > .xv-children { display: block; }
+
+/* Destaque de busca */
+mark {
+  background: rgba(33,176,166,.25);
+  outline: 1px solid var(--accent); color: var(--fg);
+}
