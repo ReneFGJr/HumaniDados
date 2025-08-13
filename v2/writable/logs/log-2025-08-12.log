@@ -147,3 +147,150 @@ in APPPATH\Controllers\XsdViewer.php on line 20.
  4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
  5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:39:42 --> Error: Class "App\Controllers\DOMDocument" not found
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 20.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:43:27 --> Error: Call to a member function getAttribute() on null
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 30.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:43:52 --> Error: Call to undefined function App\Controllers\pre()
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 30.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:44:22 --> Error: Call to a member function getAttribute() on null
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 31.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:47:07 --> Error: Call to a member function getAttribute() on null
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 30.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:47:14 --> Error: Call to a member function getAttribute() on null
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 30.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:48:50 --> ErrorException: foreach() argument must be of type array|object, false given
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 47.
+ 1 APPPATH\Controllers\XsdViewer.php(47): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, false given', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 47)
+ 2 APPPATH\Controllers\XsdViewer.php(56): App\Controllers\XsdViewer->App\Controllers\{closure}(Object(DOMElement), Object(DOMXPath))
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:48:54 --> ErrorException: foreach() argument must be of type array|object, false given
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 47.
+ 1 APPPATH\Controllers\XsdViewer.php(47): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, false given', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 47)
+ 2 APPPATH\Controllers\XsdViewer.php(56): App\Controllers\XsdViewer->App\Controllers\{closure}(Object(DOMElement), Object(DOMXPath))
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:55:26 --> ErrorException: Undefined variable $XS
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 82.
+ 1 APPPATH\Controllers\XsdViewer.php(82): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $XS', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 82)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:55:43 --> ErrorException: Undefined variable $XS
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 33.
+ 1 APPPATH\Controllers\XsdViewer.php(33): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $XS', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 33)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:55:49 --> ErrorException: Undefined variable $XS
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 80.
+ 1 APPPATH\Controllers\XsdViewer.php(80): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $XS', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 80)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:55:58 --> ParseError: syntax error, unexpected token "public"
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 64.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\XsdViewer')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\XsdViewer')
+ 4 SYSTEMPATH\CodeIgniter.php(885): class_exists('\\App\\Controllers\\XsdViewer', true)
+ 5 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:56:05 --> ErrorException: Undefined variable $XS
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 31.
+ 1 APPPATH\Controllers\XsdViewer.php(31): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $XS', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 31)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:56:07 --> ErrorException: Undefined variable $XS
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 31.
+ 1 APPPATH\Controllers\XsdViewer.php(31): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $XS', 'E:\\Projeto\\HumaniDados\\v2\\app\\Controllers\\XsdViewer.php', 31)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-12 23:57:29 --> Error: Cannot use [] for reading
+[Method: GET, Route: xsd]
+in APPPATH\Controllers\XsdViewer.php on line 34.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->index()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
