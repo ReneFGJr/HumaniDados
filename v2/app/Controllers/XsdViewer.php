@@ -68,11 +68,14 @@ class XsdViewer extends Controller
         return $sx;
     }
 
-    function extract()
+    function extract($ID= '8886485096957731')
         {
             $file = '_repository/0004706603300740.xml';
-            $data = extrairDados($file);
-            pre($data);
+            $file = '_repository/0004072613292475.xml';
+            $file = '_repository/'.$ID.'.xml';
+            $ID = sonumero($file);
+            $data = extrairDados($file,$ID);
+            //pre($data);
             return $data;
         }
 }

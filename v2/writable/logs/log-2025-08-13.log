@@ -89,3 +89,50 @@ in APPPATH\Helpers\lattes_helper.php on line 53.
  5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
  6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-13 14:44:37 --> ErrorException: Undefined variable $artigos
+[Method: GET, Route: extract]
+in APPPATH\Helpers\lattes_helper.php on line 184.
+ 1 APPPATH\Helpers\lattes_helper.php(184): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $artigos', 'D:\\www\\HumaniDados\\v2\\app\\Helpers\\lattes_helper.php', 184)
+ 2 APPPATH\Helpers\lattes_helper.php(14): lattes_artigos(Object(DOMXPath))
+ 3 APPPATH\Controllers\XsdViewer.php(75): extrairDados('_repository/0003919386536713.xml')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->extract()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-13 20:00:01 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "Pages/researcher_profile.php"
+[Method: GET, Route: researcher/1]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('Pages/researcher_profile.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('Pages/researcher_profile', [], true)
+ 3 APPPATH\Controllers\Researcher.php(20): view('Pages/researcher_profile', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Researcher->profile('1')
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Researcher))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-13 20:06:57 --> RuntimeException: Não foi possível ler o XML em _repository/1.xml
+[Method: GET, Route: researcher/1]
+in APPPATH\Helpers\lattes_helper.php on line 9.
+ 1 APPPATH\Controllers\XsdViewer.php(77): extrairDados('_repository/1.xml', '1')
+ 2 APPPATH\Controllers\Researcher.php(19): App\Controllers\XsdViewer->extract('1')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Researcher->profile('1')
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Researcher))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-13 20:50:53 --> ParseError: syntax error, unexpected token ";", expecting ")"
+[Method: GET, Route: researcher/8886485096957731]
+in APPPATH\Views\Pages\Person\researcher_profile.php on line 532.
+ 1 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('Pages/Person/researcher_profile', [], true)
+ 3 APPPATH\Controllers\Researcher.php(21): view('Pages/Person/researcher_profile', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Researcher->profile('8886485096957731')
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Researcher))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/(about|cyracris|team|production)', 'Home::page/$1');
 $routes->get('/xsd', 'XsdViewer::index');
+$routes->get('/researcher/(:any)', 'Researcher::profile/$1');
 $routes->get('/extract', 'XsdViewer::extract');
 
 $routes->get('/', 'Home::index');

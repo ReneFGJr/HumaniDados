@@ -1,4 +1,38 @@
 <?php
+function extrairDados(string $xmlPath, $id): array
+{
+    libxml_use_internal_errors(true);
+
+    $dom = new DOMDocument();
+    // O arquivo está em ISO-8859-1; o DOM respeita o encoding do próp. XML.
+    if (!$dom->load($xmlPath)) {
+        throw new RuntimeException("Não foi possível ler o XML em {$xmlPath}");
+    }
+
+    $xp = new DOMXPath($dom);
+    $geral = lattes_dados_gerais($xp);
+    $artigos = lattes_artigos($xp);
+    $trabalhos = lattes_trabalhos_eventos($xp);
+    $livros = lattes_livros_capitulos($xp);
+    $demais = lattes_demais_biblio($xp);
+    $producao_tecnica = lattes_producao_tecnica($xp);
+    $formacao = lattes_formacao($xp);
+
+    $data = [
+        'ID' => $id,
+        'geral' => $geral,
+        'formacao' => $formacao,
+        'producao_tecnica' => $producao_tecnica,
+        'demais'   => $demais,
+        'livros'    => $livros,
+        'artigos'  => $artigos,
+        'trabalhos' => $trabalhos,
+    ];
+
+    return $data;
+}
+
+/**************************************************************************/
 function lattes_authors(DOMXPath $xp, DOMElement $art): array
 {
     $authors = [];
@@ -39,39 +73,77 @@ function lattes_areas(DOMXPath $xp, DOMElement $art): array
     return $areas;
     }
 
-function extrairDados(string $xmlPath): array
+function lattes_formacao(DOMXPath $xp): array
 {
-    libxml_use_internal_errors(true);
+    $formacoes = [];
 
-    $dom = new DOMDocument();
-    // O arquivo está em ISO-8859-1; o DOM respeita o encoding do próp. XML.
-    if (!$dom->load($xmlPath)) {
-        throw new RuntimeException("Não foi possível ler o XML em {$xmlPath}");
+    // Todos os itens dentro de DADOS-GERAIS/FORMACAO-ACADEMICA-TITULACAO
+    $nodes = $xp->query('//DADOS-GERAIS/FORMACAO-ACADEMICA-TITULACAO/*');
+
+    $attrs = function (?DOMElement $el): array {
+        if (!$el) return [];
+        $out = [];
+        /** @var DOMAttr $a */
+        foreach ($el->attributes ?? [] as $a) {
+            $out[$a->name] = $a->value;
+        }
+        return $out;
+    };
+
+    /** Helper para pegar o 1º filho cujo nome começa com prefixo (ex.: DADOS-BASICOS / DETALHAMENTO) */
+    $firstByPrefix = function (DOMXPath $xp, DOMElement $ctx, string $prefix): ?DOMElement {
+        return $xp->query('*[starts-with(local-name(), "' . $prefix . '")]', $ctx)->item(0);
+    };
+
+    foreach ($nodes as $n) {
+        /** @var DOMElement $n */
+        $tipo    = $n->nodeName; // ex.: MESTRADO, DOUTORADO, GRADUACAO...
+        $dados   = $firstByPrefix($xp, $n, 'DADOS-BASICOS');
+        $detalhe = $firstByPrefix($xp, $n, 'DETALHAMENTO');
+
+        $dadosA   = $attrs($dados);
+        $detalheA = $attrs($detalhe);
+        $nodeA    = $attrs($n); // ex.: SEQUENCIA-FORMACAO, etc.
+
+        // Campos comuns (se existirem; caso não, ficam vazios)
+        $nomeCurso   = $dadosA['NOME-DO-CURSO']      ?? ($detalheA['NOME-DO-CURSO'] ?? '');
+        $instituicao = $detalheA['NOME-INSTITUICAO'] ?? ($dadosA['NOME-INSTITUICAO'] ?? '');
+        $ini         = $dadosA['ANO-DE-INICIO']      ?? ($detalheA['ANO-DE-INICIO'] ?? '');
+        $fim         = $dadosA['ANO-DE-CONCLUSAO']   ?? ($detalheA['ANO-DE-CONCLUSAO'] ?? '');
+        $status      = $dadosA['STATUS-DO-CURSO']    ?? ($detalheA['STATUS-DO-CURSO'] ?? '');
+
+        // Se você já tem helpers como nos artigos, dá pra reaproveitar:
+        $keywords = function_exists('lattes_keywords') ? lattes_keywords($xp, $n) : [];
+        $areas    = function_exists('lattes_areas')    ? lattes_areas($xp, $n)    : [];
+
+        $formacoes[] = [
+            'type'            => strtolower($tipo),     // ex.: 'mestrado'
+            'nome_curso'      => $nomeCurso,
+            'instituicao'     => $instituicao,
+            'ano_inicio'      => $ini,
+            'ano_conclusao'   => $fim,
+            'status'          => $status,
+            'sequencia'       => $nodeA['SEQUENCIA-FORMACAO'] ?? '',
+            // blocos completos de atributos (caso precise de algo específico depois)
+            'attrs_item'      => $nodeA,
+            'dados_basicos'   => $dadosA,
+            'detalhamento'    => $detalheA,
+            // extras
+            'keywords'        => $keywords,
+            'areas'           => $areas,
+        ];
     }
 
-    $xp = new DOMXPath($dom);
-    $artigos = lattes_artigos($xp);
-    $trabalhos = lattes_trabalhos_eventos($xp);
-    $livros = lattes_livros_capitulos($xp);
-    $demais = lattes_demais_biblio($xp);
-    $producao_tecnica = lattes_producao_tecnica($xp);
-
-    $data = [
-        'producao_tecnica' => $producao_tecnica,
-        'demais'   => $demais,
-        'livros'    => $livros,
-        'artigos'  => $artigos,
-        'trabalhos' => $trabalhos,
-    ];
-
-    return $data;
+    return $formacoes;
 }
+
+
 /***************************************************************** ARTIGOS */
 function lattes_artigos($xp)
     {
     // Caminho clássico no Lattes:
     $nArtigos = $xp->query('//PRODUCAO-BIBLIOGRAFICA/ARTIGOS-PUBLICADOS/ARTIGO-PUBLICADO');
-
+    $artigos = [];
     foreach ($nArtigos as $art) {
         // Filhos do ARTIGO-PUBLICADO
         $dados = $xp->query('DADOS-BASICOS-DO-ARTIGO', $art)->item(0);
@@ -112,6 +184,135 @@ function lattes_artigos($xp)
     }
     return $artigos;
 }
+
+/******************************************* Dados Gerais */
+function lattes_dados_gerais(DOMXPath $xp): array
+{
+    // Nó DADOS-GERAIS (há apenas um por currículo)
+    /** @var DOMElement|null $dg */
+    $dg = $xp->query('//DADOS-GERAIS')->item(0);
+    if (!$dg) {
+        return []; // não há dados gerais
+    }
+
+    // Helper p/ pegar atributo com fallback vazio
+    $get = fn(string $attr) => $dg->getAttribute($attr) ?: '';
+
+    // RESUMO-CV
+    $nResumo = $xp->query('RESUMO-CV', $dg)->item(0);
+    $resumo  = '';
+    if ($nResumo instanceof DOMElement) {
+        // Alguns XMLs têm TEXTO-RESUMO-CV-RH, outros TEXTO-RESUMO-CV
+        $resumo = $nResumo->getAttribute('TEXTO-RESUMO-CV-RH')
+               ?: $nResumo->getAttribute('TEXTO-RESUMO-CV')
+               ?: '';
+    }
+
+    // OUTRAS-INFORMACOES-RELEVANTES
+    $nOutras = $xp->query('OUTRAS-INFORMACOES-RELEVANTES', $dg)->item(0);
+    $outras  = $nOutras instanceof DOMElement
+        ? ($nOutras->getAttribute('OUTRAS-INFORMACOES-RELEVANTES') ?: '')
+        : '';
+
+    // ENDEREÇOS (profissional e residencial)
+    $getAddr = function (?DOMElement $el): array {
+        if (!$el) return [];
+        $fields = [
+            'CODIGO-INSTITUICAO-EMPRESA',
+            'NOME-INSTITUICAO-EMPRESA',
+            'CODIGO-ORGAO',
+            'NOME-ORGAO',
+            'CODIGO-UNIDADE',
+            'NOME-UNIDADE',
+            'PAIS','UF','CIDADE','BAIRRO','LOGRADOURO','NUMERO','COMPLEMENTO','CEP',
+            'CAIXA-POSTAL','DDD','TELEFONE','FAX','RAMAL','HOME-PAGE','E-MAIL'
+        ];
+        $out = [];
+        foreach ($fields as $f) {
+            $out[$f] = $el->getAttribute($f) ?: '';
+        }
+        return $out;
+    };
+
+    /** @var DOMElement|null $endProf */
+    $endProf = $xp->query('ENDERECO/ENDERECO-PROFISSIONAL', $dg)->item(0);
+    /** @var DOMElement|null $endRes */
+    $endRes  = $xp->query('ENDERECO/ENDERECO-RESIDENCIAL', $dg)->item(0);
+
+    // IDIOMAS
+    $idiomas = [];
+    foreach ($xp->query('IDIOMAS/IDIOMA', $dg) as $i) {
+        /** @var DOMElement $i */
+        $idiomas[] = [
+            'idioma'        => $i->getAttribute('IDIOMA') ?: $i->getAttribute('DESCRICAO-DO-IDIOMA'),
+            'leitura'       => $i->getAttribute('PROFICIENCIA-DE-LEITURA'),
+            'fala'          => $i->getAttribute('PROFICIENCIA-DE-FALA'),
+            'escrita'       => $i->getAttribute('PROFICIENCIA-DE-ESCRITA'),
+            'compreensao'   => $i->getAttribute('PROFICIENCIA-DE-COMPREENSAO') // alguns XMLs usam "COMPREENSAO"
+                               ?: $i->getAttribute('PROFICIENCIA-DE-COMPREENSÃO'),
+        ];
+    }
+
+    // ÁREAS DE ATUAÇÃO
+    $areasAtuacao = [];
+    foreach ($xp->query('AREAS-DE-ATUACAO/AREA-DE-ATUACAO', $dg) as $a) {
+        /** @var DOMElement $a */
+        $areasAtuacao[] = [
+            'grande_area'   => $a->getAttribute('NOME-GRANDE-AREA-DO-CONHECIMENTO')
+                              ?: $a->getAttribute('GRANDE-AREA-DO-CONHECIMENTO'),
+            'area'          => $a->getAttribute('NOME-DA-AREA-DO-CONHECIMENTO')
+                              ?: $a->getAttribute('AREA-DO-CONHECIMENTO'),
+            'subarea'       => $a->getAttribute('NOME-DA-SUB-AREA-DO-CONHECIMENTO')
+                              ?: $a->getAttribute('SUB-AREA-DO-CONHECIMENTO'),
+            'especialidade' => $a->getAttribute('NOME-DA-ESPECIALIDADE')
+                              ?: $a->getAttribute('ESPECIALIDADE'),
+        ];
+    }
+
+    // PRÊMIOS/TÍTULOS
+    $premios = [];
+    foreach ($xp->query('PREMIOS-TITULOS/PREMIO-TITULO', $dg) as $p) {
+        /** @var DOMElement $p */
+        $premios[] = [
+            'nome'        => $p->getAttribute('NOME-DO-PREMIO-OU-TITULO'),
+            'ano'         => $p->getAttribute('ANO'),
+            'instituicao' => $p->getAttribute('NOME-DA-INSTITUICAO'),
+            'pais'        => $p->getAttribute('PAIS'),
+        ];
+    }
+
+    // LICENÇAS
+    $licencas = [];
+    foreach ($xp->query('LICENCAS/LICENCA', $dg) as $l) {
+        /** @var DOMElement $l */
+        $licencas[] = [
+            'ano_inicio' => $l->getAttribute('ANO-INICIO'),
+            'ano_fim'    => $l->getAttribute('ANO-FIM'),
+            'descricao'  => $l->getAttribute('DESCRICAO'),
+        ];
+    }
+
+    // Monta o pacote final
+    return [
+        'type'                    => 'dados-gerais',
+        'nome_completo'           => $get('NOME-COMPLETO'),
+        'citacoes_bibliograficas' => $get('NOME-EM-CITACOES-BIBLIOGRAFICAS'),
+        'nacionalidade'           => $get('NACIONALIDADE'),
+        'cpf'                     => $get('CPF'),
+        'passaporte'              => $get('NUMERO-DO-PASSAPORTE'),
+        'pais_nascimento'         => $get('PAIS-DE-NASCIMENTO'),
+        'uf_nascimento'           => $get('UF-NASCIMENTO'),
+        'cidade_nascimento'       => $get('CIDADE-NASCIMENTO'),
+        'resumo_cv'               => $resumo,
+        'outras_informacoes'      => $outras,
+        'endereco_profissional'   => $getAddr($endProf),
+        'idiomas'                 => $idiomas,
+        'areas_de_atuacao'        => $areasAtuacao,
+        'premios_titulos'         => $premios,
+        'licencas'                => $licencas,
+    ];
+}
+
 
 /********************************************************* TRABALOS EVENTOS */
 function lattes_trabalhos_eventos(DOMXPath $xp): array

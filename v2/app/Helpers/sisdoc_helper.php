@@ -9,6 +9,12 @@ function pre($data, $stop = false)
     }
 }
 
+function sonumero($string)
+{
+    // Remove tudo que não seja número (0-9)
+    return preg_replace('/\D/', '', $string);
+}
+
 function buildHierarchy(array $adj, string $root, array &$memo = [], array $stack = []): array
 {
     // já calculado? (memoization)
