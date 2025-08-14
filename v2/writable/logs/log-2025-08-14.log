@@ -1,0 +1,11 @@
+CRITICAL - 2025-08-14 11:07:14 --> RuntimeException: Não foi possível ler o XML em _repository/.xml
+[Method: GET, Route: extractView]
+in APPPATH\Helpers\lattes_helper.php on line 9.
+ 1 APPPATH\Controllers\XsdViewer.php(87): extrairDados('_repository/.xml', '')
+ 2 APPPATH\Controllers\XsdViewer.php(78): App\Controllers\XsdViewer->extract('')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\XsdViewer->extractView()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\XsdViewer))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

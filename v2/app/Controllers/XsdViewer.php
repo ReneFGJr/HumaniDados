@@ -68,14 +68,26 @@ class XsdViewer extends Controller
         return $sx;
     }
 
+    function extractView($ID='')
+        {
+        $file = '_repository/0004706603300740.xml';
+        $file = '_repository/0004072613292475.xml';
+        $ID = '8886485096957731';
+        $ID = '0004072613292475';
+
+        $data = $this->extract($ID);
+        pre($data);
+        }
+
     function extract($ID= '8886485096957731')
         {
-            $file = '_repository/0004706603300740.xml';
-            $file = '_repository/0004072613292475.xml';
-            $file = '_repository/'.$ID.'.xml';
-            $ID = sonumero($file);
+            $ID = sonumero($ID);
+            $file = '_repository/' . $ID . '.xml';
+            if (!file_exists($file)) {
+                echo "Arquivo não encontrado: $file";
+                exit;
+            }
             $data = extrairDados($file,$ID);
-            //pre($data);
             return $data;
         }
 }

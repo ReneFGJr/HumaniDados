@@ -15,6 +15,7 @@ function extrairDados(string $xmlPath, $id): array
     $trabalhos = lattes_trabalhos_eventos($xp);
     $livros = lattes_livros_capitulos($xp);
     $demais = lattes_demais_biblio($xp);
+    $artisitica = lattes_artisitica($xp);
     $producao_tecnica = lattes_producao_tecnica($xp);
     $formacao = lattes_formacao($xp);
 
@@ -22,10 +23,11 @@ function extrairDados(string $xmlPath, $id): array
         'ID' => $id,
         'geral' => $geral,
         'formacao' => $formacao,
-        'producao_tecnica' => $producao_tecnica,
-        'demais'   => $demais,
-        'livros'    => $livros,
         'artigos'  => $artigos,
+        'livros'    => $livros,
+        'producao_tecnica' => $producao_tecnica,
+        'artisitica' => $artisitica,
+        'demais'   => $demais,
         'trabalhos' => $trabalhos,
     ];
 
@@ -61,7 +63,7 @@ function lattes_keywords(DOMXPath $xp, DOMElement $art): array
 }
 
 function lattes_areas(DOMXPath $xp, DOMElement $art): array
-    {
+{
     $areas = [];
     foreach ($xp->query('AREAS-DO-CONHECIMENTO/AREA-DO-CONHECIMENTO-1', $art) as $a) {
         /** @var DOMElement $a */
@@ -71,7 +73,7 @@ function lattes_areas(DOMXPath $xp, DOMElement $art): array
         $areas[] = $a->getAttribute('NOME-DA-ESPECIALIDADE');
     }
     return $areas;
-    }
+}
 
 function lattes_formacao(DOMXPath $xp): array
 {
@@ -137,10 +139,160 @@ function lattes_formacao(DOMXPath $xp): array
     return $formacoes;
 }
 
+/***************************************************************** ARTIGOS */
+function lattes_artisitica($xp)
+{
+    $items = [];
+
+    // mapeamento dos subtipos e dos nós de dados básicos/detalhamento
+    $map = [
+        [
+            'tag'    => 'APRESENTACAO-DE-OBRA-ARTISTICA',
+            'basic'  => 'DADOS-BASICOS-DA-APRESENTACAO-DE-OBRA-ARTISTICA',
+            'detail' => 'DETALHAMENTO-DA-APRESENTACAO-DE-OBRA-ARTISTICA',
+        ],
+        [
+            'tag'    => 'APRESENTACAO-EM-RADIO-OU-TV',
+            'basic'  => 'DADOS-BASICOS-DA-APRESENTACAO-EM-RADIO-OU-TV',
+            'detail' => 'DETALHAMENTO-DA-APRESENTACAO-EM-RADIO-OU-TV',
+        ],
+        [
+            'tag'    => 'ARRANJO-MUSICAL',
+            'basic'  => 'DADOS-BASICOS-DO-ARRANJO-MUSICAL',
+            'detail' => 'DETALHAMENTO-DO-ARRANJO-MUSICAL',
+        ],
+        [
+            'tag'    => 'COMPOSICAO-MUSICAL',
+            'basic'  => 'DADOS-BASICOS-DA-COMPOSICAO-MUSICAL',
+            'detail' => 'DETALHAMENTO-DA-COMPOSICAO-MUSICAL',
+        ],
+        [
+            'tag'    => 'CURSO-DE-CURTA-DURACAO',
+            'basic'  => 'DADOS-BASICOS-DO-CURSO-DE-CURTA-DURACAO',
+            'detail' => 'DETALHAMENTO-DO-CURSO-DE-CURTA-DURACAO',
+        ],
+        [
+            'tag'    => 'OBRA-DE-ARTES-VISUAIS',
+            'basic'  => 'DADOS-BASICOS-DA-OBRA-DE-ARTES-VISUAIS',
+            'detail' => 'DETALHAMENTO-DA-OBRA-DE-ARTES-VISUAIS',
+        ],
+        [
+            'tag'    => 'OUTRA-PRODUCAO-ARTISTICA-CULTURAL',
+            'basic'  => 'DADOS-BASICOS-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL',
+            'detail' => 'DETALHAMENTO-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL',
+        ],
+        [
+            'tag'    => 'SONOPLASTIA',
+            'basic'  => 'DADOS-BASICOS-DE-SONOPLASTIA',
+            'detail' => 'DETALHAMENTO-DE-SONOPLASTIA',
+        ],
+        [
+            'tag'    => 'ARTES-CENICAS',
+            'basic'  => 'DADOS-BASICOS-DE-ARTES-CENICAS',
+            'detail' => 'DETALHAMENTO-DE-ARTES-CENICAS',
+        ],
+        [
+            'tag'    => 'ARTES-VISUAIS',
+            'basic'  => 'DADOS-BASICOS-DE-ARTES-VISUAIS',
+            'detail' => 'DETALHAMENTO-DE-ARTES-VISUAIS',
+        ],
+        [
+            'tag'    => 'MUSICA',
+            'basic'  => 'DADOS-BASICOS-DA-MUSICA',
+            'detail' => 'DETALHAMENTO-DA-MUSICA',
+        ],
+
+    ];
+
+    // helpers
+    $get = fn(?DOMElement $el, string $attr) => $el ? $el->getAttribute($attr) : '';
+
+    $firstAttrStartsWith = function (?DOMElement $el, array $prefixes): string {
+        if (!$el || !$el->hasAttributes()) return '';
+        /** @var DOMAttr $attr */
+        foreach ($el->attributes as $attr) {
+            foreach ($prefixes as $p) {
+                if (strpos($attr->name, $p) === 0) {
+                    return (string)$attr->value;
+                }
+            }
+        }
+        return '';
+    };
+
+    foreach ($map as $cfg) {
+        $nodes = $xp->query("//OUTRA-PRODUCAO/PRODUCAO-ARTISTICA-CULTURAL/{$cfg['tag']}");
+        if (!$nodes || $nodes->length === 0) continue;
+
+        foreach ($nodes as $n) {
+            /** @var DOMElement $n */
+            $dados = $xp->query($cfg['basic'],  $n)->item(0);
+            $det   = $xp->query($cfg['detail'], $n)->item(0);
+
+            // título: pega o primeiro atributo cujo nome começa com "TITULO"
+            $titulo = $firstAttrStartsWith($dados, ['TITULO'])
+                ?: $firstAttrStartsWith($det,   ['TITULO']);
+
+            // ano: tenta "ANO" / "ANO-DO-*" / "ANO-DA-*"
+            $ano = $firstAttrStartsWith($dados, ['ANO', 'ANO-DO', 'ANO-DA'])
+                ?: $firstAttrStartsWith($det,   ['ANO', 'ANO-DO', 'ANO-DA']);
+
+            // DOI/ISSN/ISBN se existirem em qualquer um dos blocos
+            $doi  = $get($dados, 'DOI')  ?: $get($det, 'DOI');
+            $issn = $get($det,   'ISSN') ?: $get($dados, 'ISSN');
+            $isbn = $get($det,   'ISBN') ?: $get($dados, 'ISBN');
+
+            // demais campos comuns
+            $idioma = $get($dados, 'IDIOMA');
+            $pais   = $get($dados, 'PAIS-DE-PUBLICACAO') ?: $get($det, 'PAIS-DE-PUBLICACAO');
+            $natureza = $get($dados, 'NATUREZA');
+
+            // às vezes aparecem em detalhamento
+            $local     = $get($det, 'LOCAL-DE-PUBLICACAO');
+            $volume    = $get($det, 'VOLUME');
+            $fasciculo = $get($det, 'FASCICULO');
+            $pag_ini   = $get($det, 'PAGINA-INICIAL');
+            $pag_fim   = $get($det, 'PAGINA-FINAL');
+
+            // específicos de “outras produções” com frequência
+            $meio = $get($dados, 'MEIO-DE-DIVULGACAO');
+
+            // listas auxiliares
+            $autores  = function_exists('lattes_authors')  ? lattes_authors($xp, $n)  : [];
+            $keywords = function_exists('lattes_keywords') ? lattes_keywords($xp, $n) : [];
+            $areas    = function_exists('lattes_areas')    ? lattes_areas($xp, $n)    : [];
+
+            $items[] = [
+                'type'       => 'demais-bibliografica',
+                'subtipo'    => $n->tagName,  // OUTRA-PRODUCAO-BIBLIOGRAFICA | PARTITURA-MUSICAL | ...
+                'titulo'     => $titulo,
+                'natureza'   => $natureza,
+                'ano'        => $ano,
+                'doi'        => $doi,
+                'issn'       => $issn,
+                'isbn'       => $isbn,
+                'idioma'     => $idioma,
+                'pais'       => $pais,
+                'local'      => $local,
+                'meio'       => $meio,
+                'volume'     => $volume,
+                'fasciculo'  => $fasciculo,
+                'pag_ini'    => $pag_ini,
+                'pag_fim'    => $pag_fim,
+                'autores'    => $autores,
+                'keywords'   => $keywords,
+                'areas'      => $areas,
+                // você pode incluir aqui outros atributos específicos que seu XML trouxer
+            ];
+        }
+    }
+
+    return $items;
+}
 
 /***************************************************************** ARTIGOS */
 function lattes_artigos($xp)
-    {
+{
     // Caminho clássico no Lattes:
     $nArtigos = $xp->query('//PRODUCAO-BIBLIOGRAFICA/ARTIGOS-PUBLICADOS/ARTIGO-PUBLICADO');
     $artigos = [];
@@ -151,9 +303,9 @@ function lattes_artigos($xp)
         // Evitar notices quando algum bloco não existir
         $get = fn(?DOMElement $el, string $attr) => $el ? $el->getAttribute($attr) : '';
         // Autores (há vários nós AUTORES diretamente dentro de ARTIGO-PUBLICADO)
-        $autores = lattes_authors($xp,$art);
+        $autores = lattes_authors($xp, $art);
         $keywords = lattes_keywords($xp, $art);
-        $areas = lattes_areas($xp,$art);
+        $areas = lattes_areas($xp, $art);
 
         $artigos[] = [
             // DADOS-BASICOS-DO-ARTIGO
@@ -204,8 +356,8 @@ function lattes_dados_gerais(DOMXPath $xp): array
     if ($nResumo instanceof DOMElement) {
         // Alguns XMLs têm TEXTO-RESUMO-CV-RH, outros TEXTO-RESUMO-CV
         $resumo = $nResumo->getAttribute('TEXTO-RESUMO-CV-RH')
-               ?: $nResumo->getAttribute('TEXTO-RESUMO-CV')
-               ?: '';
+            ?: $nResumo->getAttribute('TEXTO-RESUMO-CV')
+            ?: '';
     }
 
     // OUTRAS-INFORMACOES-RELEVANTES
@@ -224,8 +376,21 @@ function lattes_dados_gerais(DOMXPath $xp): array
             'NOME-ORGAO',
             'CODIGO-UNIDADE',
             'NOME-UNIDADE',
-            'PAIS','UF','CIDADE','BAIRRO','LOGRADOURO','NUMERO','COMPLEMENTO','CEP',
-            'CAIXA-POSTAL','DDD','TELEFONE','FAX','RAMAL','HOME-PAGE','E-MAIL'
+            'PAIS',
+            'UF',
+            'CIDADE',
+            'BAIRRO',
+            'LOGRADOURO',
+            'NUMERO',
+            'COMPLEMENTO',
+            'CEP',
+            'CAIXA-POSTAL',
+            'DDD',
+            'TELEFONE',
+            'FAX',
+            'RAMAL',
+            'HOME-PAGE',
+            'E-MAIL'
         ];
         $out = [];
         foreach ($fields as $f) {
@@ -249,7 +414,7 @@ function lattes_dados_gerais(DOMXPath $xp): array
             'fala'          => $i->getAttribute('PROFICIENCIA-DE-FALA'),
             'escrita'       => $i->getAttribute('PROFICIENCIA-DE-ESCRITA'),
             'compreensao'   => $i->getAttribute('PROFICIENCIA-DE-COMPREENSAO') // alguns XMLs usam "COMPREENSAO"
-                               ?: $i->getAttribute('PROFICIENCIA-DE-COMPREENSÃO'),
+                ?: $i->getAttribute('PROFICIENCIA-DE-COMPREENSÃO'),
         ];
     }
 
@@ -259,13 +424,13 @@ function lattes_dados_gerais(DOMXPath $xp): array
         /** @var DOMElement $a */
         $areasAtuacao[] = [
             'grande_area'   => $a->getAttribute('NOME-GRANDE-AREA-DO-CONHECIMENTO')
-                              ?: $a->getAttribute('GRANDE-AREA-DO-CONHECIMENTO'),
+                ?: $a->getAttribute('GRANDE-AREA-DO-CONHECIMENTO'),
             'area'          => $a->getAttribute('NOME-DA-AREA-DO-CONHECIMENTO')
-                              ?: $a->getAttribute('AREA-DO-CONHECIMENTO'),
+                ?: $a->getAttribute('AREA-DO-CONHECIMENTO'),
             'subarea'       => $a->getAttribute('NOME-DA-SUB-AREA-DO-CONHECIMENTO')
-                              ?: $a->getAttribute('SUB-AREA-DO-CONHECIMENTO'),
+                ?: $a->getAttribute('SUB-AREA-DO-CONHECIMENTO'),
             'especialidade' => $a->getAttribute('NOME-DA-ESPECIALIDADE')
-                              ?: $a->getAttribute('ESPECIALIDADE'),
+                ?: $a->getAttribute('ESPECIALIDADE'),
         ];
     }
 
@@ -415,7 +580,7 @@ function lattes_livros_capitulos(DOMXPath $xp): array
             'editora'    => $ga($det,   ['EDITORA']),
             'cidade'     => $ga($det,   ['CIDADE-DA-EDITORA', 'CIDADE-DA-EDITORA-DA-PUBLICACAO']),
             'edicao'     => $ga($det,   ['NUMERO-DA-EDICAO-REVISAO', 'NUMERO-DA-EDICAO']),
-            'num_paginas'=> $ga($det,   ['NUMERO-DE-PAGINAS']),
+            'num_paginas' => $ga($det,   ['NUMERO-DE-PAGINAS']),
             // listas
             'autores'    => $autores,
             'keywords'   => $keywords,
@@ -569,7 +734,7 @@ function lattes_demais_biblio(DOMXPath $xp): array
 
             // título: pega o primeiro atributo cujo nome começa com "TITULO"
             $titulo = $firstAttrStartsWith($dados, ['TITULO'])
-                   ?: $firstAttrStartsWith($det,   ['TITULO']);
+                ?: $firstAttrStartsWith($det,   ['TITULO']);
 
             // ano: tenta "ANO" / "ANO-DO-*" / "ANO-DA-*"
             $ano = $firstAttrStartsWith($dados, ['ANO', 'ANO-DO', 'ANO-DA'])
@@ -706,23 +871,23 @@ function lattes_producao_tecnica(DOMXPath $xp): array
 
         // Exemplos prontos para habilitar (se houver no seu XML):
         'SOFTWARE' => [
-             'xpath' => '//PRODUCAO-TECNICA/SOFTWARE',
-             'dados' => 'DADOS-BASICOS-DO-SOFTWARE',
-             'det'   => 'DETALHAMENTO-DO-SOFTWARE',
-             'title' => ['TITULO-DO-SOFTWARE','TITULO'],
-             'year'  => ['ANO'],
-             'local' => ['CIDADE-DA-INSTITUICAO','CIDADE'],
-             'veic'  => ['INSTITUICAO-PROMOTORA'],
-         ],
-         'PATENTE' => [
-             'xpath' => '//PRODUCAO-TECNICA/PATENTE',
-             'dados' => 'DADOS-BASICOS-DA-PATENTE',
-             'det'   => 'DETALHAMENTO-DA-PATENTE',
-             'title' => ['TITULO'],
-             'year'  => ['ANO'],
-             'local' => ['CIDADE'],
-             'veic'  => ['INSTITUICAO-DE-REGISTRO'],
-         ],
+            'xpath' => '//PRODUCAO-TECNICA/SOFTWARE',
+            'dados' => 'DADOS-BASICOS-DO-SOFTWARE',
+            'det'   => 'DETALHAMENTO-DO-SOFTWARE',
+            'title' => ['TITULO-DO-SOFTWARE', 'TITULO'],
+            'year'  => ['ANO'],
+            'local' => ['CIDADE-DA-INSTITUICAO', 'CIDADE'],
+            'veic'  => ['INSTITUICAO-PROMOTORA'],
+        ],
+        'PATENTE' => [
+            'xpath' => '//PRODUCAO-TECNICA/PATENTE',
+            'dados' => 'DADOS-BASICOS-DA-PATENTE',
+            'det'   => 'DETALHAMENTO-DA-PATENTE',
+            'title' => ['TITULO'],
+            'year'  => ['ANO'],
+            'local' => ['CIDADE'],
+            'veic'  => ['INSTITUICAO-DE-REGISTRO'],
+        ],
         'CULTIVAR-REGISTRADA' => [
             'xpath' => '//PRODUCAO-TECNICA/CULTIVAR-REGISTRADA',
             'dados' => 'DADOS-BASICOS-DA-CULTIVAR',
@@ -856,7 +1021,7 @@ function lattes_producao_tecnica(DOMXPath $xp): array
 
                 // (opcional) atributos crus para conferência/depuração
                 'dados_raw'  => $attrs($dados),
-                'detalhe_raw'=> $attrs($det),
+                'detalhe_raw' => $attrs($det),
             ];
         }
     }
