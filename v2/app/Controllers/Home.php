@@ -12,6 +12,22 @@ class Home extends BaseController
         return $sx;
     }
 
+    public function about(): string
+    {
+        $sx = view('headers/header');
+        $sx .= view('Pages/About');
+        $sx .= view('headers/footer');
+        return $sx;
+    }
+
+
+    public function painel(): string
+    {
+        $sx = view('headers/header');
+        $sx .= view('Pages/Painel');
+        $sx .= view('headers/footer');
+        return $sx;
+    }
     public function page($arg1='',$arg2='')
         {
             $sx = view('headers/header');

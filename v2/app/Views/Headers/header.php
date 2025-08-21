@@ -40,7 +40,11 @@
                     </li>
                     -->
                     <li class="nav-item">
-                        <a class="nav-link" href="indicadores.php">Indicadores</a>
+                        <a class="nav-link" href="/indicadores">Indicadores</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/painel">Paineis</a>
                     </li>
 
                     <li class="nav-item dropdown">
