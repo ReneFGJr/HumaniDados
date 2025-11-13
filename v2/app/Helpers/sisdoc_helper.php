@@ -1,5 +1,5 @@
 <?php
-function pre($data, $stop = false)
+function pre($data, $stop = true)
 {
     echo "<pre>";
     print_r($data);
@@ -7,6 +7,32 @@ function pre($data, $stop = false)
     if ($stop) {
         exit;
     }
+}
+
+function dtobr($data)
+{
+    // Converte data no formato AAAA-MM-DD para dd/mm/aaaa
+    $data = sonumero($data);
+    $ano = round($data[0] . $data[1] . $data[2] . $data[3]);
+    if (($ano > 1900) and ($ano < 2100)) {
+        $data = substr($data,6,2).'/'.substr($data,4,2).'/'.substr($data,0,4);
+    } else {
+        $data = substr($data,0,2).'/'.substr($data,2,2).'/'.substr($data,4,4);
+    }
+    return $data; // Retorna original se não estiver no formato esperado
+}
+
+function brtod($data)
+{
+    // Converte data no formato BR (dd/mm/aaaa) para AAAA-MM-DD
+    $data = sonumero($data);
+    $ano = round($data[4] . $data[5] . $data[6] . $data[7]);
+    if (($ano > 1900) and ($ano < 2100)) {
+        $data = substr($data,4,4).'-'.substr($data,2,2).'-'.substr($data,0,2);
+    } else {
+        $data = substr($data,0,4).'-'.substr($data,4,2).'-'.substr($data,6,2);
+    }
+    return $data; // Retorna original se não estiver no formato esperado
 }
 
 function sonumero($string)
