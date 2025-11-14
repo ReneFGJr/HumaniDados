@@ -67,6 +67,17 @@ class ProducaoArtisticaModel extends Model
         }
     }
 
+    public function resume($idLattes)
+    {
+        $dt = $this
+            ->select('tipo, natureza, count(*) as total')
+            ->where('id_lattes', $idLattes)
+            ->groupBy('tipo, natureza')
+            ->orderBy('tipo, natureza')
+            ->findAll();
+        return $dt;
+    }
+
     /** Insere keywords */
     public function salvarPalavrasChave($idProducao, $keywords)
     {

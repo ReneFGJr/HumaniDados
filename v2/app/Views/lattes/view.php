@@ -138,7 +138,7 @@
 
                             <div class="row">
                                 <div class="col-md-8">
-                                    <h5 class="fw-bold text-primary"><?= $f['tipo'] ?></h5>
+                                    <h5 class="fw-bold text-primary"><?= $f['tipo'] ?> - <?= $f['nome_curso'] ?></h5>
                                     <p class="text-secondary mb-1"><?= $f['nome_curso'] ?></p>
                                     <p class="fw-semibold"><?= $f['nome_instituicao'] ?></p>
                                 </div>
@@ -146,6 +146,7 @@
                                 <div class="col-md-4 text-end">
                                     <span class="badge bg-primary fs-6"><?= $f['ano_inicio'] ?> - <?= $f['ano_conclusao'] ?></span>
                                 </div>
+
                             </div>
 
                             <hr>

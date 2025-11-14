@@ -97,6 +97,7 @@ class Lattes extends BaseController
     {
         $Lattes = new LattesResearcherModel();
         $data['pesquisador'] = $Lattes->le($id);
+        pre($data);
 
         $src = view('layout/header');
         $src .= view('lattes/view', $data);

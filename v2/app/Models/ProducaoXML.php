@@ -6,9 +6,18 @@ use CodeIgniter\Model;
 
 class ProducaoXML extends Model
 {
+
+    function zeraDados($idlattes)
+    {
+        $ProducaoArtisticaModel = model('ProducaoArtisticaModel');
+        $ProducaoArtisticaModel->where('id_lattes',$idlattes)->delete();
+        return true;
+    }
+
     function dadosBasicos($idlattes, $D,$prefixo,$tipo)
     {
         $ProducaoArtisticaModel = model('ProducaoArtisticaModel');
+        try {
         $basic = $D->{'DADOS-BASICOS'.$prefixo};
         $detal = $D->{'DETALHAMENTO'.$prefixo};
         $basic = (array)$basic->attributes();
@@ -19,8 +28,6 @@ class ProducaoXML extends Model
         $base = array_merge($basic, $detal);
         $base['tipo'] = $tipo;
         $base['id_lattes'] = $idlattes;
-
-
 
         $base['tipo'] = $tipo;
         $base['titulo'] = $base['TITULO'] ?? $base['titulo'];
@@ -41,6 +48,12 @@ class ProducaoXML extends Model
         $base['temporada'] = $base['TEMPORADA'] ?? null;
         $base['informacoes_adicionais'] = $base['INFORMACOES-ADICIONAIS'] ?? null;
         $idProducao = $ProducaoArtisticaModel->insert($base);
+        } catch (\Exception $e) {
+            echo '<h1>Erro ao processar produção artística</h1>';
+            pre($D);
+            // Log the exception or handle it as needed
+            return null; // or some error code
+        }
 
         return $idProducao;
     }

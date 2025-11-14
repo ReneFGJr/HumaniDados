@@ -31,11 +31,13 @@ class LattesResearcherModel extends Model
     function le($id)
     {
         $InstituicaoLattesModel = new InstituicaoLattesModel();
+        $ProducaoArtisticaModel = new ProducaoArtisticaModel();
         $LattesFormacaoModel = new LattesFormacaoModel();
 
         $dt = $this->where('id', $id)->first();
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
         $dt['formacao'] = $LattesFormacaoModel->le($dt['idlattes']);
+        $dt['producao_artistica'] = $ProducaoArtisticaModel->resume($dt['idlattes']);
         return $dt;
     }
 
@@ -123,6 +125,9 @@ class LattesResearcherModel extends Model
             exit;
         }
 
+        /********************* Zerar */
+        $ProducaoXML->zeraDados($idlattes);
+
         // === Extração de dados principais ===
         $nomeCompleto = (string) $xml->{'DADOS-GERAIS'}['NOME-COMPLETO'];
         $nacionalidade  = (string) $xml->{'DADOS-GERAIS'}['PAIS-DE-NACIONALIDADE'];
@@ -131,9 +136,6 @@ class LattesResearcherModel extends Model
         $orcID = (string) $xml->{'DADOS-GERAIS'}['ORCID-ID'];
         $dtUpdate = brtod((string) $xml['DATA-ATUALIZACAO']);
 
-        echo '<h1>' . $nomeCompleto . '</h1>';
-        echo '<h5>' . $nacionalidade . ' - ' . $origem . ' - ' . $cidade . '</h5>';
-        echo '<h6>' . $dtUpdate . '</h6>';
 
         // Inicializa variáveis
         $anoGraduacao = $anoMestrado = $anoDoutorado = $anoPosDoc = null;
@@ -207,11 +209,10 @@ class LattesResearcherModel extends Model
                 case 'ARTES-CENICAS':
                     $n = '-DE-ARTES-CENICAS';
                     $na = 'ARTES-CENICAS';
-                    pre($producao);
                     $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                     break;
                 case 'MUSICA':
-                    $n = '-DE-MUSICA';
+                    $n = '-DA-MUSICA';
                     $na = 'MUSICA';
                     $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                     break;
@@ -220,6 +221,7 @@ class LattesResearcherModel extends Model
                     //pre($outraProducao);
                     break;
                 default:
+                    echo "ERRO TYPE";
                     pre($tipo);
                     break;
             }
