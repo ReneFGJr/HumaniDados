@@ -66,7 +66,7 @@ class LattesResearcherModel extends Model
             // --------------------------------------------------------------------------------
             // 2) BAIXAR O ZIP DA API
             // --------------------------------------------------------------------------------
-            $url = "https://brapci.inf.br/ws/api/?verb=lattes&q={$idLattes}";
+            $url = "https://brapci.inf.br/ws/api/?verb=lattes&q=$idLattes";
             $zipContent = @file_get_contents($url);
 
             if (!$zipContent) {
@@ -151,23 +151,24 @@ class LattesResearcherModel extends Model
      */
     public function verificarArquivos()
     {
+        $msg = '';
         $pesquisadores = $this->findAll();
 
         $total = count($pesquisadores);
         $encontrados = 0;
         $naoEncontrados = 0;
+        $msg .= 'Processando '.$total.' pesquisadores para verificar.<br>';
         foreach ($pesquisadores as $p) {
             $idlattes = trim($p['idlattes']);
             $arquivo = $this->fileLattesPath($idlattes);
 
             if (file_exists($arquivo)) {
-
                 // Atualiza status somente se ainda não estiver coletado
                 if ($p['situacao_coleta'] !== 'coletado') {
                     $this->update($p['id'], ['situacao_coleta' => 'coletado']);
                     $encontrados++;
                 } else if ($p['situacao_coleta'] === 'coletado') {
-                    $this->processarXML($idlattes);
+                    $msg .= $this->processarXML($idlattes).'<br>';
                     $encontrados++;
                 }
             } else {
@@ -190,7 +191,6 @@ class LattesResearcherModel extends Model
 
     public function processarXML($idlattes)
     {
-        echo $idlattes . "<br>";
         $InstituicaoLattesModel = new InstituicaoLattesModel();
         $LattesFormacaoModel = new LattesFormacaoModel();
         $ProducaoArtisticaModel = new ProducaoArtisticaModel();
@@ -214,7 +214,6 @@ class LattesResearcherModel extends Model
         /********************* Zerar */
         $ProducaoXML->zeraDados($idlattes);
 
-
         // === Extração de dados principais ===
         $nomeCompleto = (string) $xml->{'DADOS-GERAIS'}['NOME-COMPLETO'];
         $nacionalidade  = (string) $xml->{'DADOS-GERAIS'}['PAIS-DE-NACIONALIDADE'];
@@ -223,7 +222,6 @@ class LattesResearcherModel extends Model
         $orcID = (string) $xml->{'DADOS-GERAIS'}['ORCID-ID'];
         $dtUpdate = brtod((string) $xml['DATA-ATUALIZACAO']);
 
-        pre($xml);
         // Inicializa variáveis
         $anoGraduacao = $anoMestrado = $anoDoutorado = $anoPosDoc = null;
 
@@ -284,6 +282,8 @@ class LattesResearcherModel extends Model
             echo "OPS";
             exit;
         }
+
+                
         foreach ($producaoArtisticaCultural->children() as $producao) {
             $tipo = $producao->getName();
             switch ($tipo) {
@@ -307,19 +307,17 @@ class LattesResearcherModel extends Model
                     //pre($outraProducao);
                     break;
                 default:
-                    echo "ERRO TYPE";
-                    pre($tipo);
+                    echo "ERRO TYPE $tipo";
+                    exit;
                     break;
             }
         }
-
 
         /********************************* Instituição */
         $endereco = $xml->{'DADOS-GERAIS'}->{'ENDERECO'};
         $endProfissional = (array) $endereco->{'ENDERECO-PROFISSIONAL'};
         $endProfissional = $endProfissional['@attributes'];
         $instituicao = $InstituicaoLattesModel->checkInstituicao($endProfissional);
-        //pre($xml);
 
         $InstituicaoLattesModel->checkInstituicao($endProfissional);
 
@@ -338,9 +336,8 @@ class LattesResearcherModel extends Model
             'vinculo_instituicao' => $instituicao,
             'situacao_coleta'   => 'processado'
         ];
-
         $this->where('idlattes', $idlattes)->set($dados)->update();
-
-        return "✅ Pesquisador {$nomeCompleto} ({$idlattes}) processado com sucesso.";
+        $msg = "✅ Pesquisador {$nomeCompleto} ({$idlattes}) processado com sucesso.<br>";
+        return $msg;
     }
 }

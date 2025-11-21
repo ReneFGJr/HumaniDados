@@ -82,6 +82,7 @@
                             <div class="p-3 bg-light border rounded-3 h-100">
                                 <h6 class="text-secondary">Última Atualização</h6>
                                 <p class="fw-semibold">
+                                    <?php require("file_existe.php"); ?>
                                     <a href="<?= base_url('/lattes/extractor/'.$pesquisador['idlattes']) ?>"><i class="bi bi-recycle me-2"></i></a>
                                     <?= $pesquisador['data_atualizacao'] ?>
                                 </p>

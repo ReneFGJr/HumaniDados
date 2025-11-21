@@ -57,3 +57,12 @@ build-iPhoneSimulator/
 /v2/writable/debugbar
 /v2/writable
 /v2/writable
+*.zip
+*.zip
+*.xml
+database/xml/0014692223687736.xml
+database/xml/0014987556460591.xml
+database/zip/0014692223687736.zip
+database/zip/0014987556460591.zip
+*.xml
+*.zip
