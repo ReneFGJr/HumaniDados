@@ -41,6 +41,91 @@ class LattesResearcherModel extends Model
         return $dt;
     }
 
+    public function extrairDados($idLattes)
+    {
+        helper(['filesystem']);
+
+        ROOTPATH . '..\database\sample\xml\\';
+
+        $xmlPath  = ROOTPATH . '../database/xml/' . $idLattes . '.xml';
+        $zipPath  = ROOTPATH . '../database/zip/' . $idLattes . '.zip';
+        $zipDir   = ROOTPATH . '../database/zip/';
+        $xmlDir   = ROOTPATH . '../database/xml/';
+
+        // Criar diretórios se não existirem
+        if (!is_dir($zipDir)) mkdir($zipDir, 0777, true);
+        if (!is_dir($xmlDir)) mkdir($xmlDir, 0777, true);
+
+        // ------------------------------------------------------------------------------------
+        // 1) VERIFICAR SE O XML EXISTE
+        // ------------------------------------------------------------------------------------
+        if (!file_exists($xmlPath)) {
+
+            echo "📄 XML não encontrado para ID {$idLattes}. Iniciando download...<br>";
+
+            // --------------------------------------------------------------------------------
+            // 2) BAIXAR O ZIP DA API
+            // --------------------------------------------------------------------------------
+            $url = "https://brapci.inf.br/ws/api/?verb=lattes&q={$idLattes}";
+            $zipContent = @file_get_contents($url);
+
+            if (!$zipContent) {
+                echo "❌ Falha ao baixar arquivo da API BRAPCI.<br>URL: {$url}";
+                return false;
+            }
+
+            file_put_contents($zipPath, $zipContent);
+            echo "✅ ZIP baixado com sucesso: {$zipPath}<br>";
+
+            // --------------------------------------------------------------------------------
+            // 3) VERIFICAR E DESCOMPACTAR ZIP
+            // --------------------------------------------------------------------------------
+            $zip = new \ZipArchive;
+
+            if ($zip->open($zipPath) === TRUE) {
+
+                // Extrai todo o conteúdo para a pasta zip/
+                $zip->extractTo($zipDir);
+                $zip->close();
+                echo "📦 ZIP descompactado com sucesso.<br>";
+            } else {
+                echo "❌ Erro ao abrir arquivo ZIP.<br>";
+                return false;
+            }
+
+            // --------------------------------------------------------------------------------
+            // 4) MOVIMENTAR O XML EXTRAÍDO PARA /dados/xml
+            // --------------------------------------------------------------------------------
+            $extractedXml = glob($zipDir . "*.xml");
+
+            if (count($extractedXml) == 0) {
+                echo "❌ Nenhum XML encontrado dentro do ZIP.<br>";
+                return false;
+            }
+
+            // Pegamos o primeiro arquivo XML encontrado
+            $foundXml = $extractedXml[0];
+
+            // Move o arquivo
+            rename($foundXml, $xmlPath);
+            echo "📁 XML movido para: {$xmlPath}<br>";
+
+            // Opcional: apagar o ZIP depois do processamento
+            // unlink($zipPath);
+        }
+
+        // ------------------------------------------------------------------------------------
+        // 5) PROCESSAR O XML
+        // ------------------------------------------------------------------------------------
+        echo "⏳ Processando pesquisador com ID Lattes: {$idLattes}...<br>";
+
+        // Aqui você coloca a lógica para ler o XML e armazenar no banco
+        // $xml = simplexml_load_file($xmlPath);
+
+        return true;
+    }
+
+
     function validarIDLattes(string $code): bool
     {
         $dig = substr($code, 15, 1);
@@ -99,12 +184,13 @@ class LattesResearcherModel extends Model
 
     function fileLattesPath($idlattes)
     {
-        $basePath = ROOTPATH . '..\database\sample\xml\\';
+        $basePath = ROOTPATH . '..\database\xml\\';
         return $basePath . $idlattes . '.xml';
     }
 
     public function processarXML($idlattes)
     {
+        echo $idlattes . "<br>";
         $InstituicaoLattesModel = new InstituicaoLattesModel();
         $LattesFormacaoModel = new LattesFormacaoModel();
         $ProducaoArtisticaModel = new ProducaoArtisticaModel();
@@ -115,7 +201,6 @@ class LattesResearcherModel extends Model
             echo "❌ Arquivo XML não encontrado para ID Lattes: {$idlattes}";
             exit;
         }
-
         // Carregar XML com tratamento de erros
         libxml_use_internal_errors(true);
         $xml = simplexml_load_file($arquivo);
@@ -125,8 +210,10 @@ class LattesResearcherModel extends Model
             exit;
         }
 
+
         /********************* Zerar */
         $ProducaoXML->zeraDados($idlattes);
+
 
         // === Extração de dados principais ===
         $nomeCompleto = (string) $xml->{'DADOS-GERAIS'}['NOME-COMPLETO'];
@@ -136,7 +223,7 @@ class LattesResearcherModel extends Model
         $orcID = (string) $xml->{'DADOS-GERAIS'}['ORCID-ID'];
         $dtUpdate = brtod((string) $xml['DATA-ATUALIZACAO']);
 
-
+        pre($xml);
         // Inicializa variáveis
         $anoGraduacao = $anoMestrado = $anoDoutorado = $anoPosDoc = null;
 
@@ -192,12 +279,11 @@ class LattesResearcherModel extends Model
         //pre($xml);
         $producaoArtisticaCultural = $xml->{'OUTRA-PRODUCAO'}->{'PRODUCAO-ARTISTICA-CULTURAL'};
 
-        if (!$producaoArtisticaCultural)
-            {
-                pre($producaoArtisticaCultural);
-                echo "OPS";
-                exit;
-            }
+        if (!$producaoArtisticaCultural) {
+            pre($producaoArtisticaCultural);
+            echo "OPS";
+            exit;
+        }
         foreach ($producaoArtisticaCultural->children() as $producao) {
             $tipo = $producao->getName();
             switch ($tipo) {
@@ -225,7 +311,6 @@ class LattesResearcherModel extends Model
                     pre($tipo);
                     break;
             }
-
         }
 
 

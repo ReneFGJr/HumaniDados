@@ -25,6 +25,7 @@ $routes->group('lattes', function ($routes) {
     $routes->post('import', 'Lattes::doImport');
     $routes->get('verify-files', 'Lattes::verifyFiles');
     $routes->get('view/(:num)', 'Lattes::show/$1');
+    $routes->get('extractor/(:num)', 'Lattes::extractor/$1');
 });
 
 $routes->get('login', 'Auth::login');

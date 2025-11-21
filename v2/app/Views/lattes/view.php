@@ -81,7 +81,10 @@
                         <div class="col-md-4">
                             <div class="p-3 bg-light border rounded-3 h-100">
                                 <h6 class="text-secondary">Última Atualização</h6>
-                                <p class="fw-semibold"><?= $pesquisador['data_atualizacao'] ?></p>
+                                <p class="fw-semibold">
+                                    <a href="<?= base_url('/lattes/extractor/'.$pesquisador['idlattes']) ?>"><i class="bi bi-recycle me-2"></i></a>
+                                    <?= $pesquisador['data_atualizacao'] ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -98,33 +101,34 @@
                             <i class="bi bi-building me-2"></i>
                             Instituição de Vínculo
                         </h4>
+                        <?php if (isset($pesquisador['instituição'])) { ?>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <h6 class="text-secondary">Nome</h6>
+                                    <p class="fw-semibold"><?= $pesquisador['instituição']['nome_instituicao_empresa'] ?></p>
+                                </div>
 
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <h6 class="text-secondary">Nome</h6>
-                                <p class="fw-semibold"><?= $pesquisador['instituição']['nome_instituicao_empresa'] ?></p>
-                            </div>
+                                <div class="col-md-3">
+                                    <h6 class="text-secondary">Cidade</h6>
+                                    <p><?= $pesquisador['instituição']['cidade'] ?></p>
+                                </div>
 
-                            <div class="col-md-3">
-                                <h6 class="text-secondary">Cidade</h6>
-                                <p><?= $pesquisador['instituição']['cidade'] ?></p>
-                            </div>
+                                <div class="col-md-3">
+                                    <h6 class="text-secondary">UF</h6>
+                                    <p><?= $pesquisador['instituição']['uf'] ?></p>
+                                </div>
 
-                            <div class="col-md-3">
-                                <h6 class="text-secondary">UF</h6>
-                                <p><?= $pesquisador['instituição']['uf'] ?></p>
-                            </div>
+                                <div class="col-md-4">
+                                    <h6 class="text-secondary">País</h6>
+                                    <p><?= $pesquisador['instituição']['pais'] ?></p>
+                                </div>
 
-                            <div class="col-md-4">
-                                <h6 class="text-secondary">País</h6>
-                                <p><?= $pesquisador['instituição']['pais'] ?></p>
+                                <div class="col-md-8">
+                                    <h6 class="text-secondary">Código Institucional</h6>
+                                    <p><?= $pesquisador['instituição']['codigo_instituicao_empresa'] ?></p>
+                                </div>
                             </div>
-
-                            <div class="col-md-8">
-                                <h6 class="text-secondary">Código Institucional</h6>
-                                <p><?= $pesquisador['instituição']['codigo_instituicao_empresa'] ?></p>
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
                 </div>
 

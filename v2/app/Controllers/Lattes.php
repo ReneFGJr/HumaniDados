@@ -93,11 +93,20 @@ class Lattes extends BaseController
         return redirect()->to('/lattes')->with('success', $msg);
     }
 
+    public function extractor($idlattes)
+    {
+        $Lattes = new LattesResearcherModel();
+        $msg = $Lattes->extrairDados($idlattes);
+
+        $dt = $Lattes->where('idlattes', $idlattes)->first();
+        return redirect()->to('/lattes/view/'.$dt['id'])->with('success', $msg);
+    }
+
     public function show($id)
     {
         $Lattes = new LattesResearcherModel();
         $data['pesquisador'] = $Lattes->le($id);
-        pre($data);
+        //pre($data);
 
         $src = view('layout/header');
         $src .= view('lattes/view', $data);

@@ -25,6 +25,9 @@ function dtobr($data)
 function brtod($data)
 {
     // Converte data no formato BR (dd/mm/aaaa) para AAAA-MM-DD
+    if ($data == '') {
+        return '';
+    }
     $data = sonumero($data);
     $ano = round($data[4] . $data[5] . $data[6] . $data[7]);
     if (($ano > 1900) and ($ano < 2100)) {
