@@ -166,7 +166,7 @@ class LattesResearcherModel extends Model
             if ($sucesso) {
                 $processados++;
                 $msg .= "<span style='color:green'>OK</span><br>";
-                sleep(1);
+                sleep(2);
             } else {
                 $msg .= "<span style='color:red'>já coletado</span><br>";
             }
