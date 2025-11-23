@@ -66,8 +66,6 @@ class ProducaoXML extends Model
             return null; // or some error code
         }
         */
-        pre($D,false);
-
         return $idProducao;
     }
 }
