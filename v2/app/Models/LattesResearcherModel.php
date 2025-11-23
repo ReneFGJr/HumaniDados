@@ -169,6 +169,7 @@ class LattesResearcherModel extends Model
                 sleep(2);
             } else {
                 $msg .= "<span style='color:red'>já coletado</span><br>";
+                sleep(0.5);
             }
 
             $msg .= "<br>🏁 <b>Harvesting concluído</b><br>";
@@ -321,7 +322,7 @@ class LattesResearcherModel extends Model
 
     function fileLattesPath($idlattes)
     {
-        $basePath = ROOTPATH . '..\database\xml\\';
+        $basePath = ROOTPATH . '../database/xml/';
         return $basePath . $idlattes . '.xml';
     }
 
