@@ -126,8 +126,11 @@ class Lattes extends BaseController
     public function show($id)
     {
         $Lattes = new LattesResearcherModel();
+        $InstituicoesModel = new \App\Models\InstituicaoLattesModel();
+
         $data['pesquisador'] = $Lattes->le($id);
         $data['treeHTML'] = $Lattes->xml_content($id);
+        $data['instituicao'] = $InstituicoesModel->le($$data['pesquisador']['vinculo_instituicao']);
 
         pre($data);
 
