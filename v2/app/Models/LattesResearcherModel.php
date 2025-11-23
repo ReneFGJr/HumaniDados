@@ -195,6 +195,8 @@ class LattesResearcherModel extends Model
         $zipDir   = ROOTPATH . '../database/zip/';
         $xmlDir   = ROOTPATH . '../database/xml/';
 
+        echo '==>'.$xmlPath;
+
         // Criar diretórios se não existirem
         if (!is_dir($zipDir)) mkdir($zipDir, 0777, true);
         if (!is_dir($xmlDir)) mkdir($xmlDir, 0777, true);
