@@ -64,7 +64,7 @@
                 </p>
             </div>
         </div>
-
+        <? if (isset($pesquisador['instituição']['nome_instituicao_empresa'])) { ?>
         <div class="col-md-8">
             <div class="p-3 bg-dark border border-secondary rounded-3 h-100 text-light">
                 <h6 class="text-white-50">Vinculo Institucional</h6>
@@ -73,5 +73,6 @@
                 </p>
             </div>
         </div>
+        <?php } ?>
     </div>
 </div>
