@@ -25,7 +25,7 @@ class ProducaoXML extends Model
         $ProducaoArtisticaModel = model('ProducaoArtisticaModel');
         echo 'DADOS-BASICOS' . $prefixo.'<hr>';
         echo 'DETALHAMENTO' . $prefixo . '<hr>';
-        try {
+        //try {
         $basic = $D->{'DADOS-BASICOS'.$prefixo};
         $detal = $D->{'DETALHAMENTO'.$prefixo};
         $basic = (array)$basic->attributes();
@@ -57,12 +57,15 @@ class ProducaoXML extends Model
         $base['temporada'] = $base['TEMPORADA'] ?? null;
         $base['informacoes_adicionais'] = $base['INFORMACOES-ADICIONAIS'] ?? null;
         $idProducao = $ProducaoArtisticaModel->insert($base);
+
+        /*
         } catch (\Exception $e) {
             echo '<h1>Erro ao processar produção artística</h1>';
             pre($D);
             // Log the exception or handle it as needed
             return null; // or some error code
         }
+        */
 
         return $idProducao;
     }
