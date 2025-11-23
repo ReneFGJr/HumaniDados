@@ -129,6 +129,8 @@ class Lattes extends BaseController
         $data['pesquisador'] = $Lattes->le($id);
         $data['treeHTML'] = $Lattes->xml_content($id);
 
+        pre($data);
+
         $src = view('layout/header');
         $src .= view('lattes/view', $data);
         $src .= view('layout/footer');
