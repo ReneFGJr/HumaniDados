@@ -68,4 +68,17 @@ class InstituicaoLattesModel extends Model
 
         return $this->insert($insertData);
     }
+
+    function pesquisadoresVinculados($id)
+    {
+        $LattesResearcherModel = new LattesResearcherModel();
+        return $LattesResearcherModel->where('vinculo_instituicao', $id)->orderby('nome_completo')->findAll();
+    }
+
+    function le($id)
+    {
+        $dt['pesquisadores'] = $this->pesquisadoresVinculados($id);
+        $dt['pesquisadores_total'] = count($this->pesquisadoresVinculados($id));
+        return $dt;
+    }
 }

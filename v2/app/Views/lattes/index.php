@@ -9,6 +9,10 @@
                 <i class="bi bi-plus-circle"></i> Importar
             </a>
 
+            <a href="<?= base_url('lattes/harvesting') ?>" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Harvesting
+            </a>
+
             <a href="<?= base_url('lattes/verify-files') ?>" class="btn btn-success">
                 <i class="bi bi-recycle"></i>
             </a>

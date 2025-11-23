@@ -86,12 +86,32 @@ class Lattes extends BaseController
         echo view('layout/footer');
     }
 
+    function harvesting()
+    {
+        $Lattes = new LattesResearcherModel();
+        echo view('layout/header');
+        echo view('lattes/painel_harvesting');
+        echo view('layout/footer');
+
+        $msg = $Lattes->harvestDados();
+        exit;
+    }
+
     public function verifyFiles()
     {
         $Lattes = new LattesResearcherModel();
         $msg = $Lattes->verificarArquivos();
         pre($msg);
         return redirect()->to('/lattes')->with('success', $msg);
+    }
+
+    public function process($idlattes)
+    {
+        $Lattes = new LattesResearcherModel();
+        $msg = $Lattes->processarXML($idlattes);
+
+        $dt = $Lattes->where('idlattes', $idlattes)->first();
+        return redirect()->to('/lattes/view/'.$dt['id'])->with('success', $msg);
     }
 
     public function extractor($idlattes)
@@ -107,7 +127,7 @@ class Lattes extends BaseController
     {
         $Lattes = new LattesResearcherModel();
         $data['pesquisador'] = $Lattes->le($id);
-        //pre($data);
+        $data['treeHTML'] = $Lattes->xml_content($id);
 
         $src = view('layout/header');
         $src .= view('lattes/view', $data);

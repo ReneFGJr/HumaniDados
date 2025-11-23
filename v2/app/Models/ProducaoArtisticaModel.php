@@ -16,6 +16,7 @@ class ProducaoArtisticaModel extends Model
 
         // Dados básicos
         'natureza',
+        'atividade',
         'titulo',
         'ano',
         'pais',
@@ -52,6 +53,11 @@ class ProducaoArtisticaModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
+    public function totalProducaoArtistica()
+    {
+        return $this->countAllResults();
+    }
+
     /** Insere autores */
     public function salvarAutores($idProducao, $autores)
     {
@@ -73,7 +79,17 @@ class ProducaoArtisticaModel extends Model
             ->select('tipo, natureza, count(*) as total')
             ->where('id_lattes', $idLattes)
             ->groupBy('tipo, natureza')
-            ->orderBy('tipo, natureza')
+            ->orderBy('total desc, tipo, natureza')
+            ->findAll();
+        return $dt;
+    }
+
+    public function indicators()
+    {
+        $dt = $this
+            ->select('tipo, natureza, atividade, count(*) as total')
+            ->groupBy('tipo, natureza, atividade')
+            ->orderBy('total desc, tipo, natureza')
             ->findAll();
         return $dt;
     }

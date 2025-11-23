@@ -29,6 +29,20 @@
                         Formação Acadêmica
                     </button>
                 </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="dashboard-tab" data-bs-toggle="tab"
+                        data-bs-target="#dashboard" type="button" role="tab">
+                        Dashboard
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="xml-tab" data-bs-toggle="tab"
+                        data-bs-target="#xml" type="button" role="tab">
+                        Ver XML
+                    </button>
+                </li>
             </ul>
 
             <!-- TAB CONTENT -->
@@ -37,147 +51,30 @@
                 <!-- =======================
                      ABA 1 - Dados Gerais
                 ======================== -->
-                <div class="tab-pane fade show active" id="geral" role="tabpanel">
-
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-                            <div class="p-3 bg-light border rounded-3 h-100">
-                                <h5 class="text-secondary">Nome Completo</h5>
-                                <p class="fw-bold fs-5"><?= $pesquisador['nome_completo'] ?></p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="p-3 bg-light border rounded-3 h-100">
-                                <h6 class="text-secondary">IDLattes</h6>
-                                <p class="fw-semibold"><?= $pesquisador['idlattes'] ?></p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="p-3 bg-light border rounded-3 h-100">
-                                <h6 class="text-secondary">ORCID</h6>
-                                <p class="fw-semibold"><?= $pesquisador['orcID'] ?: '—' ?></p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light border rounded-3 h-100">
-                                <h6 class="text-secondary">Nacionalidade</h6>
-                                <p class="fw-semibold"><?= $pesquisador['nacionalidade'] ?></p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light border rounded-3 h-100">
-                                <h6 class="text-secondary">Nascimento</h6>
-                                <p class="fw-semibold">
-                                    <?= $pesquisador['nascimento_cidade'] ?> — <?= $pesquisador['nascimento_pais'] ?>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light border rounded-3 h-100">
-                                <h6 class="text-secondary">Última Atualização</h6>
-                                <p class="fw-semibold">
-                                    <?php require("file_existe.php"); ?>
-                                    <a href="<?= base_url('/lattes/extractor/'.$pesquisador['idlattes']) ?>"><i class="bi bi-recycle me-2"></i></a>
-                                    <?= $pesquisador['data_atualizacao'] ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php require("view_myTab.php") ?>
 
                 <!-- =======================
                      ABA 2 - Instituição
                 ======================== -->
-                <div class="tab-pane fade" id="instituicao" role="tabpanel">
-
-                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-light">
-
-                        <h4 class="text-primary fw-bold mb-3">
-                            <i class="bi bi-building me-2"></i>
-                            Instituição de Vínculo
-                        </h4>
-                        <?php if (isset($pesquisador['instituição'])) { ?>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <h6 class="text-secondary">Nome</h6>
-                                    <p class="fw-semibold"><?= $pesquisador['instituição']['nome_instituicao_empresa'] ?></p>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <h6 class="text-secondary">Cidade</h6>
-                                    <p><?= $pesquisador['instituição']['cidade'] ?></p>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <h6 class="text-secondary">UF</h6>
-                                    <p><?= $pesquisador['instituição']['uf'] ?></p>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <h6 class="text-secondary">País</h6>
-                                    <p><?= $pesquisador['instituição']['pais'] ?></p>
-                                </div>
-
-                                <div class="col-md-8">
-                                    <h6 class="text-secondary">Código Institucional</h6>
-                                    <p><?= $pesquisador['instituição']['codigo_instituicao_empresa'] ?></p>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>
+                <?php require("view_instituicao.php") ?>
 
                 <!-- =======================
                      ABA 3 - Formação
                 ======================== -->
-                <div class="tab-pane fade" id="formacao" role="tabpanel">
+                <?php require("view_formacao.php") ?>
 
-                    <?php foreach ($pesquisador['formacao'] as $f): ?>
-                        <div class="card mb-3 border-0 shadow-sm rounded-4 p-3">
+                <!-- =======================
+                     ABA 5 - Dashboard Produção Artística
+                ======================== -->
+                <?php
+                $producao_artistica = $pesquisador['producao_artistica'];
+                require("dashboard/prod_artistica.php");
+                ?>
 
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="fw-bold text-primary"><?= $f['tipo'] ?> - <?= $f['nome_curso'] ?></h5>
-                                    <p class="text-secondary mb-1"><?= $f['nome_curso'] ?></p>
-                                    <p class="fw-semibold"><?= $f['nome_instituicao'] ?></p>
-                                </div>
-
-                                <div class="col-md-4 text-end">
-                                    <span class="badge bg-primary fs-6"><?= $f['ano_inicio'] ?> - <?= $f['ano_conclusao'] ?></span>
-                                </div>
-
-                            </div>
-
-                            <hr>
-
-                            <div class="row g-2">
-                                <div class="col-md-4">
-                                    <small class="text-muted">Status:</small>
-                                    <p><?= $f['status_curso'] ?></p>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <small class="text-muted">Bolsa:</small>
-                                    <p><?= $f['flag_bolsa'] ?></p>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <small class="text-muted">Orientador:</small>
-                                    <p><?= $f['orientador'] ?: '—' ?></p>
-                                </div>
-                            </div>
-
-                        </div>
-                    <?php endforeach; ?>
-
-                </div>
-
+                <!-- =======================
+                     ABA 9 - Ver XML
+                ======================== -->
+                <?php require("view_xml.php") ?>
             </div>
         </div>
     </div>

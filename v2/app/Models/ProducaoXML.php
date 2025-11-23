@@ -14,6 +14,12 @@ class ProducaoXML extends Model
         return true;
     }
 
+    function le($idLattes)
+        {
+            $dt = $this->where('id_lattes',$idLattes)->findAll();
+            return $dt;
+        }
+
     function dadosBasicos($idlattes, $D,$prefixo,$tipo)
     {
         $ProducaoArtisticaModel = model('ProducaoArtisticaModel');
@@ -32,6 +38,7 @@ class ProducaoXML extends Model
         $base['tipo'] = $tipo;
         $base['titulo'] = $base['TITULO'] ?? $base['titulo'];
         $base['natureza'] = $base['NATUREZA'] ?? null;
+        $base['atividade'] = $base['ATIVIDADE-DOS-AUTORES'] ?? null;
         $base['ano'] = $base['ANO'] ?? null;
         $base['pais'] = $base['PAIS'] ?? null;
         $base['idioma'] = $base['IDIOMA'] ?? null;
