@@ -447,6 +447,11 @@ class LattesResearcherModel extends Model
                             $na = '-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
+                        case 'ARRANJO-MUSICAL':
+                            $n = '-ARRANJO-MUSICAL';
+                            $na = 'MUSICA';
+                            $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
+                            break;
                         case 'CURSO-DE-CURTA-DURACAO':
                             $outraProducao = $producao;
                             //pre($outraProducao);
