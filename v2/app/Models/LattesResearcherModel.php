@@ -110,11 +110,10 @@ class LattesResearcherModel extends Model
             return null;
         }
         $idlattes = $dt['idlattes'];
-        $xmlPath  = ROOTPATH . '..\database\xml\\' . $idlattes . '.xml';
+        $xmlPath  = $this->fileLattesPath($idlattes);
 
         if (!file_exists($xmlPath)) {
-            echo "Arquivo XML não encontrado. $xmlPath";
-            exit;
+            echo "❌ Arquivo XML não encontrado. $xmlPath";
             return null;
         }
         /*
@@ -192,10 +191,10 @@ class LattesResearcherModel extends Model
 
         ROOTPATH . '..\database\sample\xml\\';
 
-        $xmlPath  = ROOTPATH . '../database/xml/' . $idLattes . '.xml';
-        $zipPath  = ROOTPATH . '../database/zip/' . $idLattes . '.zip';
-        $zipDir   = ROOTPATH . '../database/zip/';
-        $xmlDir   = ROOTPATH . '../database/xml/';
+        $xmlPath  = $this->fileLattesPath($idLattes);
+        $zipPath  = str_replace('xml', 'zip', $xmlPath);
+        $zipDir   = substr($zipPath, 0, strpos($zipPath, 'zip')) . 'zip/';
+        $xmlDir   = substr($xmlPath, 0, strpos($xmlPath, 'xml')) . 'xml/';
 
         // Criar diretórios se não existirem
         if (!is_dir($zipDir)) mkdir($zipDir, 0777, true);
@@ -322,7 +321,10 @@ class LattesResearcherModel extends Model
 
     function fileLattesPath($idlattes)
     {
-        $basePath = ROOTPATH . '../database/xml/';
+        $dir = ROOTPATH;
+        $dir = substr($dir,0,strpos($dir,'v2'));
+        $dir = str_replace('\\','/',$dir);
+        $basePath = $dir . 'database/xml/';
         return $basePath . $idlattes . '.xml';
     }
 
@@ -336,7 +338,7 @@ class LattesResearcherModel extends Model
 
         if (!file_exists($arquivo)) {
             echo "❌ Arquivo XML não encontrado para ID Lattes: {$idlattes}";
-            exit;
+            return "";
         }
         // Carregar XML com tratamento de erros
         libxml_use_internal_errors(true);
