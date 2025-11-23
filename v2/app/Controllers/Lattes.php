@@ -130,7 +130,7 @@ class Lattes extends BaseController
 
         $data['pesquisador'] = $Lattes->le($id);
         $data['treeHTML'] = $Lattes->xml_content($id);
-        $data['instituicao'] = $InstituicoesModel->le($$data['pesquisador']['vinculo_instituicao']);
+        $data['instituicao'] = $InstituicoesModel->le($data['pesquisador']['vinculo_instituicao']);
 
         pre($data);
 
