@@ -40,7 +40,7 @@ class ProducaoXML extends Model
         $base['tipo'] = $tipo;
         $base['titulo'] = $base['TITULO'] ?? $base['titulo'];
         $base['natureza'] = $base['NATUREZA'] ?? null;
-        $base['atividade'] = $base['ATIVIDADE-DOS-AUTORES'] ?? null;
+        $base['atividade'] = $base['ATIVIDADE-DOS-AUTORES'] ?? '';
         $base['ano'] = $base['ANO'] ?? null;
         $base['pais'] = $base['PAIS'] ?? null;
         $base['idioma'] = $base['IDIOMA'] ?? null;
