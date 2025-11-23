@@ -444,7 +444,7 @@ class LattesResearcherModel extends Model
                             break;
                         case 'OUTRA-PRODUCAO-ARTISTICA-CULTURAL':
                             $n = '-ARTISTICA-CULTURAL';
-                            $na = 'OUTRA-PRODUCAO-ARTISTICA-CULTURAL';
+                            $na = '-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
                         case 'CURSO-DE-CURTA-DURACAO':

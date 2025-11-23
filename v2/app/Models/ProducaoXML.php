@@ -23,6 +23,7 @@ class ProducaoXML extends Model
     function dadosBasicos($idlattes, $D,$prefixo,$tipo)
     {
         $ProducaoArtisticaModel = model('ProducaoArtisticaModel');
+        echo 'DADOS-BASICOS' . $prefixo.'<hr>';
         try {
         $basic = $D->{'DADOS-BASICOS'.$prefixo};
         $detal = $D->{'DETALHAMENTO'.$prefixo};
