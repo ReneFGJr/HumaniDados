@@ -88,6 +88,9 @@ class Lattes extends BaseController
 
     function harvesting()
     {
+        ini_set('max_execution_time', 0); // ilimitado
+        ini_set('memory_limit', '2048M');
+
         $Lattes = new LattesResearcherModel();
         echo view('layout/header');
         echo view('lattes/painel_harvesting');
