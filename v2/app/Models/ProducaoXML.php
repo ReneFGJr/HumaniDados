@@ -37,6 +37,11 @@ class ProducaoXML extends Model
         $base['tipo'] = $tipo;
         $base['id_lattes'] = $idlattes;
 
+        /* */
+        if (!isset($base['titulo'])) {
+            $base['titulo'] = 'sem titulo';
+        }
+
         $base['tipo'] = $tipo;
         $base['titulo'] = $base['TITULO'] ?? $base['titulo'];
         $base['natureza'] = $base['NATUREZA'] ?? null;
