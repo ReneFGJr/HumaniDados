@@ -167,7 +167,7 @@ class LattesResearcherModel extends Model
                 $processados++;
                 $msg .= "<span style='color:green'>OK</span><br>";
             } else {
-                $msg .= "<span style='color:red'>Falhou</span><br>";
+                $msg .= "<span style='color:red'>já coletado</span><br>";
             }
 
             $msg .= "<br>🏁 <b>Harvesting concluído</b><br>";
@@ -206,7 +206,7 @@ class LattesResearcherModel extends Model
         // ------------------------------------------------------------------------------------
         if (!file_exists($xmlPath)) {
 
-            $msg .= "📄 XML não encontrado para ID {$idLattes}. Iniciando download...<br>";
+            $msg .= "<br>📄 XML não encontrado para ID {$idLattes}. Iniciando download...<br>";
 
             // --------------------------------------------------------------------------------
             // 2) BAIXAR O ZIP DA API
