@@ -441,6 +441,7 @@ class LattesResearcherModel extends Model
                             $outraProducao = $producao;
                             //pre($outraProducao);
                             break;
+                        /*
                         case 'OBRA-DE-ARTES-VISUAIS':
                             break;
                         case 'COMPOSICAO-MUSICAL':
@@ -451,8 +452,9 @@ class LattesResearcherModel extends Model
                             $outraProducao = $producao;
                             //pre($outraProducao);
                             break;
+                        */
                         default:
-                            echo "ERRO TYPE $tipo";
+                            echo "ERRO TYPE $tipo em idlattes $idlattes";
                             exit;
                             break;
                     }
