@@ -24,6 +24,7 @@ class ProducaoXML extends Model
     {
         $ProducaoArtisticaModel = model('ProducaoArtisticaModel');
         echo 'DADOS-BASICOS' . $prefixo.'<hr>';
+        echo 'DETALHAMENTO' . $prefixo . '<hr>';
         try {
         $basic = $D->{'DADOS-BASICOS'.$prefixo};
         $detal = $D->{'DETALHAMENTO'.$prefixo};
