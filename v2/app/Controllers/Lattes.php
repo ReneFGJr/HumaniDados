@@ -104,8 +104,8 @@ class Lattes extends BaseController
     {
         $Lattes = new LattesResearcherModel();
         echo view('layout/header');
-        $msg = $Lattes->verificarArquivos();
         echo view('lattes/painel_harvesting.php');
+        $msg = $Lattes->verificarArquivos();
         return redirect()->to('/lattes')->with('success', $msg);
     }
 

@@ -330,7 +330,14 @@ class LattesResearcherModel extends Model
                 $naoEncontrados++;
             }
 
-            echo "➡️ {$idlattes} verificado.<br>";
+            $msg = "🔎 Verificação em andamento...<br>
+              🔹 Total: {$total}<br>
+              ✅ Processados: {$encontrados}<br>
+              ⚠️ Não encontrados: {$naoEncontrados}<br>";
+            echo '<script>';
+            echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+            echo '</script>';
+
             flush();
         }
 
