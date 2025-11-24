@@ -290,6 +290,7 @@ class LattesResearcherModel extends Model
         $this->where('situacao_coleta', null)
             ->set('situacao_coleta', '')
             ->update();
+        echo $this->getlastquery();
 
         $msg = '';
         $pesquisadores = $this->where('situacao_coleta', '')->findAll();
