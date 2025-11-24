@@ -285,69 +285,61 @@ class LattesResearcherModel extends Model
      */
     public function verificarArquivos()
     {
-        ini_set('max_execution_time', 3000); // 5 minutos
-        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        ini_set('output_buffering', 'off');
+        ini_set('zlib.output_compression', 0);
 
-        $this->where('situacao_coleta', null)
-            ->set('situacao_coleta', 'pendente')
-            ->update();
-
-        $msg = '';
-        $pesquisadores = $this->where('situacao_coleta', 'coletado')->findAll();
-
-        echo count($pesquisadores) . ' pesquisadores para verificar.<br>';
-        flush();
-
-        // Libera o buffer para mostrar em tempo real
-        @ini_set('output_buffering', 'off');
-        @ini_set('zlib.output_compression', false);
         while (ob_get_level() > 0) {
             ob_end_flush();
         }
         ob_implicit_flush(true);
 
+        // Marca os pendentes
+        $this->where('situacao_coleta', null)
+            ->set('situacao_coleta', 'pendente')
+            ->update();
+
+        $pesquisadores = $this->where('situacao_coleta', 'coletado')->findAll();
+
         $total = count($pesquisadores);
         $encontrados = 0;
         $naoEncontrados = 0;
-        $msg = 'Processando ' . $total . ' pesquisadores para verificar.<br>';
-        echo '<script>';
-        echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
-        echo '</script>';
+
+        echo "🔎 Verificando {$total} pesquisadores...<br>";
         flush();
 
         foreach ($pesquisadores as $p) {
+
             $idlattes = trim($p['idlattes']);
-            $arquivo = $this->fileLattesPath($idlattes);
+            $arquivo  = $this->fileLattesPath($idlattes);
 
             if (file_exists($arquivo)) {
-                // Atualiza status somente se ainda não estiver coletado
-                if ($p['situacao_coleta'] !== 'coletado') {
-                    $this->update($p['id'], ['situacao_coleta' => 'coletado']);
-                    $encontrados++;
-                } else if ($p['situacao_coleta'] === 'coletado') {
-                    $msg .= $this->processarXML($idlattes) . '<br>';
-                    $encontrados++;
+
+                // Processa XML se estiver coletado
+                if ($p['situacao_coleta'] === 'coletado') {
+                    echo "📄 Processando XML: {$idlattes}<br>";
+                    flush();
+
+                    $this->processarXML($idlattes);
                     $this->update($p['id'], ['situacao_coleta' => 'processado']);
+                    $encontrados++;
                 }
             } else {
+                echo "❌ Arquivo NÃO encontrado: {$idlattes}<br>";
+                flush();
                 $naoEncontrados++;
             }
-            $msg = $idlattes . ' - ' . ($p['situacao_coleta'] ?? 'n/a') . '<br>';
 
-            echo '<script>';
-            echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
-            echo '</script>';
-            echo $msg;
+            echo "➡️ {$idlattes} verificado.<br>";
             flush();
-            sleep(1);
         }
 
-        $msg = "Verificação concluída.<br>
-        🔹 Total: {$total}<br>
-        ✅ Encontrados e atualizados: {$encontrados}<br>
-        ⚠️ Não encontrados: {$naoEncontrados}";
-        return $msg;
+        echo "<br>✔️ Verificação concluída.<br>
+          🔹 Total: {$total}<br>
+          ✅ Processados: {$encontrados}<br>
+          ⚠️ Não encontrados: {$naoEncontrados}<br>";
     }
+
 
     function fileLattesPath($idlattes)
     {
