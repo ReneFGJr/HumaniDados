@@ -294,6 +294,9 @@ class LattesResearcherModel extends Model
         $msg = '';
         $pesquisadores = $this->where('situacao_coleta', 'coletado')->findAll();
 
+        echo count($pesquisadores).' pesquisadores para verificar.<br>';
+        flush();
+
         // Libera o buffer para mostrar em tempo real
         @ini_set('output_buffering', 'off');
         @ini_set('zlib.output_compression', false);
