@@ -15,7 +15,7 @@
             font-size: 15px;
             line-height: 1.4em;
             overflow-y: auto;
-            height: 70vh;
+            height: 150px;
         }
     </style>
 </head>
