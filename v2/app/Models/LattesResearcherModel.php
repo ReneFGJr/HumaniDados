@@ -290,6 +290,14 @@ class LattesResearcherModel extends Model
         $msg = '';
         $pesquisadores = $this->findAll();
 
+        // Libera o buffer para mostrar em tempo real
+        @ini_set('output_buffering', 'off');
+        @ini_set('zlib.output_compression', false);
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+        ob_implicit_flush(true);
+
         $total = count($pesquisadores);
         $encontrados = 0;
         $naoEncontrados = 0;
@@ -310,6 +318,8 @@ class LattesResearcherModel extends Model
             } else {
                 $naoEncontrados++;
             }
+            echo $idlattes.' - '.($p['situacao_coleta'] ?? 'n/a').'<br>';
+            flush();
         }
 
         $msg = "Verificação concluída.<br>

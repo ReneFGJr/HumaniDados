@@ -104,7 +104,6 @@ class Lattes extends BaseController
     {
         $Lattes = new LattesResearcherModel();
         $msg = $Lattes->verificarArquivos();
-        pre($msg);
         return redirect()->to('/lattes')->with('success', $msg);
     }
 
