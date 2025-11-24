@@ -104,7 +104,7 @@ function corTipo($tipo)
             list($cor, $rotulo) = corTipo($classe);
         ?>
 
-            <div class="classe-box col-md-4">
+            <div class="classe-box col-md-3">
                 <h3 class="fw-bold mb-4" style="color: <?= $cor ?>;">
                     <?= $rotulo ?>
                 </h3>
