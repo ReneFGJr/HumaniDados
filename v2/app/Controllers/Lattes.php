@@ -103,6 +103,7 @@ class Lattes extends BaseController
     public function verifyFiles()
     {
         $Lattes = new LattesResearcherModel();
+        echo view('layout/header');
         $msg = $Lattes->verificarArquivos();
         return redirect()->to('/lattes')->with('success', $msg);
     }

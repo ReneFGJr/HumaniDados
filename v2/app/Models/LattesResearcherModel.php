@@ -287,6 +287,9 @@ class LattesResearcherModel extends Model
      */
     public function verificarArquivos()
     {
+        ini_set('max_execution_time', 3000); // 5 minutos
+        set_time_limit(0);
+
         $this->where('situacao_coleta', null)
             ->set('situacao_coleta', 'pendente')
             ->update();
