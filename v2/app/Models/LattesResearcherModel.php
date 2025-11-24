@@ -308,13 +308,17 @@ class LattesResearcherModel extends Model
         }
         ob_implicit_flush(true);
 
-        echo '<div id="output">Processando pesquisadores...</div>';
-        flush();
+
 
         $total = count($pesquisadores);
         $encontrados = 0;
         $naoEncontrados = 0;
-        $msg .= 'Processando ' . $total . ' pesquisadores para verificar.<br>';
+        $msg = 'Processando ' . $total . ' pesquisadores para verificar.<br>';
+        echo '<script>';
+        echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+        echo '</script>';
+        flush();
+
         foreach ($pesquisadores as $p) {
             $idlattes = trim($p['idlattes']);
             $arquivo = $this->fileLattesPath($idlattes);
@@ -332,7 +336,7 @@ class LattesResearcherModel extends Model
             } else {
                 $naoEncontrados++;
             }
-                $msg .= $idlattes.' - '.($p['situacao_coleta'] ?? 'n/a').'<br>';
+                $msg = $idlattes.' - '.($p['situacao_coleta'] ?? 'n/a').'<br>';
 
                 echo '<script>';
                 echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
