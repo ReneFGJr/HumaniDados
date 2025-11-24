@@ -50,7 +50,6 @@ class LattesResearcherModel extends Model
             ->groupBy('vinculo_instituicao')
             ->findAll();
         return $dt;
-
     }
 
     private function xmlToTree($xml, $level = 0)
@@ -179,7 +178,6 @@ class LattesResearcherModel extends Model
             echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
             echo '</script>';
             flush();
-
         }
         flush();
     }
@@ -297,7 +295,7 @@ class LattesResearcherModel extends Model
         $msg = '';
         $pesquisadores = $this->where('situacao_coleta', 'coletado')->findAll();
 
-        echo count($pesquisadores).' pesquisadores para verificar.<br>';
+        echo count($pesquisadores) . ' pesquisadores para verificar.<br>';
         flush();
 
         // Libera o buffer para mostrar em tempo real
@@ -307,8 +305,6 @@ class LattesResearcherModel extends Model
             ob_end_flush();
         }
         ob_implicit_flush(true);
-
-
 
         $total = count($pesquisadores);
         $encontrados = 0;
@@ -336,15 +332,13 @@ class LattesResearcherModel extends Model
             } else {
                 $naoEncontrados++;
             }
-                $msg = $idlattes.' - '.($p['situacao_coleta'] ?? 'n/a').'<br>';
+            $msg = $idlattes . ' - ' . ($p['situacao_coleta'] ?? 'n/a') . '<br>';
 
-                echo '<script>';
-                echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
-                echo '</script>';
-                flush();
-                sleep(1);
-
+            echo '<script>';
+            echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+            echo '</script>';
             flush();
+            sleep(1);
         }
 
         $msg = "Verificação concluída.<br>
@@ -357,8 +351,8 @@ class LattesResearcherModel extends Model
     function fileLattesPath($idlattes)
     {
         $dir = ROOTPATH;
-        $dir = substr($dir,0,strpos($dir,'v2'));
-        $dir = str_replace('\\','/',$dir);
+        $dir = substr($dir, 0, strpos($dir, 'v2'));
+        $dir = str_replace('\\', '/', $dir);
         $basePath = $dir . 'database/xml/';
         return $basePath . $idlattes . '.xml';
     }
@@ -533,12 +527,11 @@ class LattesResearcherModel extends Model
         /********************************* Instituição */
         $endereco = $xml->{'DADOS-GERAIS'}->{'ENDERECO'};
         $endProfissional = (array) $endereco->{'ENDERECO-PROFISSIONAL'};
-        if (isset($endProfissional['@attributes']))
-            {
-                $endProfissional = $endProfissional['@attributes'];
-            } else {
-                $endProfissional = [];
-            }
+        if (isset($endProfissional['@attributes'])) {
+            $endProfissional = $endProfissional['@attributes'];
+        } else {
+            $endProfissional = [];
+        }
 
         $instituicao = $InstituicaoLattesModel->checkInstituicao($endProfissional);
 
