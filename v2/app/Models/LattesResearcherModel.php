@@ -483,6 +483,11 @@ class LattesResearcherModel extends Model
                             $na = 'MUSICA';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
+                        case 'APRESENTACAO-DE-OBRA-ARTISTICA':
+                            $n = '-APRESENTACAO-DE-OBRA-ARTISTICA';
+                            $na = 'OUTROS';
+                            $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
+                            break;
                         /*
                         case 'APRESENTACAO-DE-OBRA-ARTISTICA':
                             break;
