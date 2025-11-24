@@ -312,7 +312,7 @@ class LattesResearcherModel extends Model
             $idlattes = trim($p['idlattes']);
             $arquivo  = $this->fileLattesPath($idlattes);
 
-            $msg = $msgA."📄 Processando XML: {$idlattes}<br>";
+            $msg = $msgA."📄 Processando XML: {$idlattes} / $encontrados<br>";
             /*
                     $msg .= "🔎 Verificação em andamento...<br>
                     🔹 Total: {$total}<br>
