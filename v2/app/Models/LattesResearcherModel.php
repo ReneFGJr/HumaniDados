@@ -314,6 +314,7 @@ class LattesResearcherModel extends Model
                 } else if ($p['situacao_coleta'] === 'coletado') {
                     $msg .= $this->processarXML($idlattes) . '<br>';
                     $encontrados++;
+                    $this->update($p['id'], ['situacao_coleta' => 'processado']);
                 }
             } else {
                 $naoEncontrados++;
