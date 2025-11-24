@@ -516,7 +516,13 @@ class LattesResearcherModel extends Model
         /********************************* Instituição */
         $endereco = $xml->{'DADOS-GERAIS'}->{'ENDERECO'};
         $endProfissional = (array) $endereco->{'ENDERECO-PROFISSIONAL'};
-        $endProfissional = $endProfissional['@attributes'];
+        if (isset($endProfissional['@attributes']))
+            {
+                $endProfissional = $endProfissional['@attributes'];
+            } else {
+                $endProfissional = [];
+            }
+
         $instituicao = $InstituicaoLattesModel->checkInstituicao($endProfissional);
 
         $InstituicaoLattesModel->checkInstituicao($endProfissional);
