@@ -305,15 +305,14 @@ class LattesResearcherModel extends Model
         $encontrados = 0;
         $naoEncontrados = 0;
 
-        echo "🔎 Verificando {$total} pesquisadores...<br>";
-        flush();
+        $msgA = "🔎 Verificando {$total} pesquisadores...<br>";
 
         foreach ($pesquisadores as $p) {
 
             $idlattes = trim($p['idlattes']);
             $arquivo  = $this->fileLattesPath($idlattes);
 
-            $msg = "📄 Processando XML: {$idlattes}<br>";
+            $msg = $msgA."📄 Processando XML: {$idlattes}<br>";
             /*
                     $msg .= "🔎 Verificação em andamento...<br>
                     🔹 Total: {$total}<br>
