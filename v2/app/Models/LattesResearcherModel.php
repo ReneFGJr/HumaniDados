@@ -288,7 +288,9 @@ class LattesResearcherModel extends Model
     public function verificarArquivos()
     {
         $msg = '';
-        $pesquisadores = $this->where('situacao_coleta !=', 'coletado')->findAll();
+        $pesquisadores = $this->where('situacao_coleta ==', '')->findAll();
+
+        pre($pesquisadores);
 
         // Libera o buffer para mostrar em tempo real
         @ini_set('output_buffering', 'off');
