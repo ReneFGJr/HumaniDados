@@ -478,16 +478,12 @@ class LattesResearcherModel extends Model
                             $na = 'ARTES-VISUAIS';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
-
-                        /*
-                        case 'OBRA-DE-ARTES-VISUAIS':
-                            $n = '-DE-ARTES-VISUAIS';
-                            $na = 'ARTES-VISUAIS';
-                            $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
-
-                            break;
                         case 'COMPOSICAO-MUSICAL':
+                            $n = '-COMPOSICAO-MUSICAL';
+                            $na = 'MUSICA';
+                            $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
+                        /*
                         case 'APRESENTACAO-DE-OBRA-ARTISTICA':
                             break;
                         case 'OUTRA-PRODUCAO-ARTISTICA-CULTURAL':
