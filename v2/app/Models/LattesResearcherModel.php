@@ -317,7 +317,10 @@ class LattesResearcherModel extends Model
 
                 // Processa XML se estiver coletado
                 if ($p['situacao_coleta'] === 'coletado') {
-                    echo "📄 Processando XML: {$idlattes}<br>";
+                    $msg = "📄 Processando XML: {$idlattes}<br>";
+                    echo '<script>';
+                    echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+                    echo '</script>';
                     flush();
 
                     $this->processarXML($idlattes);
