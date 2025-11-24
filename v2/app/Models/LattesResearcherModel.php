@@ -313,22 +313,21 @@ class LattesResearcherModel extends Model
             $idlattes = trim($p['idlattes']);
             $arquivo  = $this->fileLattesPath($idlattes);
 
-            if (file_exists($arquivo)) {
-
-                // Processa XML se estiver coletado
-                if ($p['situacao_coleta'] === 'coletado') {
-                    $msg = "📄 Processando XML: {$idlattes}<br>";
-                    /*
+            $msg = "📄 Processando XML: {$idlattes}<br>";
+            /*
                     $msg .= "🔎 Verificação em andamento...<br>
                     🔹 Total: {$total}<br>
                     ✅ Processados: {$encontrados}<br>
                     ⚠️ Não encontrados: {$naoEncontrados}<br>";
                     */
-                    echo '<script>';
-                    echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
-                    echo '</script>';
-                    flush();
+            echo '<script>';
+            echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+            echo '</script>';
+            flush();
 
+            if (file_exists($arquivo)) {
+                // Processa XML se estiver coletado
+                if ($p['situacao_coleta'] === 'coletado') {
                     $this->processarXML($idlattes);
                     $this->update($p['id'], ['situacao_coleta' => 'processado']);
                     $encontrados++;
