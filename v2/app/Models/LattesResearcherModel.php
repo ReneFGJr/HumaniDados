@@ -287,6 +287,10 @@ class LattesResearcherModel extends Model
      */
     public function verificarArquivos()
     {
+        $this->where('situacao_coleta', null)
+            ->set('situacao_coleta', '')
+            ->update();
+
         $msg = '';
         $pesquisadores = $this->where('situacao_coleta', '')->findAll();
 
