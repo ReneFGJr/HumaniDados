@@ -290,12 +290,9 @@ class LattesResearcherModel extends Model
         $this->where('situacao_coleta', null)
             ->set('situacao_coleta', 'pendente')
             ->update();
-        echo $this->getlastquery();
 
         $msg = '';
         $pesquisadores = $this->where('situacao_coleta', 'coletado')->findAll();
-
-        pre($pesquisadores);
 
         // Libera o buffer para mostrar em tempo real
         @ini_set('output_buffering', 'off');
