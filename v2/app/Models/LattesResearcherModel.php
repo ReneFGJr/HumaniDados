@@ -167,7 +167,7 @@ class LattesResearcherModel extends Model
                 sleep(2);
             } else {
                 $msg .= "<span style='color:red'>já coletado</span><br>";
-                sleep(0.5);
+                sleep(0.1);
             }
 
             $msg .= "<br>🏁 <b>Harvesting concluído</b><br>";
@@ -337,6 +337,7 @@ class LattesResearcherModel extends Model
             echo '<script>';
             echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
             echo '</script>';
+            echo $msg;
             flush();
             sleep(1);
         }
