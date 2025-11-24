@@ -308,6 +308,9 @@ class LattesResearcherModel extends Model
         }
         ob_implicit_flush(true);
 
+        echo '<div id="output">Processando pesquisadores...</div>';
+        flush();
+
         $total = count($pesquisadores);
         $encontrados = 0;
         $naoEncontrados = 0;
@@ -329,7 +332,14 @@ class LattesResearcherModel extends Model
             } else {
                 $naoEncontrados++;
             }
-            echo $idlattes.' - '.($p['situacao_coleta'] ?? 'n/a').'<br>';
+                $msg .= $idlattes.' - '.($p['situacao_coleta'] ?? 'n/a').'<br>';
+
+                echo '<script>';
+                echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+                echo '</script>';
+                flush();
+                sleep(1);
+
             flush();
         }
 
