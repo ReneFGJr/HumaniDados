@@ -439,12 +439,12 @@ class LattesResearcherModel extends Model
                             break;
                         case 'APRESENTACAO-EM-RADIO-OU-TV':
                             $n = '-EM-RADIO-OU-TV';
-                            $na = 'APRESENTACAO-EM-RADIO-OU-TV';
+                            $na = 'OUTRO';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
                         case 'OUTRA-PRODUCAO-ARTISTICA-CULTURAL':
                             $n = '-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL';
-                            $na = '-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL';
+                            $na = 'OUTRO';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
                         case 'ARRANJO-MUSICAL':
