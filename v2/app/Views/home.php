@@ -5,6 +5,9 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-12 text-center">
+            <img src="<?= base_url('assets/images/logo_humanidados.png') ?>" alt="Banner HumaniDados" class="img-fluid mb-4">
+        </div>
         <div class="col-md-3">
             <div class="card text-center mb-4">
                 <div class="card-body">

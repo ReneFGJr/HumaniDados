@@ -2,7 +2,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-<footer class="bg-dark text-light mt-5 pt-4 pb-3">
+<footer class="bg-navbar text-dark mt-5 pt-4 pb-3">
     <div class="container">
 
         <div class="row">

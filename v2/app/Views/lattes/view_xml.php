@@ -44,7 +44,7 @@
 
     <body class="container py-4">
 
-        <h3 class="mb-4 text-info">
+        <h3 class="mb-4 text-hd-info">
             <i class="bi bi-diagram-3"></i> Estrutura Completa do XML
         </h3>
 

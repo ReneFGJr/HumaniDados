@@ -1,0 +1,26 @@
+.bg-hd 
+{
+    background-color: #ffffff;
+}
+.text-hd {
+    color: #2c3e50;
+}
+.text-hd-tx
+{
+    color: #809a0b;
+    font-weight: bold;
+}
+.text-hd-info
+{
+    color: #2980b9;
+}
+
+.bg-navbar
+    {
+        background-color: #030507;
+    }
+
+.link {
+    color: #2980b9;
+    text-decoration: none;
+    }

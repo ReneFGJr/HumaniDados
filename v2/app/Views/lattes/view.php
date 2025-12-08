@@ -30,12 +30,19 @@
                     </button>
                 </li>
 
+                <li class="nav-item" role="production">
+                    <button class="nav-link" id="production-tab" data-bs-toggle="tab"
+                        data-bs-target="#production" type="button" role="tab">
+                        Produção Ciêntífica
+                    </button>
+                </li>                    
+
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard-tab" data-bs-toggle="tab"
                         data-bs-target="#dashboard" type="button" role="tab">
                         Dashboard
                     </button>
-                </li>
+                </li>            
 
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="xml-tab" data-bs-toggle="tab"
@@ -62,6 +69,11 @@
                      ABA 3 - Formação
                 ======================== -->
                 <?php require("view_formacao.php") ?>
+
+                <!-- =======================
+                     ABA 6 - Produção Científica
+                ======================== -->
+                <?php require("view_production.php") ?>                
 
                 <!-- =======================
                      ABA 5 - Dashboard Produção Artística

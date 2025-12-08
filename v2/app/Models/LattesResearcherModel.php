@@ -33,11 +33,17 @@ class LattesResearcherModel extends Model
         $InstituicaoLattesModel = new InstituicaoLattesModel();
         $ProducaoArtisticaModel = new ProducaoArtisticaModel();
         $LattesFormacaoModel = new LattesFormacaoModel();
+        $LivrosModel = new LivrosModel();
+        $LivrosCapitulosModel = new LivrosCapitulosModel();
+        $ArtigosPublicadosModel = new ArtigosPublicadosModel();
 
         $dt = $this->where('id', $id)->first();
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
         $dt['formacao'] = $LattesFormacaoModel->le($dt['idlattes']);
         $dt['producao_artistica'] = $ProducaoArtisticaModel->resume($dt['idlattes']);
+        $dt['livros'] = $LivrosModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
         return $dt;
     }
 
@@ -387,8 +393,34 @@ class LattesResearcherModel extends Model
 
 
         /********************* Zerar */
-        $ProducaoXML->zeraDados($idlattes);
+        $LivrosModel = new LivrosModel();
+        $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+        $LivrosCapitulosModel = new LivrosCapitulosModel();
 
+
+        /* Zerar Dados Anteriores */
+        $ProducaoXML->zeraDados($idlattes);
+        $ArtigosPublicadosModel->zeraDados($idlattes);
+        $LivrosModel->zeraDados($idlattes);
+        $LivrosCapitulosModel->zeraDados($idlattes);
+
+        /************************* Produção Científica */
+        /*** Livros */
+        $livros = $LivrosModel->extrairLivros($xml);
+        foreach ($livros as $registro) {
+            $LivrosModel->insert($registro);
+        }         
+        
+        /*** Capitulos */
+        $capitulos = $LivrosCapitulosModel->extrairCapitulos($xml,$idlattes);
+        foreach ($capitulos as $registro) {
+            $LivrosCapitulosModel->insert($registro);
+        }     
+
+        $artigos = $ArtigosPublicadosModel->extrairArtigos($xml);
+        foreach ($artigos as $registro) {
+            $ArtigosPublicadosModel->insert($registro);
+        }        
 
         // === Extração de dados principais ===
         $nomeCompleto = (string) $xml->{'DADOS-GERAIS'}['NOME-COMPLETO'];

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-bs-theme="dark">
+<html lang="pt-br" data-bs-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
 </head>
 
-<body class="bg-dark text-light">
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body class="bg-light text-dark">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-hd"> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="<?= base_url('/') ?>">HumaniDados</a>
             <div class="collapse navbar-collapse">
