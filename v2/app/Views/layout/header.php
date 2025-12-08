@@ -13,6 +13,12 @@
 
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="<?= base_url('assets/favicon.png') ?>">
+    <!-- Alternativo para .ico -->
+    <link rel="shortcut icon" href="<?= base_url('assets/favicon.png') ?>">
+
 </head>
 
 <body class="bg-light text-dark">
