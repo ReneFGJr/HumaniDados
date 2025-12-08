@@ -318,13 +318,14 @@ class LattesResearcherModel extends Model
             $idlattes = trim($p['idlattes']);
             $arquivo  = $this->fileLattesPath($idlattes);
 
-            $msg = $msgA."📄 Processando XML: {$idlattes} / $encontrados<br>";
+            $msg = $msgA."<span style='color: white'>📄 Processando XML: {$idlattes} / $encontrados<br>";
             /*
                     $msg .= "🔎 Verificação em andamento...<br>
                     🔹 Total: {$total}<br>
                     ✅ Processados: {$encontrados}<br>
                     ⚠️ Não encontrados: {$naoEncontrados}<br>";
                     */
+            echo '</span>';
             echo '<script>';
             echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
             echo '</script>';
