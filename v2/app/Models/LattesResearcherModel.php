@@ -416,8 +416,9 @@ class LattesResearcherModel extends Model
         $capitulos = $LivrosCapitulosModel->extrairCapitulos($xml,$idlattes);
         foreach ($capitulos as $registro) {
             $LivrosCapitulosModel->insert($registro);
-        }     
+        }
 
+        /*** Artigos Publicados */
         $artigos = $ArtigosPublicadosModel->extrairArtigos($xml);
         foreach ($artigos as $registro) {
             $ArtigosPublicadosModel->insert($registro);

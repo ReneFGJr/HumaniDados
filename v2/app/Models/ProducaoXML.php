@@ -27,11 +27,15 @@ class ProducaoXML extends Model
         //try {
         $basic = $D->{'DADOS-BASICOS'.$prefixo};
         $detal = $D->{'DETALHAMENTO'.$prefixo};
+        $areas = $D->{'AREAS-DO-CONHECIMENTO'};
         $basic = (array)$basic->attributes();
         $detal = (array)$detal->attributes();
+        $areas = (array)$areas->attributes();
 
         $basic = $basic['@attributes'] ?? [];
         $detal = $detal['@attributes'] ?? [];
+        $areas = $areas['@attributes'] ?? [];
+
         $base = array_merge($basic, $detal);
         $base['tipo'] = $tipo;
         $base['id_lattes'] = $idlattes;
@@ -45,6 +49,7 @@ class ProducaoXML extends Model
         $base['titulo'] = $base['TITULO'] ?? $base['titulo'];
         $base['natureza'] = $base['NATUREZA'] ?? null;
         $base['atividade'] = $base['ATIVIDADE-DOS-AUTORES'] ?? '';
+        $base['tipo_evento'] = $detal['TIPO-DE-EVENTO'] ?? '';
         $base['ano'] = $base['ANO'] ?? null;
         $base['pais'] = $base['PAIS'] ?? null;
         $base['idioma'] = $base['IDIOMA'] ?? null;

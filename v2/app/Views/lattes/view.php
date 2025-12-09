@@ -38,9 +38,9 @@
                 </li>                    
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="dashboard-tab" data-bs-toggle="tab"
-                        data-bs-target="#dashboard" type="button" role="tab">
-                        Dashboard
+                    <button class="nav-link" id="artistic-tab" data-bs-toggle="tab"
+                        data-bs-target="#artistic" type="button" role="tab">
+                        Produção Artística
                     </button>
                 </li>            
 
@@ -81,6 +81,7 @@
                 <?php
                 $producao_artistica = $pesquisador['producao_artistica'];
                 require("dashboard/prod_artistica.php");
+                require("sankey/index.php");
                 ?>
 
                 <!-- =======================

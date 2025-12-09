@@ -246,6 +246,7 @@ function lattes_artisitica($xp)
             $idioma = $get($dados, 'IDIOMA');
             $pais   = $get($dados, 'PAIS-DE-PUBLICACAO') ?: $get($det, 'PAIS-DE-PUBLICACAO');
             $natureza = $get($dados, 'NATUREZA');
+            $tipoEvento = $get($det, 'TIPO-DE-EVENTO');
 
             // às vezes aparecem em detalhamento
             $local     = $get($det, 'LOCAL-DE-PUBLICACAO');
@@ -267,6 +268,7 @@ function lattes_artisitica($xp)
                 'subtipo'    => $n->tagName,  // OUTRA-PRODUCAO-BIBLIOGRAFICA | PARTITURA-MUSICAL | ...
                 'titulo'     => $titulo,
                 'natureza'   => $natureza,
+                'tipo_evento'=> $tipoEvento,
                 'ano'        => $ano,
                 'doi'        => $doi,
                 'issn'       => $issn,
@@ -284,9 +286,8 @@ function lattes_artisitica($xp)
                 'areas'      => $areas,
                 // você pode incluir aqui outros atributos específicos que seu XML trouxer
             ];
-        }
+        }        
     }
-
     return $items;
 }
 

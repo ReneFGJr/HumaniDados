@@ -1,6 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="tab-pane fade" id="dashboard" role="tabpanel">
+<div class="tab-pane fade" id="artistic" role="tabpanel">
 
     <h3 class="text-hd-info mb-4">
         <i class="bi bi-palette-fill"></i> Painel de Produção Artística – Artes Visuais

@@ -76,9 +76,9 @@ class ProducaoArtisticaModel extends Model
     public function resume($idLattes)
     {
         $dt = $this
-            ->select('tipo, natureza, count(*) as total')
+            ->select('tipo, natureza, tipo_evento, count(*) as total')
             ->where('id_lattes', $idLattes)
-            ->groupBy('tipo, natureza')
+            ->groupBy('tipo, natureza, tipo_evento')
             ->orderBy('total desc, tipo, natureza')
             ->findAll();
         return $dt;
