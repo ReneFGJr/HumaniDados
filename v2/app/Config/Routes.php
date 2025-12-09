@@ -39,6 +39,15 @@ $routes->group(
     }
 );
 
+$routes->group(
+    'producao_cientifica',
+    ['namespace' => 'App\Controllers'],
+    function ($routes) {
+        $routes->get('/', 'ProducaoCientifica::index');
+        $routes->get('view/(:num)', 'Indicators::view/$1');
+    }
+);
+
 
 $routes->group(
     'indicators',

@@ -31,6 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('lattes') ?>">Pesquisadores</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('instituicoes') ?>">Instituições</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('producao_artistica') ?>">Produção Artística</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('producao_cientifica') ?>">Produção Científica</a></li>
                 </ul>
 
                 <ul class="navbar-nav">
