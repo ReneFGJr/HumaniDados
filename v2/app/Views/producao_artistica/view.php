@@ -25,6 +25,14 @@
 
     <div class="container my-4">
 
+    <div><?php
+    echo breadcrumb([
+    'Home' => '/',
+    'Produção Artistica' => '/producao_artistica',
+    'Visualização' => '' // último item sem link
+]);
+    ?></div>
+
         <h2 class="mb-4 text-center">Indicadores da Produção Artística</h2>
 
         <!-- ================= INDICADORES ================= -->
@@ -113,8 +121,8 @@
         dados.forEach(d => {
             tbody += `
         <tr>
-            <td>${d.natureza}</td>
-            <td>${d.atividade || "Não Informado"}</td>
+            <td><a class="link" href="<?= base_url(); ?>producao_artistica/<?= $pag; ?>?arg1=${d.natureza}">${d.natureza}</a></td>
+            <td><a class="link" href="<?= base_url(); ?>producao_artistica/<?= $pag; ?>?arg1=${d.natureza}&arg2=${d.atividade}">${d.atividade || "Não Informado"}</a></td>
             <td>${d.total}</td>
         </tr>`;
         });

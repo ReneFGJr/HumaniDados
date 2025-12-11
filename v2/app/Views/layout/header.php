@@ -50,10 +50,10 @@
 
                     <ul class="dropdown-menu" aria-labelledby="dropArt">
 
-                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/musica') ?>">Música</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/cenicas') ?>">Artes Cênicas</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/visuais') ?>">Artes Visuais</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/outros') ?>">Outros</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/MUSICA') ?>">Música</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/ARTES-CENICAS') ?>">Artes Cênicas</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/ARTES-VISUAIS') ?>">Artes Visuais</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_artistica/OUTROS') ?>">Outros</a></li>
 
                     </ul>
                 </li>
