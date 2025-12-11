@@ -33,7 +33,7 @@ class ProducaoArtistica extends BaseController
         
         echo view('layout/header');
         switch ($pg) {
-            case 'musica':
+            case 'MUSICA':
                 echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'musica']);
                 break;
             case 'ARTES-CENICAS':
