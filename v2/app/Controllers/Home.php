@@ -22,6 +22,13 @@ class Home extends BaseController
             . view('layout/footer');
     }
 
+    public function faq()
+    {
+        return view('layout/header')
+            . view('FAQ/index')
+            . view('layout/footer');
+    }    
+
     public function about()
     {
         return view('layout/header')

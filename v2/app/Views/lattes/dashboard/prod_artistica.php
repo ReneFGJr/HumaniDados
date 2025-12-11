@@ -40,6 +40,12 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <?= $gr_sankey; ?>
+        </div>
+    </div>
+
     <!-- ====== Preparação dos producao_artistica ====== -->
     <script>
         const labels = <?= json_encode(array_column($producao_artistica, 'natureza')) ?>;
@@ -81,5 +87,4 @@
             }
         });
     </script>
-
 </div>

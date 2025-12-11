@@ -80,8 +80,8 @@
                 ======================== -->
                 <?php
                 $producao_artistica = $pesquisador['producao_artistica'];
-                require("dashboard/prod_artistica.php");
-                require("sankey/index.php");
+                $gr_sankey = view('lattes/sankey/index',   ['producao_artistica'=> $producao_artistica]);
+                require("dashboard/prod_artistica.php");                
                 ?>
 
                 <!-- =======================

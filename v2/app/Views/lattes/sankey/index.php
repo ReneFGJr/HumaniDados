@@ -8,7 +8,7 @@
         }
         h2 { text-align: center; color: #fff; margin-top: 20px; }
         #sankey_chart {
-            width: 100%;
+            width: 1024px;
             height: 700px;
             margin-top: 30px;
         }
@@ -16,7 +16,7 @@
 
 <h2>Fluxo da Produção Artística / Cultural</h2>
 
-<div id="sankey_chart"></div>
+<div id="sankey_chart" ></div>
 
 <script>
     google.charts.load('current', {packages:['sankey']});

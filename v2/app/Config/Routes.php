@@ -9,6 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about');
 $routes->get('glossary', 'Home::glossary');
+$routes->get('faq', 'Home::faq');
 
 // Grupo de rotas de usuários
 $routes->group(
