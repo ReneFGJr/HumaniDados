@@ -3,7 +3,7 @@
     <style>
         body {
             background: #111;
-            color: #eee;
+            color: #111;
             font-family: Arial, sans-serif;
         }
         h2 { text-align: center; color: #fff; margin-top: 20px; }
@@ -54,7 +54,7 @@
             height: 700,
             sankey: {
                 node: {
-                    label: { color: '#fff', fontSize: 14 },
+                    label: { color: '#000', fontSize: 12 },  // <-- preto
                     nodePadding: 20
                 },
                 link: {
