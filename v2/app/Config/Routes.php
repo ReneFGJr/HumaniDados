@@ -24,6 +24,18 @@ $routes->group(
     }
 );
 
+// Grupo de rotas de usuários
+$routes->group(
+    'producao_artistica',
+    ['namespace' => 'App\Controllers'],
+    function ($routes) {
+        $routes->get('(:any)', 'ProducaoArtistica::index/$1');          // Listar usuários
+        $routes->get('create', 'ProducaoArtistica::create');    // Formulário de novo usuário
+        $routes->post('store', 'ProducaoArtistica::store');     // Salvar usuário
+    }
+);
+
+
 $routes->group(
     'instituicoes',
     ['namespace' => 'App\Controllers'],

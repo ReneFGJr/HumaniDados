@@ -15,13 +15,21 @@ class ProducaoArtistica extends BaseController
         $this->session = session();
     }
 
-    function index()
+    function index($pg='')
     {
         $ProducaoArtisticaModel = new \App\Models\ProducaoArtisticaModel();
         $dt = $ProducaoArtisticaModel->indicators();
 
         echo view('layout/header');
-        echo view('producao_artistica/index',['dados'=>$dt]);
+        switch ($pg) {
+            case 'musica':
+                 $dt = $ProducaoArtisticaModel->getIndicatorByType($pg);
+                echo view('producao_artistica/view',['array'=>$dt]);
+                break;
+            default:
+                echo view('producao_artistica/index',['dados'=>$dt]);
+                break;
+        }
         echo view('layout/footer');
     }
 

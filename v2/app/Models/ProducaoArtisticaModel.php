@@ -122,4 +122,15 @@ class ProducaoArtisticaModel extends Model
             ]);
         }
     }
+
+    function getIndicatorByType($type)
+    {
+        $dt = $this
+            ->select('natureza, atividade, count(*) as total')
+            ->where('tipo', $type)
+            ->groupBy('natureza, atividade')
+            ->orderBy('natureza, atividade', 'asc')
+            ->findAll();
+        return $dt;
+    }   
 }
