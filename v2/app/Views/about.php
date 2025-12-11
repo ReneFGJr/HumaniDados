@@ -11,13 +11,14 @@
         </div>
         <div class="col-12">
             <h2 class="section-title">Financiamento</h2>
+            Financiado pelo Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq)<br />
             Processo: 421072/2022-9<br />
             Chamada nº 40/2022 - Linha 1B - Projetos em Rede - Pesquisa em temas livres em Ciências Humanas, Ciências Sociais<br />
             Aplicadas e Linguística, Letras e Artes<br />
             SIGLA: Pro-Humanidades 2022<br />
         </div>
 
-        
+
     </div>
 
 </div>
