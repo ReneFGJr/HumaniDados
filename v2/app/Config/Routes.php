@@ -8,6 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about');
+$routes->get('about_method', 'Home::about_method');
+
 $routes->get('glossary', 'Home::glossary');
 $routes->get('faq', 'Home::faq');
 

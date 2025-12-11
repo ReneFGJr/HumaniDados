@@ -36,6 +36,13 @@ class Home extends BaseController
             . view('layout/footer');
     }
 
+    public function about_method()
+    {
+        return view('layout/header')
+            . view('about_method')
+            . view('layout/footer');
+    }
+
     public function glossary()
     {
         $GlossarioModel = new \App\Models\GlossarioModel();
