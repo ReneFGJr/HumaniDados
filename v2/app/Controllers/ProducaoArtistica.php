@@ -36,11 +36,11 @@ class ProducaoArtistica extends BaseController
         //pre($dt);
         switch ($pg) {
             case '':
-                echo view('producao_artistica/view_2',['dados'=>$dt, 'pag'=>'musica']);
+                echo view('producao_artistica/view_3',['dados'=>$dt, 'pag'=>'musica']);
                 break;
             case 'MUSICA':
                 //pre($dt);
-                echo view('producao_artistica/view_4',['dados'=>$dt, 'pag'=>'musica']);
+                echo view('producao_artistica/view_2',['dados'=>$dt, 'pag'=>'musica']);
                 echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'musica']);
                 break;
             case 'ARTES-CENICAS':
