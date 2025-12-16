@@ -34,7 +34,12 @@ class ProducaoCientifica extends BaseController
             $IndicadoresModel->saveIndicador($arg0, $arg1, $arg2, $arg3, $dt);
         }
 
-        $rsp = view('producao_cientifica/indicador_artigos', ['artigos' => $dt['artigos'], 'pag' => $pg]);
+        /* Render view */
+
+        $rsp .= view('producao_cientifica/indicador_artigos', ['artigos' => $dt['artigos']['trabalhos'], 'pag' => $pg]);
+        $rsp .= view('producao_cientifica/indicador_idioma', ['artigos' => $dt['artigos']['idiomas'], 'pag' => $pg]);
+        $rsp .= view('producao_cientifica/indicador_ano', ['anos' => $dt['artigos']['anos'], 'pag' => $pg]);
+        //pre($dt);
 
         echo view('layout/header');
         echo $rsp;
