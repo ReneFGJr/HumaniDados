@@ -66,7 +66,7 @@ class ProducaoCientificaModel extends Model
         $dt['artigos']['trabalhos'] = $Artigos->select('count(*) as total, natureza')->groupBy('natureza')->findAll();
         $dt['artigos']['idiomas'] = $Artigos->select('count(*) as total, idioma')->groupBy('idioma')->findAll();
         $dt['artigos']['anos'] = $Artigos->select('count(*) as total, ano')->groupBy('ano')->orderBy('ano')->findAll();
-
+        $dt['artigos']['periodico'] = $Artigos->select('count(*) as total, periodico')->groupBy('periodico')->orderBy('total','desc')->findAll();
         return $dt;
     }     
 

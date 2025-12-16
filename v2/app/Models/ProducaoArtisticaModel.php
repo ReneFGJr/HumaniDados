@@ -125,9 +125,16 @@ class ProducaoArtisticaModel extends Model
 
     function getIndicatorByType($type,$arg1=null,$arg2=null,$arg3=null)
     {
-        $this
+        $type = trim($type);
+        if ($type != '')
+        {
+            $this
             ->select('natureza, atividade, count(*) as total')
             ->where('tipo', $type);
+        } else {
+            $this
+            ->select('tipo, natureza, atividade, count(*) as total');
+        }
         if ($arg1 !== null) {
             $this->where('natureza', $arg1);
         }
@@ -138,8 +145,9 @@ class ProducaoArtisticaModel extends Model
             $this->where('tipo_evento', $arg3);
         }
         $dt = $this->groupBy('natureza, atividade')
-            ->orderBy('natureza, atividade', 'asc')
+            ->orderBy('tipo,natureza, atividade', 'asc')
             ->findAll();
+            //echo $this->getLastQuery();
         return $dt;
     }   
 }

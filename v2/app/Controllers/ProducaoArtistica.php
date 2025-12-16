@@ -33,8 +33,14 @@ class ProducaoArtistica extends BaseController
         
         echo view('layout/header');
         $pg = ctype_upper($pg) ? $pg : strtoupper($pg);
+        //pre($dt);
         switch ($pg) {
+            case '':
+                echo view('producao_artistica/view_2',['dados'=>$dt, 'pag'=>'musica']);
+                break;
             case 'MUSICA':
+                pre($dt);
+                echo view('producao_artistica/view_4',['dados'=>$dt, 'pag'=>'musica']);
                 echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'musica']);
                 break;
             case 'ARTES-CENICAS':
