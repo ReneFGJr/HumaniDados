@@ -25,6 +25,8 @@ class ProducaoCientifica extends BaseController
         $arg3 = $this->request->getGet('arg3');
         $arg0 = $pg;
 
+        $rsp = '';
+
         $dt = $IndicadoresModel->findByArgs($arg0, $arg1, $arg2, $arg3);
         if ($dt == null)
         {
@@ -32,16 +34,10 @@ class ProducaoCientifica extends BaseController
             $IndicadoresModel->saveIndicador($arg0, $arg1, $arg2, $arg3, $dt);
         }
 
+        $rsp = view('producao_cientifica/indicador_artigos', ['artigos' => $dt['artigos'], 'pag' => $pg]);
+
         echo view('layout/header');
-        switch ($pg) {
-            case 'artigos':
-                echo view('producao_cientifica/view',['array'=>$dt, 'pag'=>'artigos']);
-                break;
-                          
-            default:
-                ECHO $pg;
-                break;
-        }
+        echo $rsp;
         echo view('layout/footer');
     }
 

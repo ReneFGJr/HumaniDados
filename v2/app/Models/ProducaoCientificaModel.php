@@ -64,7 +64,6 @@ class ProducaoCientificaModel extends Model
         $Artigos = new \App\Models\ArtigosPublicadosModel();
         $dt = [];
         $dt['artigos'] = $Artigos->select('count(*) as total, natureza')->groupBy('natureza')->findAll();
-        pre($dt);
         return $dt;
     }     
 
