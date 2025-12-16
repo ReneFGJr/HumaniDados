@@ -53,10 +53,20 @@ class ProducaoCientificaModel extends Model
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
-    public function totalProducaoArtistica()
+    public function totalProducaoCientifica()
     {
         return $this->countAllResults();
     }
+
+
+    function getIndicatorByArticle($type,$arg1=null,$arg2=null,$arg3=null)
+    {
+        $Artigos = new \App\Models\ArtigosPublicadosModel();
+        $dt = [];
+        $dt['artigos'] = $Artigos->select('count(*) as total, natureza')->groupBy('natureza')->findAll();
+        pre($dt);
+        return $dt;
+    }     
 
     /** Insere autores */
     public function salvarAutores($idProducao, $autores)

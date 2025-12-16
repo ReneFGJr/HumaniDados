@@ -121,7 +121,7 @@ class ProducaoArtisticaModel extends Model
                 'especialidade' => $ar['especialidade']
             ]);
         }
-    }
+    }   
 
     function getIndicatorByType($type,$arg1=null,$arg2=null,$arg3=null)
     {
