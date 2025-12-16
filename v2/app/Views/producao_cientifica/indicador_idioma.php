@@ -8,18 +8,6 @@ foreach ($artigos as $item) {
 
     <h3 class="mb-4">📊 Indicadores de Artigos / Idiomas</h3>
 
-    <!-- TOTAL GERAL -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white shadow">
-                <div class="card-body text-center">
-                    <h6>Total Geral</h6>
-                    <h2><?= number_format($totalGeral, 0, ',', '.') ?></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- CARDS POR idioma -->
     <div class="row">
         <?php foreach ($artigos as $item): ?>

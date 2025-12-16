@@ -33,16 +33,16 @@
 ]);
     ?></div>
 
-        <h2 class="mb-4 text-center">Indicadores da Produção Artística</h2>
+        <h2 class="mb-4 text-center">Indicadores da Produção Científica</h2>
 
         <!-- ================= INDICADORES ================= -->
         <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="card card-indicador p-3">
-                    <h5>Total Geral</h5>
-                    <span class="fs-3 fw-bold" id="indTotal"></span>
+                <div class="col-md-4">
+                    <div class="card card-indicador p-3">
+                        <h5>Total Geral</h5>
+                        <span class="fs-3 fw-bold" id="indTotal"></span>
+                    </div>
                 </div>
-            </div>
 
             <div class="col-md-4">
                 <div class="card card-indicador p-3">
