@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\Lattes\OrientationModel;
 
 class LattesResearcherModel extends Model
 {
@@ -404,6 +405,16 @@ class LattesResearcherModel extends Model
         $ArtigosPublicadosModel->zeraDados($idlattes);
         $LivrosModel->zeraDados($idlattes);
         $LivrosCapitulosModel->zeraDados($idlattes);
+
+        /************************* Orientações  */
+        pre($xml);
+        
+        $OrientationModel = new OrientationModel();
+        $orientacoes = $OrientationModel->extractOrientacoes($xml, $idlattes);
+
+        if (!empty($orientacoes)) {
+            $OrientationModel->insertBatch($orientacoes);
+        }
 
         /************************* Produção Científica */
         /*** Livros */
