@@ -406,9 +406,15 @@ class LattesResearcherModel extends Model
         $LivrosModel->zeraDados($idlattes);
         $LivrosCapitulosModel->zeraDados($idlattes);
 
-        /************************* Orientações  */
+        /************************** Área do conhecimento */
+        $LattesResearchersAreaModel = new LattesResearchersAreaModel();
+        $AreasCnpqModel = new AreasCnpqModel();
+        $LattesResearchersAreaModel->extactAreas($xml,$idlattes);
         pre($xml);
-        
+
+        /************************* Orientações  */
+
+
         $OrientationModel = new OrientationModel();
         $orientacoes = $OrientationModel->extractOrientacoes($xml, $idlattes);
 
@@ -421,8 +427,8 @@ class LattesResearcherModel extends Model
         $livros = $LivrosModel->extrairLivros($xml);
         foreach ($livros as $registro) {
             $LivrosModel->insert($registro);
-        }         
-        
+        }
+
         /*** Capitulos */
         $capitulos = $LivrosCapitulosModel->extrairCapitulos($xml,$idlattes);
         foreach ($capitulos as $registro) {
@@ -433,7 +439,7 @@ class LattesResearcherModel extends Model
         $artigos = $ArtigosPublicadosModel->extrairArtigos($xml);
         foreach ($artigos as $registro) {
             $ArtigosPublicadosModel->insert($registro);
-        }        
+        }
 
         // === Extração de dados principais ===
         $nomeCompleto = (string) $xml->{'DADOS-GERAIS'}['NOME-COMPLETO'];
