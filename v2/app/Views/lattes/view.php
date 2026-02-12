@@ -35,14 +35,14 @@
                         data-bs-target="#production" type="button" role="tab">
                         Produção Ciêntífica
                     </button>
-                </li>                    
+                </li>
 
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="artistic-tab" data-bs-toggle="tab"
                         data-bs-target="#artistic" type="button" role="tab">
                         Produção Artística
                     </button>
-                </li>            
+                </li>
 
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="xml-tab" data-bs-toggle="tab"
@@ -73,7 +73,7 @@
                 <!-- =======================
                      ABA 6 - Produção Científica
                 ======================== -->
-                <?php require("view_production.php") ?>                
+                <?php require("view_production.php") ?>
 
                 <!-- =======================
                      ABA 5 - Dashboard Produção Artística
@@ -81,7 +81,7 @@
                 <?php
                 $producao_artistica = $pesquisador['producao_artistica'];
                 $gr_sankey = view('lattes/sankey/index',   ['producao_artistica'=> $producao_artistica]);
-                require("dashboard/prod_artistica.php");                
+                require("dashboard/prod_artistica.php");
                 ?>
 
                 <!-- =======================

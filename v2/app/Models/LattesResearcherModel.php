@@ -37,6 +37,7 @@ class LattesResearcherModel extends Model
         $LivrosModel = new LivrosModel();
         $LivrosCapitulosModel = new LivrosCapitulosModel();
         $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+        $OrientationModel = new OrientationModel();
 
         $dt = $this->where('id', $id)->first();
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
@@ -45,6 +46,8 @@ class LattesResearcherModel extends Model
         $dt['livros'] = $LivrosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['orientacoes'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['orientacoes'] = $OrientationModel->resume($dt['idlattes']);
         return $dt;
     }
 
@@ -410,17 +413,12 @@ class LattesResearcherModel extends Model
         $LattesResearchersAreaModel = new LattesResearchersAreaModel();
         $AreasCnpqModel = new AreasCnpqModel();
         $LattesResearchersAreaModel->extactAreas($xml,$idlattes);
-        pre($xml);
 
         /************************* Orientações  */
 
 
         $OrientationModel = new OrientationModel();
         $orientacoes = $OrientationModel->extractOrientacoes($xml, $idlattes);
-
-        if (!empty($orientacoes)) {
-            $OrientationModel->insertBatch($orientacoes);
-        }
 
         /************************* Produção Científica */
         /*** Livros */
