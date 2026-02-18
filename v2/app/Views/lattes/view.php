@@ -44,6 +44,13 @@
                     </button>
                 </li>
 
+                <li class="nav-item" role="knowledge">
+                    <button class="nav-link" id="knowledge-tab" data-bs-toggle="tab"
+                        data-bs-target="#knowledge" type="button" role="tab">
+                        Área do conhecimento
+                    </button>
+                </li>
+
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="xml-tab" data-bs-toggle="tab"
                         data-bs-target="#xml" type="button" role="tab">
@@ -76,11 +83,16 @@
                 <?php require("view_production.php") ?>
 
                 <!-- =======================
+                     ABA 7 - Área do conhecimento
+                ======================== -->
+                <?php require("view_knowledge.php") ?>
+
+                <!-- =======================
                      ABA 5 - Dashboard Produção Artística
                 ======================== -->
                 <?php
                 $producao_artistica = $pesquisador['producao_artistica'];
-                $gr_sankey = view('lattes/sankey/index',   ['producao_artistica'=> $producao_artistica]);
+                $gr_sankey = view('lattes/sankey/index',   ['producao_artistica' => $producao_artistica]);
                 require("dashboard/prod_artistica.php");
                 ?>
 

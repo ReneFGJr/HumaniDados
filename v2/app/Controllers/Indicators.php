@@ -17,8 +17,12 @@ class Indicators extends BaseController
 
     function index()
     {
-        echo view('layout/header');
-        echo view('indicators/index');
+        $LattesResearcherModel = new LattesResearcherModel();
+        $data = [];
+        //$data['areas_conhecimento'] = $LattesResearcherModel->areasConhecimento();
+        $data['lattes_atualizados'] = $LattesResearcherModel->atualizacaoLattes();
+        echo view('layout/header', $data);
+        echo view('indicators/index', $data);
         echo view('layout/footer');
     }
 

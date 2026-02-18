@@ -38,6 +38,7 @@ class LattesResearcherModel extends Model
         $LivrosCapitulosModel = new LivrosCapitulosModel();
         $ArtigosPublicadosModel = new ArtigosPublicadosModel();
         $OrientationModel = new OrientationModel();
+        $LattesResearchersAreaModel = new LattesResearchersAreaModel();
 
         $dt = $this->where('id', $id)->first();
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
@@ -47,7 +48,20 @@ class LattesResearcherModel extends Model
         $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['orientacoes'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
-        $dt['orientacoes'] = $OrientationModel->resume($dt['idlattes']);
+        $dt['orientacoes_total'] = $OrientationModel->resume($dt['idlattes']);
+        $dt['areas_conhecimento'] = $LattesResearchersAreaModel->areasResearcher($dt['idlattes']);
+        $dt['areas_conhecimento_all'] = $LattesResearchersAreaModel->areasResearcherAll($dt['idlattes']);
+        return $dt;
+    }
+
+    public function atualizacaoLattes()
+    {
+        $dt = $this
+            ->select('count(*) as total, YEAR(data_atualizacao) as ano, MONTH(data_atualizacao) as mes')
+            ->groupBy('ano, mes')
+            ->orderBy('ano', 'DESC')
+            ->orderBy('mes', 'DESC')
+            ->findAll();
         return $dt;
     }
 

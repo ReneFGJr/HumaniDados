@@ -26,14 +26,14 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="p-3 bg-hd border border-secondary rounded-3 h-100 text-hd">
                 <h6 class="text-hd-tx">Nacionalidade</h6>
                 <p class="fw-semibold"><?= $pesquisador['nacionalidade'] ?></p>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="p-3 bg-hd border border-secondary rounded-3 h-100 text-hd">
                 <h6 class="text-hd-tx">Nascimento</h6>
                 <p class="fw-semibold">
@@ -52,27 +52,34 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="p-3 bg-hd border border-secondary rounded-3 h-100 text-hd">
-                <h6 class="text-hd-tx">Lattes ID</h6>
-                <p class="fw-semibold">
-                    <a
-                        class="link"
-                        target="_blank"
-                        href="https://lattes.cnpq.br/<?= $pesquisador['idlattes'] ?>">https://lattes.cnpq.br/<?= $pesquisador['idlattes'] ?>
-                    </a>
-                </p>
+                <h6 class="text-hd-tx">Áreas de Conhecimento</h6>
+                <?php echo view('areas/icones'); ?>
             </div>
         </div>
-        <?php if (!empty($pesquisador['instituição']['nome_instituicao_empresa'])): ?>
-            <div class="col-md-8">
+
+            <div class="col-md-4">
                 <div class="p-3 bg-hd border border-secondary rounded-3 h-100 text-hd">
-                    <h6 class="text-hd-tx">Vínculo Institucional</h6>
+                    <h6 class="text-hd-tx">Lattes ID</h6>
                     <p class="fw-semibold">
-                        <?= esc($pesquisador['instituição']['nome_instituicao_empresa']) ?>
+                        <a
+                            class="link"
+                            target="_blank"
+                            href="https://lattes.cnpq.br/<?= $pesquisador['idlattes'] ?>">https://lattes.cnpq.br/<?= $pesquisador['idlattes'] ?>
+                        </a>
                     </p>
                 </div>
             </div>
-        <?php endif; ?>
+            <?php if (!empty($pesquisador['instituição']['nome_instituicao_empresa'])): ?>
+                <div class="col-md-8">
+                    <div class="p-3 bg-hd border border-secondary rounded-3 h-100 text-hd">
+                        <h6 class="text-hd-tx">Vínculo Institucional</h6>
+                        <p class="fw-semibold">
+                            <?= esc($pesquisador['instituição']['nome_instituicao_empresa']) ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
-</div>

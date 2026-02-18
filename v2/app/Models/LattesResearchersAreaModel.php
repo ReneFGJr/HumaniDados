@@ -23,6 +23,89 @@ class LattesResearchersAreaModel extends Model
 
     protected $useTimestamps = false;
 
+    function areasResearcherAll($idlattes)
+    {
+        $cp = 'a1.cnpq_area as area_1, ';
+        $cp .= 'a2.cnpq_area as area_2, ';
+        $cp .= 'a3.cnpq_area as area_3, ';
+        $cp .= 'a4.cnpq_area as area_4, ';
+        $cp .= 'a1.cnpq_icone as cnpq_icone';
+
+        $dt = $this
+            ->select($cp)
+            ->join('areas_cnpq as a1', 'a1.id_cnpq = ra_area_1', 'left')
+            ->join('areas_cnpq as a2', 'a2.id_cnpq = ra_area_2', 'left')
+            ->join('areas_cnpq as a3', 'a3.id_cnpq = ra_area_3', 'left')
+            ->join('areas_cnpq as a4', 'a4.id_cnpq = ra_area_4', 'left')
+            ->where('ra_idlattes', $idlattes)
+            ->findAll();
+
+        foreach ($dt as $k => $v) {
+            $name = $v['area_1'];
+            $name = str_replace('_', ' ', $name);
+            $name = ucfirst(strtolower($name));
+            $dt[$k]['area_1'] = $name;
+        }
+
+        $mtx = [];
+        foreach ($dt as $v) {
+            $area1 = $v['area_1'] ?: '';
+            $area2 = $v['area_2'] ?: '';
+            $area3 = $v['area_3'] ?: '';
+            $area4 = $v['area_4'] ?: '';
+
+            if (!isset($mtx[$area1])) {
+                $mtx[$area1]['total'] = 1;
+            } else {
+                $mtx[$area1]['total']++;
+            }
+            /*********** Área 2 */
+            if ($area2 != '') {
+                if (!isset($mtx[$area1][$area2])) {
+                    $mtx[$area1][$area2]['total'] = 1;
+                } else {
+                    $mtx[$area1][$area2]['total']++;
+                }
+            }
+            /*********** Área 3 */
+            if ($area3 != '') {
+                if (!isset($mtx[$area1][$area2][$area3])) {
+                    $mtx[$area1][$area2][$area3]['total'] = 1;
+                } else {
+                    $mtx[$area1][$area2][$area3]['total']++;
+                }
+            }
+            /*********** Área 3 */
+            if ($area4 != '') {
+                if (!isset($mtx[$area1][$area2][$area3][$area4])) {
+                    $mtx[$area1][$area2][$area3][$area4]['total'] = 1;
+                } else {
+                    $mtx[$area1][$area2][$area3]['total']++;
+                }
+            }
+
+        }
+        return $mtx;
+    }
+
+    function areasResearcher($idlattes)
+    {
+        $cp = 'cnpq_area, cnpq_icone';
+        $dt = $this
+            ->select($cp)
+            ->join('areas_cnpq', 'id_cnpq = ra_area_1', 'left')
+            ->where('ra_idlattes', $idlattes)
+            ->groupby($cp)
+            ->findAll();
+        foreach ($dt as $k => $v) {
+            $name = $v['cnpq_area'];
+            $name = str_replace('_',' ', $name);
+            $name = ucfirst(strtolower($name));
+            $dt[$k]['cnpq_area'] = $name;
+        }
+        return $dt;
+    }
+
     function extactAreas($xml, $idlattes)
     {
         /* Zera Dados anteriores */
