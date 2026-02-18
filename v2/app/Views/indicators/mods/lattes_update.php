@@ -24,11 +24,9 @@ foreach ($lattes_atualizados as $atualizacao) {
                     } else {
                         $mesesA = 48;
                     }
-                    $mesesA = 48;
                 } else {
                     $mesesA = 36;
                 }
-                $mesesA = 36;
             } else {
                 $mesesA = 24;
             }
