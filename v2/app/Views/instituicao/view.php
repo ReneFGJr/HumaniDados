@@ -6,6 +6,10 @@
             </h4>
         </div>
 
+        <?php
+        pre($instituicao);
+        ?>
+
         <div class="card-body">
 
             <div class="row mb-3">
