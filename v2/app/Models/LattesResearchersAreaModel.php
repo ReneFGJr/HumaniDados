@@ -23,7 +23,12 @@ class LattesResearchersAreaModel extends Model
 
     protected $useTimestamps = false;
 
-    function areasResearcherAll($idlattes)
+    function areasConhecimentoAll()
+    {
+        return $this->areasResearcherAll();
+    }
+
+    function areasResearcherAll($idlattes = '')
     {
         $cp = 'a1.cnpq_area as area_1, ';
         $cp .= 'a2.cnpq_area as area_2, ';
@@ -31,14 +36,16 @@ class LattesResearchersAreaModel extends Model
         $cp .= 'a4.cnpq_area as area_4, ';
         $cp .= 'a1.cnpq_icone as cnpq_icone';
 
-        $dt = $this
+        $this
             ->select($cp)
             ->join('areas_cnpq as a1', 'a1.id_cnpq = ra_area_1', 'left')
             ->join('areas_cnpq as a2', 'a2.id_cnpq = ra_area_2', 'left')
             ->join('areas_cnpq as a3', 'a3.id_cnpq = ra_area_3', 'left')
-            ->join('areas_cnpq as a4', 'a4.id_cnpq = ra_area_4', 'left')
-            ->where('ra_idlattes', $idlattes)
-            ->findAll();
+            ->join('areas_cnpq as a4', 'a4.id_cnpq = ra_area_4', 'left');
+        if ($idlattes) {
+            $this->where('ra_idlattes', $idlattes);
+        }
+        $dt = $this->findAll();
 
         foreach ($dt as $k => $v) {
             $name = $v['area_1'];

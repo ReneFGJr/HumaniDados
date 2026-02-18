@@ -5,8 +5,6 @@ if (isset($lattes_atualizados[0])) {
     $month = $lattes_atualizados[0]['mes'];
 }
 
-echo 'ùltima atualização: ' . ($year ?? 'N/A') . '-' . ($month ?? 'N/A');
-
 $meses = [];
 $max = 10;
 foreach ($lattes_atualizados as $atualizacao) {
@@ -45,7 +43,7 @@ foreach ($lattes_atualizados as $atualizacao) {
 }
 
 /*********  */
-for($r=0;$r < 12; $r++) {
+for ($r = 0; $r < 12; $r++) {
     if (!isset($meses[$r])) {
         $meses[$r] = 0;
     }
@@ -68,40 +66,44 @@ if (!isset($meses[60])) {
 $mult = 200 / $max;
 ksort($meses);
 ?>
-        <table class="table table-bordered" style="width: 100%; height: 200px;">
-            <?= $max ?> valor máximo
-            <tbody>
-                <tr>
-                    <th colspan="17" class="text-center bg-light">quantidade de meses da atualização dos currículos Lattes</th>
-                </tr>
-                <tr>
-                    <?php foreach ($meses as $mes => $total) : ?>
-                        <td valign="bottom" class="text-center bold small bg-light p-0">
-                            <?php
-                            if ($mes > 12) {
-                                echo $mes.'+';
-                            } else {
-                                echo $mes;
-                            }
-                            ?>
-                        </td>
-                    <?php endforeach; ?>
-                </tr>
-                <tr>
-                    <?php foreach ($meses as $mes => $total) :
-                        $bgcolor = 'green';
-                        if ($mes > 12) {
-                            $bgcolor = 'orange';
-                        }
-                        if ($mes > 24) {
-                            $bgcolor = 'red';
-                        }
+<h3 class="text-hd-info mb-4"><i class="bi bi-diagram-3"></i>
+    Atualizações dos Lattes</h3>
+<?= 'Última atualização: ' . ($year ?? 'N/A') . '-' . ($month ?? 'N/A'); ?>
+
+<table class="table table-bordered" style="width: 100%; height: 200px;">
+    <?= $max ?> valor máximo
+    <tbody>
+        <tr>
+            <th colspan="17" class="text-center bg-light">quantidade de meses da atualização dos currículos Lattes</th>
+        </tr>
+        <tr>
+            <?php foreach ($meses as $mes => $total) : ?>
+                <td valign="bottom" class="text-center bold small bg-light p-0">
+                    <?php
+                    if ($mes > 12) {
+                        echo $mes . '+';
+                    } else {
+                        echo $mes;
+                    }
                     ?>
-                        <td width="5%" valign="bottom" class="text-center bold small p-0">
-                            <?= $total ?>
-                            <div style="background-color: <?= $bgcolor; ?>; height: <?= round($total * $mult); ?>px;"></div>
-                        </td>
-                    <?php endforeach; ?>
-                </tr>
-            </tbody>
-        </table>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+        <tr>
+            <?php foreach ($meses as $mes => $total) :
+                $bgcolor = 'green';
+                if ($mes > 12) {
+                    $bgcolor = 'orange';
+                }
+                if ($mes > 24) {
+                    $bgcolor = 'red';
+                }
+            ?>
+                <td width="5%" valign="bottom" class="text-center bold small p-0">
+                    <?= $total ?>
+                    <div style="background-color: <?= $bgcolor; ?>; height: <?= round($total * $mult); ?>px;"></div>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    </tbody>
+</table>
