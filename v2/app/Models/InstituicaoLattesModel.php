@@ -77,6 +77,7 @@ class InstituicaoLattesModel extends Model
 
     function le($id)
     {
+        $dt = $this->find($id);
         $dt['pesquisadores'] = $this->pesquisadoresVinculados($id);
         $dt['pesquisadores_total'] = count($this->pesquisadoresVinculados($id));
         return $dt;
