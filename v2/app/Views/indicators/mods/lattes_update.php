@@ -68,12 +68,7 @@ if (!isset($meses[60])) {
 $mult = 200 / $max;
 ksort($meses);
 ?>
-<div class="card mb-4">
-    <div class="card-body">
-        <h5 class="card-title">Atualização dos Currículos Lattes</h5>
-        <p class="card-text">Número de currículos Lattes atualizados por mês.</
-                <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="width: 100%; height: 200px;">
             <?= $max ?> valor máximo
             <tbody>
                 <tr>
@@ -110,6 +105,3 @@ ksort($meses);
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
-</div>
