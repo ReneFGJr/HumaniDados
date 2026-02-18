@@ -32,10 +32,6 @@ class Instituicoes extends BaseController
         $InstituicoesModel = new \App\Models\InstituicaoLattesModel();
         $data['instituicao'] = $InstituicoesModel->le($id);
 
-        echo '<h1>'.$id.'</h1>';
-
-        pre($data);
-
         echo view('layout/header');
         echo view('instituicao/view', $data);
         echo view('layout/footer');
