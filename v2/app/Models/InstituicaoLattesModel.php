@@ -53,6 +53,16 @@ class InstituicaoLattesModel extends Model
         // 🔎 1. Verificar se já existe no banco
         $existe = $this->where('codigo_instituicao_empresa', $codigo)->first();
 
+        if ($existe)
+            {
+                $nome = trim($dados['NOME-INSTITUICAO-EMPRESA']);
+                if ($nome != $existe['nome_instituicao_empresa'])
+                    {
+                        $existe = false;
+                    }
+            }
+
+        
         if ($existe) {
             return $existe['id']; // já cadastrado
         }
