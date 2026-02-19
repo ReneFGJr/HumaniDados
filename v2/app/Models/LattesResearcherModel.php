@@ -604,10 +604,7 @@ class LattesResearcherModel extends Model
         }
 
         $instituicao = $InstituicaoLattesModel->checkInstituicao($endProfissional);
-        pre($endProfissional,false);
-        pre($instituicao);
-
-        $InstituicaoLattesModel->checkInstituicao($endProfissional);
+        //$InstituicaoLattesModel->checkInstituicao($endProfissional);
 
         // === Atualização no banco ===
         $dados = [
