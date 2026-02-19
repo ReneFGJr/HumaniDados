@@ -604,7 +604,7 @@ class LattesResearcherModel extends Model
         }
 
         $instituicao = $InstituicaoLattesModel->checkInstituicao($endProfissional);
-        echo $endProfissional;
+        pre($endProfissional,false);
         pre($instituicao);
 
         $InstituicaoLattesModel->checkInstituicao($endProfissional);
