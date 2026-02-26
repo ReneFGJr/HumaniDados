@@ -14,6 +14,7 @@ class LivrosModel extends Model
         'natureza',
         'titulo',
         'ano',
+        'autor_nome',
         'pais_publicacao',
         'idioma',
         'meio_divulgacao',
@@ -66,7 +67,7 @@ class LivrosModel extends Model
             }
 
             $livros[] = [
-                'id_lattes'        => (string)$xml->attributes()['NRO-ID-CNPQ'],
+                'id_lattes'        => (string)$xml->attributes()['NUMERO-IDENTIFICADOR'],
                 'sequencia'       => (string)$livro['SEQUENCIA-PRODUCAO'],
                 'tipo'            => (string)$dados['TIPO'],
                 'natureza'        => (string)$dados['NATUREZA'],
@@ -77,6 +78,7 @@ class LivrosModel extends Model
                 'meio_divulgacao' => (string)$dados['MEIO-DE-DIVULGACAO'],
                 'homepage'        => (string)$dados['HOME-PAGE-DO-TRABALHO'],
                 'doi'             => (string)$dados['DOI'],
+                'autor_nome'      => implode(', ', array_column($autores, 'nome')),
 
                 // Detalhamento
                 'volumes'         => (string)$detalhe['NUMERO-DE-VOLUMES'],
@@ -92,7 +94,6 @@ class LivrosModel extends Model
                 'palavras_chave'  => $palavras,
             ];
         }
-
         return $livros;
     }
 }

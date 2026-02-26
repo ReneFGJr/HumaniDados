@@ -58,6 +58,26 @@ class ProducaoCientificaModel extends Model
         return $this->countAllResults();
     }
 
+    function getIndicatorByBook($type,$arg1=null,$arg2=null,$arg3=null)
+    {
+        $LivrosModel = new \App\Models\LivrosModel();
+        $dt = [];
+        $dt['livros']['trabalhos'] = $LivrosModel->select('count(*) as total, natureza')->groupBy('natureza')->findAll();
+        $dt['livros']['idiomas'] = $LivrosModel->select('count(*) as total, idioma')->groupBy('idioma')->findAll();
+        $dt['livros']['anos'] = $LivrosModel->select('count(*) as total, ano')->groupBy('ano')->orderBy('ano')->findAll();
+        return $dt;
+    }
+
+    function getIndicatorByChapter($type,$arg1=null,$arg2=null,$arg3=null)
+    {
+        $CapitulosModel = new \App\Models\LivrosCapitulosModel();
+        $dt = [];
+        $dt['capitulos']['trabalhos'] = $CapitulosModel->select('count(*) as total, tipo as natureza')->groupBy('tipo')->findAll();
+        $dt['capitulos']['idiomas'] = $CapitulosModel->select('count(*) as total, idioma')->groupBy('idioma')->findAll();
+        $dt['capitulos']['anos'] = $CapitulosModel->select('count(*) as total, ano')->groupBy('ano')->orderBy('ano')->findAll();
+        return $dt;
+    }
+
 
     function getIndicatorByArticle($type,$arg1=null,$arg2=null,$arg3=null)
     {
@@ -68,7 +88,7 @@ class ProducaoCientificaModel extends Model
         $dt['artigos']['anos'] = $Artigos->select('count(*) as total, ano')->groupBy('ano')->orderBy('ano')->findAll();
         $dt['artigos']['periodico'] = $Artigos->select('count(*) as total, periodico')->groupBy('periodico')->orderBy('total','desc')->findAll();
         return $dt;
-    }     
+    }
 
     /** Insere autores */
     public function salvarAutores($idProducao, $autores)

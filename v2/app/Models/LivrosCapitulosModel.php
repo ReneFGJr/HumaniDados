@@ -15,6 +15,7 @@ class LivrosCapitulosModel extends Model
         'ano',
         'pais_publicacao',
         'idioma',
+        'autor_nome',
         'meio_divulgacao',
         'homepage',
         'doi',
@@ -33,7 +34,7 @@ class LivrosCapitulosModel extends Model
     protected $useTimestamps = true;
 
     function zeraDados($idlattes)
-    {        
+    {
         $this->where('id_lattes',$idlattes)->delete();
         return true;
     }
@@ -69,6 +70,7 @@ class LivrosCapitulosModel extends Model
                 'meio_divulgacao' => (string)$dados['MEIO-DE-DIVULGACAO'],
                 'homepage'        => (string)$dados['HOME-PAGE-DO-TRABALHO'],
                 'doi'             => (string)$dados['DOI'],
+                'autor_nome'      => implode(', ', array_column($autores, 'nome')),
 
                 // Detalhamento
                 'titulo_livro'    => (string)$detalhe['TITULO-DO-LIVRO'],

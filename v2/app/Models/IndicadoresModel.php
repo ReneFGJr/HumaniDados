@@ -55,7 +55,7 @@ class IndicadoresModel extends Model
         }
         if ($arg3 === null) {
             $arg3 = '';
-        }   
+        }
         if ($arg2 === null) {
             $arg2 = '';
         }
@@ -81,13 +81,13 @@ class IndicadoresModel extends Model
         }
         if ($arg3 === null) {
             $arg3 = '';
-        }   
+        }
         if ($arg2 === null) {
             $arg2 = '';
         }
         if ($arg1 === null) {
             $arg1 = '';
-        }        
+        }
         // se result for array → transforma em JSON
         if (is_array($result)) {
             $result = json_encode($result, JSON_UNESCAPED_UNICODE);

@@ -39,6 +39,7 @@ class LattesResearcherModel extends Model
         $ArtigosPublicadosModel = new ArtigosPublicadosModel();
         $OrientationModel = new OrientationModel();
         $LattesResearchersAreaModel = new LattesResearchersAreaModel();
+        $ProceedingsModel = new ProceedingsModel();
 
         $dt = $this->where('id', $id)->first();
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
@@ -47,6 +48,8 @@ class LattesResearcherModel extends Model
         $dt['livros'] = $LivrosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['eventos'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['proceedings'] = $ProceedingsModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['orientacoes'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['orientacoes_total'] = $OrientationModel->resume($dt['idlattes']);
         $dt['areas_conhecimento'] = $LattesResearchersAreaModel->areasResearcher($dt['idlattes']);
@@ -396,6 +399,7 @@ class LattesResearcherModel extends Model
         $ProducaoArtisticaModel = new ProducaoArtisticaModel();
         $arquivo = $this->fileLattesPath($idlattes);
         $ProducaoXML = new ProducaoXML();
+        $ProceedingsModel = new ProceedingsModel();
 
         if (!file_exists($arquivo)) {
             echo "❌ Arquivo XML não encontrado para ID Lattes: {$idlattes}";
@@ -416,12 +420,12 @@ class LattesResearcherModel extends Model
         $ArtigosPublicadosModel = new ArtigosPublicadosModel();
         $LivrosCapitulosModel = new LivrosCapitulosModel();
 
-
         /* Zerar Dados Anteriores */
         $ProducaoXML->zeraDados($idlattes);
         $ArtigosPublicadosModel->zeraDados($idlattes);
         $LivrosModel->zeraDados($idlattes);
         $LivrosCapitulosModel->zeraDados($idlattes);
+        $ProceedingsModel->zeraDados($idlattes);
 
         /************************** Área do conhecimento */
         $LattesResearchersAreaModel = new LattesResearchersAreaModel();
@@ -429,8 +433,6 @@ class LattesResearcherModel extends Model
         $LattesResearchersAreaModel->extactAreas($xml,$idlattes);
 
         /************************* Orientações  */
-
-
         $OrientationModel = new OrientationModel();
         $orientacoes = $OrientationModel->extractOrientacoes($xml, $idlattes);
 
@@ -451,6 +453,12 @@ class LattesResearcherModel extends Model
         $artigos = $ArtigosPublicadosModel->extrairArtigos($xml);
         foreach ($artigos as $registro) {
             $ArtigosPublicadosModel->insert($registro);
+        }
+
+        /*** Eventos */
+        $eventos = $ProceedingsModel->extrairProceedings($xml);
+        foreach ($eventos as $registro) {
+            $ProceedingsModel->insert($registro);
         }
 
         // === Extração de dados principais ===
