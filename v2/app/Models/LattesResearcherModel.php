@@ -192,12 +192,12 @@ class LattesResearcherModel extends Model
 
             foreach ($pesquisadores as $p) {
                 $idlattes = trim($p['idlattes']);
-                $sucesso = $this->process($idlattes);
+                $msg = $this->processarXML($idlattes);
                 $this->status('processado', $idlattes);
 
-                pre($sucesso);
+                pre($msg);
 
-                if ($sucesso) {
+                if ($msg === "Processamento concluído com sucesso.") {
                     $processados++;
                     sleep(1);
                 }
