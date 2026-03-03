@@ -42,9 +42,11 @@ class LattesResearchersAreaModel extends Model
             ->join('areas_cnpq as a2', 'a2.id_cnpq = ra_area_2', 'left')
             ->join('areas_cnpq as a3', 'a3.id_cnpq = ra_area_3', 'left')
             ->join('areas_cnpq as a4', 'a4.id_cnpq = ra_area_4', 'left');
+
         if ($idlattes) {
             $this->where('ra_idlattes', $idlattes);
         }
+
         $dt = $this->findAll();
 
         foreach ($dt as $k => $v) {
@@ -55,18 +57,24 @@ class LattesResearchersAreaModel extends Model
         }
 
         $mtx = [];
+
         foreach ($dt as $v) {
+
             $area1 = $v['area_1'] ?: '';
             $area2 = $v['area_2'] ?: '';
             $area3 = $v['area_3'] ?: '';
             $area4 = $v['area_4'] ?: '';
 
+            if ($area1 == '') continue;
+
+            // Área 1
             if (!isset($mtx[$area1])) {
                 $mtx[$area1]['total'] = 1;
             } else {
                 $mtx[$area1]['total']++;
             }
-            /*********** Área 2 */
+
+            // Área 2
             if ($area2 != '') {
                 if (!isset($mtx[$area1][$area2])) {
                     $mtx[$area1][$area2]['total'] = 1;
@@ -74,25 +82,58 @@ class LattesResearchersAreaModel extends Model
                     $mtx[$area1][$area2]['total']++;
                 }
             }
-            /*********** Área 3 */
-            if ($area3 != '') {
+
+            // Área 3
+            if ($area2 != '' && $area3 != '') {
                 if (!isset($mtx[$area1][$area2][$area3])) {
                     $mtx[$area1][$area2][$area3]['total'] = 1;
                 } else {
                     $mtx[$area1][$area2][$area3]['total']++;
                 }
             }
-            /*********** Área 3 */
-            if ($area4 != '') {
+
+            // Área 4
+            if ($area2 != '' && $area3 != '' && $area4 != '') {
                 if (!isset($mtx[$area1][$area2][$area3][$area4])) {
                     $mtx[$area1][$area2][$area3][$area4]['total'] = 1;
                 } else {
-                    $mtx[$area1][$area2][$area3]['total']++;
+                    $mtx[$area1][$area2][$area3][$area4]['total']++;
                 }
             }
-
         }
+
+        // 🔎 Filtra incidências menores que 10
+        $mtx = $this->filterMinIncidence($mtx, 10);
+
         return $mtx;
+    }
+
+
+    private function filterMinIncidence($array, $min = 10)
+    {
+        foreach ($array as $key => &$value) {
+
+            if (is_array($value)) {
+
+                // Remove subníveis recursivamente
+                foreach ($value as $k2 => &$v2) {
+                    if ($k2 !== 'total' && is_array($v2)) {
+                        $v2 = $this->filterMinIncidence($v2, $min);
+
+                        if (isset($v2['total']) && $v2['total'] < $min) {
+                            unset($value[$k2]);
+                        }
+                    }
+                }
+
+                // Remove nível principal se total < mínimo
+                if (isset($value['total']) && $value['total'] < $min) {
+                    unset($array[$key]);
+                }
+            }
+        }
+
+        return $array;
     }
 
     function areasResearcher($idlattes)
