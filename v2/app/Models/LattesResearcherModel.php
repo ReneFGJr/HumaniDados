@@ -193,6 +193,7 @@ class LattesResearcherModel extends Model
             foreach ($pesquisadores as $p) {
                 $idlattes = trim($p['idlattes']);
                 $sucesso = $this->process($idlattes);
+                $this->status('processado', $idlattes);
 
                 pre($sucesso);
 
