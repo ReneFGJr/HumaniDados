@@ -400,6 +400,7 @@ class LattesResearcherModel extends Model
         $arquivo = $this->fileLattesPath($idlattes);
         $ProducaoXML = new ProducaoXML();
         $ProceedingsModel = new ProceedingsModel();
+        $PartituraModel = new PartituraModel();
 
         if (!file_exists($arquivo)) {
             echo "❌ Arquivo XML não encontrado para ID Lattes: {$idlattes}";
