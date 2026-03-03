@@ -89,6 +89,7 @@ $routes->group('lattes', function ($routes) {
     $routes->get('reprocess', 'Lattes::reprocess');
     $routes->get('process/(:num)', 'Lattes::process/$1');
     $routes->get('harvesting', 'Lattes::harvesting');
+    $routes->get('status', 'Lattes::status');
 });
 
 $routes->get('login', 'Auth::login');

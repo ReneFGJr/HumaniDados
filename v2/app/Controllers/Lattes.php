@@ -74,6 +74,7 @@ class Lattes extends BaseController
     // 🔹 Exclui pesquisador
     public function delete($id)
     {
+        pre($_SESSION);
         $this->model->delete($id);
         return redirect()->to('/lattes')->with('success', 'Registro removido com sucesso.');
     }
