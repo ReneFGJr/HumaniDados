@@ -161,7 +161,7 @@ class OrientationModel extends Model
                 $basico = 'DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS';
                 $detalhe = 'DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS';
                 break;
-            case 'ORIENTACOES-CONCLUIDAS-PARA-POS-DOUTORADO':
+            case 'OUTROS ORIENTACOES-CONCLUIDAS-PARA-POS-DOUTORADO':
                 $basico = 'DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-POS-DOUTORADO';
                 $detalhe = 'DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-POS-DOUTORADO';
                 break;
