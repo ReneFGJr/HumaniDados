@@ -44,10 +44,6 @@ class ProducaoCientifica extends BaseController
             $IndicadoresModel->saveIndicador($arg0, $arg1, $arg2, $arg3, $dt);
         }
 
-        pre($dt);
-
-
-
         /* Render view */
         switch($pg) {
             case 'artigos':
