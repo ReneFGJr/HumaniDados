@@ -160,7 +160,6 @@ class LattesResearcherModel extends Model
     {
         $dd['situacao_coleta'] = $status;
         $this->set($dd)->where('idlattes', $idlattes)->update();
-        echo $this->getlastquery();
     }
 
     public function mudarStatusColetas()
@@ -184,18 +183,18 @@ class LattesResearcherModel extends Model
 
     public function reprocessarTodos()
         {
-            $this->mudarStatusColetas();
+            //$this->mudarStatusColetas();
             $pesquisadores = $this
                 ->where('situacao_coleta', 'coletado')
                 ->findAll();
             $total = count($pesquisadores);
             $processados = 0;
 
-            pre($pesquisadores);
-
             foreach ($pesquisadores as $p) {
                 $idlattes = trim($p['idlattes']);
-                $sucesso = $this->extrairDados($idlattes);
+                $sucesso = $this->process($idlattes);
+
+                pre($sucesso);
 
                 if ($sucesso) {
                     $processados++;
