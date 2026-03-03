@@ -1,6 +1,6 @@
 <div class="container mt-5">
-    <h2 class="mb-4">📈 Evolução da Produção por Tipo</h2>
-    <canvas id="graficoLinhaAno"></canvas>
+    <h2 class="mb-4">📊 Produção por Tipo e Ano</h2>
+    <canvas id="graficoBarraAno"></canvas>
 </div>
 
 <script>
@@ -8,60 +8,61 @@
 
         const producao = <?= json_encode($producaoAno) ?>;
         const anos = Object.keys(producao.cientifica.artigos);
-
         const datasets = [];
 
-        // 🎨 Paletas
-        const azulBase = 54; // Científica
-        const rosaBase = 255; // Artística
+        // ==========================
+        // Científica (Azul)
+        // ==========================
+        const azulTons = [
+            'rgba(54,162,235,0.8)',
+            'rgba(30,144,255,0.8)',
+            'rgba(0,123,255,0.8)',
+            'rgba(0,105,217,0.8)',
+            'rgba(0,90,190,0.8)'
+        ];
 
         let i = 0;
 
-        // ==========================
-        // Científica (tons de azul)
-        // ==========================
         for (let tipo in producao.cientifica) {
-
             datasets.push({
-                label: tipo.toUpperCase(),
+                label: 'Científica - ' + tipo.toUpperCase(),
                 data: anos.map(ano => parseInt(producao.cientifica[tipo][ano] ?? 0)),
-                borderColor: `rgba(${azulBase}, ${162 + i*10}, ${235 - i*10}, 1)`,
-                backgroundColor: `rgba(${azulBase}, ${162 + i*10}, ${235 - i*10}, 0.1)`,
-                tension: 0.3,
-                fill: false
+                backgroundColor: azulTons[i % azulTons.length],
+                stack: 'cientifica'
             });
-
             i++;
         }
+
+        // ==========================
+        // Artística (Rosa)
+        // ==========================
+        const rosaTons = [
+            'rgba(255,105,180,0.8)',
+            'rgba(255,99,132,0.8)',
+            'rgba(255,20,147,0.8)',
+            'rgba(219,112,147,0.8)'
+        ];
 
         i = 0;
 
-        // ==========================
-        // Artística (tons de rosa)
-        // ==========================
         for (let tipo in producao.artistica) {
-
             datasets.push({
-                label: tipo,
+                label: 'Artística - ' + tipo,
                 data: anos.map(ano => parseInt(producao.artistica[tipo][ano] ?? 0)),
-                borderColor: `rgba(${rosaBase}, ${99 + i*15}, ${132 + i*10}, 1)`,
-                backgroundColor: `rgba(${rosaBase}, ${99 + i*15}, ${132 + i*10}, 0.1)`,
-                tension: 0.3,
-                fill: false,
-                borderDash: [5, 5] // 🔥 artística tracejada para diferenciar
+                backgroundColor: rosaTons[i % rosaTons.length],
+                stack: 'artistica'
             });
-
             i++;
         }
 
-        const canvas = document.getElementById('graficoLinhaAno');
+        const canvas = document.getElementById('graficoBarraAno');
 
         if (Chart.getChart(canvas)) {
             Chart.getChart(canvas).destroy();
         }
 
         new Chart(canvas, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: anos,
                 datasets: datasets
@@ -78,6 +79,9 @@
                     }
                 },
                 scales: {
+                    x: {
+                        stacked: false
+                    },
                     y: {
                         beginAtZero: true
                     }
