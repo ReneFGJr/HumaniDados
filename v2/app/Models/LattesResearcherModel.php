@@ -166,7 +166,7 @@ class LattesResearcherModel extends Model
                 $idlattes = trim($d['idlattes']);
                 $arquivo  = $this->fileLattesPath($idlattes);
                 if (file_exists($arquivo)) {
-                    $dd[] = $d['idlattes'];
+                    pre($arquivo);
                 }
             }
 
