@@ -450,7 +450,7 @@ class LattesResearcherModel extends Model
         $arquivo = $this->fileLattesPath($idlattes);
         $ProducaoXML = new ProducaoXML();
         $ProceedingsModel = new ProceedingsModel();
-        $PartituraModel = new PartituraModel();
+        $PartiturasModel = new PartiturasModel();
 
         if (!file_exists($arquivo)) {
             echo "❌ Arquivo XML não encontrado para ID Lattes: {$idlattes}";
@@ -470,6 +470,7 @@ class LattesResearcherModel extends Model
         $LivrosModel = new LivrosModel();
         $ArtigosPublicadosModel = new ArtigosPublicadosModel();
         $LivrosCapitulosModel = new LivrosCapitulosModel();
+        $PartiturasModel = new PartiturasModel();
 
         /* Zerar Dados Anteriores */
         $ProducaoXML->zeraDados($idlattes);
