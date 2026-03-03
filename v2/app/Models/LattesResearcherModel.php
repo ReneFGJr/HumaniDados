@@ -198,7 +198,7 @@ class LattesResearcherModel extends Model
             $total = count($pesquisadores);
             $processados = 0;
 
-            pre($processados);
+            pre($pesquisadores);
 
             foreach ($pesquisadores as $p) {
                 $idlattes = trim($p['idlattes']);
