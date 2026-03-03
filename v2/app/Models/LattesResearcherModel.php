@@ -193,6 +193,7 @@ class LattesResearcherModel extends Model
         {
             $this->mudarStatusColetas();
             $pesquisadores = $this
+                ->select('idlattes')
                 ->findAll(10);
             $total = count($pesquisadores);
             $processados = 0;
