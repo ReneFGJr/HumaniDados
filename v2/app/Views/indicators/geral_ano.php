@@ -3,6 +3,8 @@
     <canvas id="graficoBarraAno"></canvas>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
     (function() {
 
@@ -28,7 +30,7 @@
                 label: 'Científica - ' + tipo.toUpperCase(),
                 data: anos.map(ano => parseInt(producao.cientifica[tipo][ano] ?? 0)),
                 backgroundColor: azulTons[i % azulTons.length],
-                stack: 'cientifica'
+                barThickness: 35
             });
             i++;
         }
@@ -50,13 +52,14 @@
                 label: 'Artística - ' + tipo,
                 data: anos.map(ano => parseInt(producao.artistica[tipo][ano] ?? 0)),
                 backgroundColor: rosaTons[i % rosaTons.length],
-                stack: 'artistica'
+                barThickness: 35
             });
             i++;
         }
 
         const canvas = document.getElementById('graficoBarraAno');
 
+        // 🔥 evita erro de canvas já utilizado
         if (Chart.getChart(canvas)) {
             Chart.getChart(canvas).destroy();
         }
