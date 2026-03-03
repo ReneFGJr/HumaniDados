@@ -193,8 +193,7 @@ class LattesResearcherModel extends Model
         {
             $this->mudarStatusColetas();
             $pesquisadores = $this
-                ->where('situacao_coleta', 'coletado')
-                ->findAll();
+                ->findAll(10);
             $total = count($pesquisadores);
             $processados = 0;
 
