@@ -57,6 +57,16 @@ class LattesResearcherModel extends Model
         return $dt;
     }
 
+    public function getStatus()
+    {
+        $dt = $this
+            ->select('count(*) as total, situacao_coleta as status')
+            ->groupBy('situacao_coleta')
+            ->orderBy('total', 'DESC')
+            ->findAll();
+        return $dt;
+    }
+
     public function atualizacaoLattes()
     {
         $dt = $this

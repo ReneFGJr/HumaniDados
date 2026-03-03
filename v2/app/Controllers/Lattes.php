@@ -71,6 +71,16 @@ class Lattes extends BaseController
         echo view('layout/footer');
     }
 
+    public function status()
+    {
+        $PesquisadoresModel = new LattesResearcherModel();
+        $data = $PesquisadoresModel->getStatus();
+
+        echo view('layout/header');
+        echo view('lattes/status', $data);
+        echo view('layout/footer');
+    }
+
     // 🔹 Exclui pesquisador
     public function delete($id)
     {
