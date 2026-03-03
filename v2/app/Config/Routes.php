@@ -86,6 +86,7 @@ $routes->group('lattes', function ($routes) {
     $routes->get('verify-files', 'Lattes::verifyFiles');
     $routes->get('view/(:num)', 'Lattes::show/$1');
     $routes->get('extractor/(:num)', 'Lattes::extractor/$1');
+    $routes->get('reprocess', 'Lattes::reprocess');
     $routes->get('process/(:num)', 'Lattes::process/$1');
     $routes->get('harvesting', 'Lattes::harvesting');
 });

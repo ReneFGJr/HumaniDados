@@ -86,6 +86,13 @@ class Lattes extends BaseController
         echo view('layout/footer');
     }
 
+    function reprocess()
+    {
+        $Lattes = new LattesResearcherModel();
+        $msg = $Lattes->reprocessarTodos();
+        return redirect()->to('/lattes')->with('success', $msg);
+    }
+
     function harvesting()
     {
         ini_set('max_execution_time', 0); // ilimitado

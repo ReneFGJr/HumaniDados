@@ -156,6 +156,63 @@ class LattesResearcherModel extends Model
         return $xmlFormatted;
     }
 
+    public function mudarStatusColetas()
+        {
+        helper(['filesystem']);
+            $dd = [];
+
+            $dt = $this->select('idlattes')->where('situacao_coleta', 'pendente')->findAll();
+            foreach ($dt as $d) {
+                $idlattes = trim($d['idlattes']);
+                $arquivo  = $this->fileLattesPath($idlattes);
+                if (file_exists($arquivo)) {
+                    $dd[] = $d['idlattes'];
+                }
+            }
+
+        foreach ($dd as $idlattes) {
+            pre($idlattes);
+            $idLattes = trim($idlattes);
+
+        $xmlPath  = $this->fileLattesPath($idLattes);
+        $zipPath  = str_replace('xml', 'zip', $xmlPath);
+        $zipDir   = substr($zipPath, 0, strpos($zipPath, 'zip')) . 'zip/';
+        $xmlDir   = substr($xmlPath, 0, strpos($xmlPath, 'xml')) . 'xml/';
+
+        // Criar diretórios se não existirem
+        if (!is_dir($zipDir)) mkdir($zipDir, 0777, true);
+        if (!is_dir($xmlDir)) mkdir($xmlDir, 0777, true);
+
+
+            $dd['situacao_coleta'] = 'coletado';
+            $this->set($dd)->where('situacao_coleta', 'pendente')->update();
+        }
+    }
+
+    public function reprocessarTodos()
+        {
+            $this->mudarStatusColetas();
+            $pesquisadores = $this
+                ->where('situacao_coleta', 'coletado')
+                ->findAll();
+            $total = count($pesquisadores);
+            $processados = 0;
+
+            pre($processados);
+
+            foreach ($pesquisadores as $p) {
+                $idlattes = trim($p['idlattes']);
+                $sucesso = $this->extrairDados($idlattes);
+
+                if ($sucesso) {
+                    $processados++;
+                    sleep(1);
+                }
+            }
+
+            return "Processamento concluído. Total: {$total}. Reprocessados: {$processados}.";
+        }
+
     public function harvestDados()
     {
         helper(['filesystem']);
