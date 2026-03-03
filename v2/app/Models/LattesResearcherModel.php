@@ -86,7 +86,7 @@ function producaoArtisticaAno()
             }
 
             $dd = [];
-            $year = date('Y') - 10;
+            $year = date('Y') - 11;
 
             for ($i = 0; $i < 11; $i++) {
                 foreach ($tps as $tp) {
@@ -155,7 +155,7 @@ function producaoArtisticaAno()
                 $dt['proceedings'] = $ProceedingsModel->select('ano_trabalho as ano, count(*) as total')->groupBy('ano')->findAll();
 
                 $dd = [];
-                $year = date('Y')-10;
+                $year = date('Y')-11;
                 for ($i=0; $i<11; $i++) {
                     $dd['artigos'][$year] = 0;
                     $dd['capitulos'][$year] = 0;
