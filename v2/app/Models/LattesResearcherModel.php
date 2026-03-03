@@ -199,6 +199,8 @@ class LattesResearcherModel extends Model
             }
             ob_implicit_flush(true);
 
+            $msgA = "🔎 Verificando {$total} pesquisadores...<br>";
+
             foreach ($pesquisadores as $p) {
                 $idlattes = trim($p['idlattes']);
                 $msg = $this->processarXML($idlattes);
