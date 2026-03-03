@@ -161,7 +161,7 @@ class LattesResearcherModel extends Model
         helper(['filesystem']);
             $dd = [];
 
-            $dt = $this->select('idlattes')->where('situacao_coleta', 'pendente')->findAll();
+            $dt = $this->select('idlattes')->findAll();
             foreach ($dt as $d) {
                 $idlattes = trim($d['idlattes']);
                 $arquivo  = $this->fileLattesPath($idlattes);
@@ -193,8 +193,8 @@ class LattesResearcherModel extends Model
         {
             $this->mudarStatusColetas();
             $pesquisadores = $this
-                ->select('idlattes')
-                ->findAll(10);
+                ->where('situacao_coleta', 'coletado')
+                ->findAll();
             $total = count($pesquisadores);
             $processados = 0;
 
