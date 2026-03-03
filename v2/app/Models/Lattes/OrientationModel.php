@@ -167,7 +167,7 @@ class OrientationModel extends Model
                 break;
             default:
                 $tipo = 'OUTROS '.$tipo;
-                echo "OPS ".$tipo;
+                echo "OPS [".$tipo.']';
                 pre($item);
                 exit;
                 break;
