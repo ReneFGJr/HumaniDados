@@ -59,7 +59,6 @@
 
         const canvas = document.getElementById('graficoBarraAno');
 
-        // 🔥 evita erro de canvas já utilizado
         if (Chart.getChart(canvas)) {
             Chart.getChart(canvas).destroy();
         }
@@ -78,7 +77,11 @@
                 },
                 plugins: {
                     legend: {
-                        position: 'top'
+                        position: 'right', // 🔥 legenda lateral
+                        labels: {
+                            boxWidth: 15,
+                            padding: 15
+                        }
                     }
                 },
                 scales: {
