@@ -160,6 +160,7 @@ class LattesResearcherModel extends Model
     {
         $dd['situacao_coleta'] = $status;
         $this->set($dd)->where('idlattes', $idlattes)->update();
+        echo $this->getlastquery();
     }
 
     public function mudarStatusColetas()
