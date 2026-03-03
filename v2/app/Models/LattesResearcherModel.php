@@ -206,7 +206,7 @@ class LattesResearcherModel extends Model
                 $msg = $this->processarXML($idlattes);
                 $this->status('processado', $idlattes);
 
-                $msg = $msgA . "<span style='color: white'>📄 Processando XML: {$idlattes} / $total<br>";
+                $msg = $msgA . "<span style='color: white'>📄 Processando XML <b>idlattes</b>: {$processados} / $total<br>";
                 /*
                         $msg .= "🔎 Verificação em andamento...<br>
                         🔹 Total: {$total}<br>
