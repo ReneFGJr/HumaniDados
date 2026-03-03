@@ -59,6 +59,148 @@ class LattesResearcherModel extends Model
         return $dt;
     }
 
+function producaoArtisticaAno()
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica','ano');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ProducaoArtisticaModel = new ProducaoArtisticaModel();
+            $dt = $ProducaoArtisticaModel->select('tipo,ano,count(*) as total')->groupBy('tipo,ano')->findAll();
+            $dd = [];
+            foreach ($dt as $d) {
+                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = str_replace('-', ' ', $tipo);
+                $tipo = ucfirst(strtolower($tipo));
+                $dd[$tipo] = $d['total'];
+            }
+
+
+            $tps = [];
+            foreach ($dt as $d) {
+                $tipo = $d['tipo'] ?? 'OUTROS';
+                if (!in_array($tipo, $tps)) {
+                    $tps[] = $tipo;
+                }
+            }
+
+            $dd = [];
+            $year = date('Y') - 10;
+
+            for ($i = 0; $i < 11; $i++) {
+                foreach ($tps as $tp) {
+                    $dd[$tp][$year] = 0;
+                }
+                $year++;
+            }
+
+            foreach ($dt as $d) {
+                $tipo = $d['tipo'] ?? 'OUTROS';
+                $ano = $d['ano'] ?? 'SEM_DATA';
+                 if (isset($dd[$tipo][$ano])) {
+                    $dd[$tipo][$ano] = $d['total'];
+                }
+            }
+
+            $dt = [];
+            foreach($dd as $tipo => $dados) {
+                $tipoN = str_replace('-', ' ', $tipo);
+                $tipoN = ucfirst(strtolower($tipoN));
+                $dt[$tipoN] = $dados;
+            }
+            $IndicadoresModel->saveIndicador('producao_total', 'artistica', 'ano', '', $dt);
+        }
+        return $dt;
+    }
+
+    public function producaoArtistica()
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ProducaoArtisticaModel = new ProducaoArtisticaModel();
+            $dt = $ProducaoArtisticaModel->select('tipo,count(*) as total')->groupBy('tipo')->findAll();
+            $dd = [];
+            foreach ($dt as $d) {
+                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = str_replace('-', ' ', $tipo);
+                $tipo = ucfirst(strtolower($tipo));
+                $dd[$tipo] = $d['total'];
+            }
+            $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dt);
+        }
+        return $dt;
+    }
+
+    function producaoCientificaAno()
+        {
+            $IndicadoresModel = new IndicadoresModel();
+            $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica','ano');
+             if ($dt) {
+                return $dt;
+            } else {
+                $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+                $LivrosCapitulosModel = new LivrosCapitulosModel();
+                $LivrosModel = new LivrosModel();
+                $ProceedingsModel = new ProceedingsModel();
+                $PartiturasModel = new PartiturasModel();
+                $dt = [];
+                $dt['artigos'] = $ArtigosPublicadosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+                $dt['capitulos'] = $LivrosCapitulosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+                $dt['livros'] = $LivrosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+                $dt['partituras'] = $PartiturasModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+                $dt['proceedings'] = $ProceedingsModel->select('ano_trabalho as ano, count(*) as total')->groupBy('ano')->findAll();
+
+                $dd = [];
+                $year = date('Y')-10;
+                for ($i=0; $i<11; $i++) {
+                    $dd['artigos'][$year] = 0;
+                    $dd['capitulos'][$year] = 0;
+                    $dd['livros'][$year] = 0;
+                    $dd['partituras'][$year] = 0;
+                    $dd['proceedings'][$year] = 0;
+                    $year++;
+                }
+                $tps = ['artigos', 'capitulos', 'livros', 'partituras', 'proceedings'];
+                foreach ($tps as $tp) {
+                    foreach ($dt[$tp] as $d) {
+                        if (isset($dd[$tp][$d['ano']])) {
+                            $dd[$tp][$d['ano']] = $d['total'];
+                        }
+                    }
+                }
+                $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'ano', '', $dd);
+            }
+
+            return $dd;
+        }
+
+    public function producaoCientifica()
+        {
+            $IndicadoresModel = new IndicadoresModel();
+            $dt = $IndicadoresModel->findByArgs('producao_total','cientifica');
+            if ($dt) {
+                return $dt;
+            } else {
+                $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+                $LivrosCapitulosModel = new LivrosCapitulosModel();
+                $LivrosModel = new LivrosModel();
+                $ProceedingsModel = new ProceedingsModel();
+                $PartiturasModel = new PartiturasModel();
+                $dt = [];
+                $dt['artigos'] = $ArtigosPublicadosModel->select('count(*) as total')->first()['total'] ?? 0;
+                $dt['capitulos'] = $LivrosCapitulosModel->select('count(*) as total')->first()['total'] ?? 0;
+                $dt['livros'] = $LivrosModel->select('count(*) as total')->first()['total'] ?? 0;
+                $dt['partituras'] = $PartiturasModel->select('count(*) as total')->first()['total'] ?? 0;
+                $dt['proceedings'] = $ProceedingsModel->select('count(*) as total')->first()['total'] ?? 0;
+                $IndicadoresModel->saveIndicador('producao_total','cientifica', '', '', $dt);
+            }
+            return $dt;
+        }
+
     public function getStatus()
     {
         $dt = $this

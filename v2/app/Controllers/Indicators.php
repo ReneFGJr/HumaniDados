@@ -23,7 +23,16 @@ class Indicators extends BaseController
         //$data['areas_conhecimento'] = $LattesResearcherModel->areasConhecimento();
         $data['lattes_atualizados'] = $LattesResearcherModel->atualizacaoLattes();
         $data['areas_conhecimento_all'] = $LattesResearchersAreaModel->areasConhecimentoAll();
+        $data['producao']['cientifica'] = $LattesResearcherModel->producaoCientifica();
+        $data['producao']['artistica'] = $LattesResearcherModel->producaoArtistica();
+
+        $data['producaoAno']['cientifica'] = $LattesResearcherModel->producaoCientificaAno();
+        $data['producaoAno']['artistica'] = $LattesResearcherModel->producaoArtisticaAno();
         echo view('layout/header', $data);
+
+        echo view('indicators/geral_tipos', ['dados'=>$data]);
+        echo view('indicators/geral_ano', ['dados' => $data]);
+
         echo view('indicators/index', $data);
         echo view('layout/footer');
     }

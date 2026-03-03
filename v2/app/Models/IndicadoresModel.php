@@ -48,7 +48,7 @@ class IndicadoresModel extends Model
     /**
      * Busca por combinação de argumentos
      */
-    public function findByArgs($arg1, $arg2, $arg3, $arg4)
+    public function findByArgs($arg1, $arg2='', $arg3='', $arg4='')
     {
         if ($arg4 === null) {
             $arg4 = '';
