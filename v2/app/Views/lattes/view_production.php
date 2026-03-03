@@ -6,6 +6,9 @@
     $totalArtigos = count($pesquisador['artigos']);
     $totalGeral = $totalLivros + $totalCapitulos + $totalArtigos;
     $totalEventos = count($pesquisador['eventos']);
+    $totalPartituras = count($pesquisador['partituras']);
+
+    $totalGeral = $totalLivros + $totalCapitulos + $totalArtigos + $totalEventos + $totalPartituras;
     ?>
 
     <!-- ===============================
@@ -14,7 +17,7 @@
     <h5 class="text-hd-tx text-center mb-4">Produção Científica – Formato ABNT</h5>
 
     <div class="row text-center mb-4">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="text-primary">Livros</h5>
@@ -23,7 +26,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="text-success">Capítulos</h5>
@@ -32,7 +35,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="text-danger">Artigos</h5>
@@ -41,7 +44,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="text-danger">Eventos</h5>
@@ -50,11 +53,21 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="text-dark">Partituras</h5>
+                    <h1><?= $totalPartituras ?></h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="text-dark">Total Geral</h5>
-                    <h2><?= $totalGeral ?></h2>
+                    <h1><?= $totalGeral ?></h1>
                 </div>
             </div>
         </div>
@@ -80,15 +93,17 @@
         const dados = {
             livros: <?= $totalLivros ?>,
             capitulos: <?= $totalCapitulos ?>,
+            partituras: <?= $totalPartituras ?>,
             artigos: <?= $totalArtigos ?>,
+            eventos: <?= $totalEventos ?>
         };
 
         new Chart(document.getElementById('graficoPizza'), {
             type: 'pie',
             data: {
-                labels: ['Livros', 'Capítulos', 'Artigos'],
+                labels: ['Livros', 'Capítulos', 'Partituras', 'Artigos', 'Eventos'],
                 datasets: [{
-                    data: [dados.livros, dados.capitulos, dados.artigos],
+                    data: [dados.livros, dados.capitulos, dados.partituras, dados.artigos, dados.eventos],
                 }]
             }
         });
@@ -96,10 +111,10 @@
         new Chart(document.getElementById('graficoBarras'), {
             type: 'bar',
             data: {
-                labels: ['Livros', 'Capítulos', 'Artigos'],
+                labels: ['Livros', 'Capítulos', 'Partituras', 'Artigos', 'Eventos'],
                 datasets: [{
                     label: 'Quantidade',
-                    data: [dados.livros, dados.capitulos, dados.artigos]
+                    data: [dados.livros, dados.capitulos, dados.partituras, dados.artigos, dados.eventos]
                 }]
             },
             options: {
@@ -179,6 +194,57 @@
 
     <div class="mt-3">
         <?php foreach ($pesquisador['artigos'] as $a): ?>
+            <div class="ref-item abnt">
+                <?php
+                echo "<strong>{$a['autor_nome']}</strong>. ";
+                echo "{$a['titulo']}. ";
+                echo "<em>{$a['periodico']}</em>, ";
+
+                if (!empty($a['volume'])) echo "v. {$a['volume']}, ";
+                if (!empty($a['serie'])) echo "n. {$a['serie']}, ";
+
+                echo "{$a['ano']}, ";
+                echo "p. {$a['pagina_inicial']}-{$a['pagina_final']}. ";
+                if (!empty($a['doi'])) echo "DOI: {$a['doi']}.";
+                ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- =======================================================
+ PARTITURAS PUBLICADOS
+======================================================= -->
+    <h5 class="text-hd-tx mt-5">Partituras publicadas
+        <span class="contador">(<?= $totalPartituras ?> itens)</span>
+    </h5>
+
+    <div class="mt-3">
+        <?php foreach ($pesquisador['partituras'] as $a): ?>
+            <div class="ref-item abnt">
+                <?php
+                echo "<strong>{$a['autor_nome']}</strong>. ";
+                echo "{$a['titulo']}. ";
+
+                echo "{$a['ano']}, ";
+                echo ", {$a['pais_publicacao']}.";
+                echo "Idioma: {$a['idioma']}. ";
+                if (!empty($a['meio_divulgacao'])) echo "Meio de divulgação: {$a['meio_divulgacao']}. ";
+                if (!empty($a['numero_paginas'])) echo ", {$a['numero_paginas']} pgs. ";
+                if (!empty($a['doi'])) echo "DOI: {$a['doi']}.";
+                ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- =======================================================
+ TRABALHOS EM EVENTOS
+======================================================= -->
+    <h5 class="text-hd-tx mt-5">Trabalhos em Eventos
+        <span class="contador">(<?= $totalEventos ?> itens)</span>
+    </h5>
+
+    <div class="mt-3">
+        <?php foreach ($pesquisador['eventos'] as $a): ?>
             <div class="ref-item abnt">
                 <?php
                 echo "<strong>{$a['autor_nome']}</strong>. ";

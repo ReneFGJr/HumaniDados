@@ -29,7 +29,8 @@ class LivrosCapitulosModel extends Model
         'serie',
         'cidade_editora',
         'nome_editora',
-        'id_lattes'
+        'id_lattes',
+        'total_autores'
     ];
     protected $useTimestamps = true;
 
@@ -71,6 +72,7 @@ class LivrosCapitulosModel extends Model
                 'homepage'        => (string)$dados['HOME-PAGE-DO-TRABALHO'],
                 'doi'             => (string)$dados['DOI'],
                 'autor_nome'      => implode(', ', array_column($autores, 'nome')),
+                'total_autores'   => count($autores),
 
                 // Detalhamento
                 'titulo_livro'    => (string)$detalhe['TITULO-DO-LIVRO'],

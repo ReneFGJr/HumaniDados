@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class ArtigosPublicadosModel extends Model
 {
-    
+
     protected $table      = 'artigos_publicados';
     protected $primaryKey = 'id';
 
@@ -28,13 +28,14 @@ class ArtigosPublicadosModel extends Model
         'pagina_final',
         'autor_nome',
         'autor_citacao',
-        'autor_id_cnpq'
+        'autor_id_cnpq',
+        'total_autores'
     ];
 
     protected $useTimestamps = true;
 
     function zeraDados($idlattes)
-    {        
+    {
         $this->where('id_lattes',$idlattes)->delete();
         return true;
     }
@@ -49,6 +50,17 @@ function extrairArtigos($xml)
         $detalhe = $artigo->{'DETALHAMENTO-DO-ARTIGO'};
         $autor = $artigo->AUTORES;
 
+        // Autores
+        $autores = [];
+        foreach ($artigo->AUTORES as $a) {
+            $autores[] = [
+                'nome' => (string)$a['NOME-COMPLETO-DO-AUTOR'],
+                'citacao' => (string)$a['NOME-PARA-CITACAO'],
+                'ordem' => (string)$a['ORDEM-DE-AUTORIA'],
+                'id_cnpq' => (string)$a['NRO-ID-CNPQ']
+            ];
+        }
+
         $artigos[] = [
             'id_lattes'        => (string)$xml['NUMERO-IDENTIFICADOR'],
             'sequencia'         => (string)$artigo['SEQUENCIA-PRODUCAO'],
@@ -59,6 +71,7 @@ function extrairArtigos($xml)
             'meio_divulgacao'   => (string)$dados['MEIO-DE-DIVULGACAO'],
             'homepage'          => (string)$dados['HOME-PAGE-DO-TRABALHO'],
             'doi'               => (string)$dados['DOI'],
+            'total_autores'     => count($autores),
 
             // Detalhamento
             'periodico'         => (string)$detalhe['TITULO-DO-PERIODICO-OU-REVISTA'],

@@ -35,6 +35,7 @@ class LattesResearcherModel extends Model
         $ProducaoArtisticaModel = new ProducaoArtisticaModel();
         $LattesFormacaoModel = new LattesFormacaoModel();
         $LivrosModel = new LivrosModel();
+        $PartiturasModel = new PartiturasModel();
         $LivrosCapitulosModel = new LivrosCapitulosModel();
         $ArtigosPublicadosModel = new ArtigosPublicadosModel();
         $OrientationModel = new OrientationModel();
@@ -49,6 +50,7 @@ class LattesResearcherModel extends Model
         $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['eventos'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['partituras'] = $PartiturasModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['proceedings'] = $ProceedingsModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['orientacoes'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['orientacoes_total'] = $OrientationModel->resume($dt['idlattes']);
@@ -511,6 +513,7 @@ class LattesResearcherModel extends Model
         $LivrosModel->zeraDados($idlattes);
         $LivrosCapitulosModel->zeraDados($idlattes);
         $ProceedingsModel->zeraDados($idlattes);
+        $PartiturasModel->zeraDados($idlattes);
 
         /************************** Área do conhecimento */
         $LattesResearchersAreaModel = new LattesResearchersAreaModel();
@@ -544,6 +547,12 @@ class LattesResearcherModel extends Model
         $eventos = $ProceedingsModel->extrairProceedings($xml);
         foreach ($eventos as $registro) {
             $ProceedingsModel->insert($registro);
+        }
+
+        /*** Partituras */
+        $partituras = $PartiturasModel->extrairPartituras($xml);
+        foreach ($partituras as $registro) {
+            $PartiturasModel->insert($registro);
         }
 
         // === Extração de dados principais ===
