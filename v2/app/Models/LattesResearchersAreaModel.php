@@ -92,6 +92,8 @@ class LattesResearchersAreaModel extends Model
                 }
             }
 
+            /*
+
             // Área 4
             if ($area2 != '' && $area3 != '' && $area4 != '') {
                 if (!isset($mtx[$area1][$area2][$area3][$area4])) {
@@ -100,6 +102,7 @@ class LattesResearchersAreaModel extends Model
                     $mtx[$area1][$area2][$area3][$area4]['total']++;
                 }
             }
+            */
         }
 
         // 🔎 Filtra incidências menores que 10
