@@ -156,9 +156,15 @@ class LattesResearcherModel extends Model
         return $xmlFormatted;
     }
 
+    public function status($status, $idlattes)
+    {
+        $dd['situacao_coleta'] = $status;
+        $this->set($dd)->where('idlattes', $idlattes)->update();
+    }
+
     public function mudarStatusColetas()
         {
-        helper(['filesystem']);
+            helper(['filesystem']);
             $dd = [];
 
             $dt = $this->select('idlattes')->findAll();
@@ -166,27 +172,13 @@ class LattesResearcherModel extends Model
                 $idlattes = trim($d['idlattes']);
                 $arquivo  = $this->fileLattesPath($idlattes);
                 if (file_exists($arquivo)) {
-                    pre($arquivo);
+                    $this->status('coletado',$idlattes);
+                } else {
+                    $this->status('pendente',$idlattes);
                 }
             }
 
-        foreach ($dd as $idlattes) {
-            pre($idlattes);
-            $idLattes = trim($idlattes);
 
-        $xmlPath  = $this->fileLattesPath($idLattes);
-        $zipPath  = str_replace('xml', 'zip', $xmlPath);
-        $zipDir   = substr($zipPath, 0, strpos($zipPath, 'zip')) . 'zip/';
-        $xmlDir   = substr($xmlPath, 0, strpos($xmlPath, 'xml')) . 'xml/';
-
-        // Criar diretórios se não existirem
-        if (!is_dir($zipDir)) mkdir($zipDir, 0777, true);
-        if (!is_dir($xmlDir)) mkdir($xmlDir, 0777, true);
-
-
-            $dd['situacao_coleta'] = 'coletado';
-            $this->set($dd)->where('situacao_coleta', 'pendente')->update();
-        }
     }
 
     public function reprocessarTodos()
