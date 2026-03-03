@@ -3,7 +3,7 @@
 header("Content-Type: application/xml");
 header("Access-Control-Allow-Origin: *");
 
-$url = "https://www.ufrgs.br/proplan/sitemap.xml";
+$url = "https://www.ufrgs.br/proplan/";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
