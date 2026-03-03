@@ -55,7 +55,7 @@
 
     <script>
         async function carregarSitemap() {
-            const response = await fetch("https://www.ufrgs.br/proplan/sitemap.xml");
+            const response = await fetch("proxy-sitemap.php");
             const text = await response.text();
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "application/xml");
