@@ -190,12 +190,32 @@ class LattesResearcherModel extends Model
             $total = count($pesquisadores);
             $processados = 0;
 
+            ini_set('max_execution_time', 0);
+            ini_set('output_buffering', 'off');
+            ini_set('zlib.output_compression', 0);
+
+            while (ob_get_level() > 0) {
+                ob_end_flush();
+            }
+            ob_implicit_flush(true);
+
             foreach ($pesquisadores as $p) {
                 $idlattes = trim($p['idlattes']);
                 $msg = $this->processarXML($idlattes);
                 $this->status('processado', $idlattes);
 
-                pre($msg);
+                $msg = $msgA . "<span style='color: white'>📄 Processando XML: {$idlattes} / $encontrados<br>";
+                /*
+                        $msg .= "🔎 Verificação em andamento...<br>
+                        🔹 Total: {$total}<br>
+                        ✅ Processados: {$encontrados}<br>
+                        ⚠️ Não encontrados: {$naoEncontrados}<br>";
+                        */
+                echo '</span>';
+                echo '<script>';
+                echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+                echo '</script>';
+                flush();
 
                 if ($msg === "Processamento concluído com sucesso.") {
                     $processados++;

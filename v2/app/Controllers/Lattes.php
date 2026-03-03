@@ -89,6 +89,8 @@ class Lattes extends BaseController
     function reprocess()
     {
         $Lattes = new LattesResearcherModel();
+        echo view('layout/header');
+        echo view('lattes/painel_harvesting.php');
         $msg = $Lattes->reprocessarTodos();
         return redirect()->to('/lattes')->with('success', $msg);
     }
