@@ -183,7 +183,7 @@ class LattesResearcherModel extends Model
 
     public function reprocessarTodos()
         {
-            //$this->mudarStatusColetas();
+            $this->mudarStatusColetas();
             $pesquisadores = $this
                 ->where('situacao_coleta', 'coletado')
                 ->findAll();
