@@ -39,6 +39,8 @@ class Indicators extends BaseController
 
         echo view('layout/header', $data);
 
+        PRE($data);
+
         echo view('indicators/geral_tipos', ['dados'=>$data]);
         echo view('indicators/geral_ano', ['dados' => $data]);
         echo view('indicators/geral_idioma', ['dados' => $data]);
