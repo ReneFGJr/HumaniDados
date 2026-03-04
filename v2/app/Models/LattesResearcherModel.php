@@ -134,8 +134,6 @@ class LattesResearcherModel extends Model
                 $tipo = ucfirst(strtolower($tipo));
                 $dd[$tipo] = $d['total'];
             }
-
-            pre($dd);
             $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dt);
         }
         return $dt;
