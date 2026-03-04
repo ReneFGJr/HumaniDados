@@ -90,5 +90,5 @@
 </div>
 
 <?php
-pre($artistica);
+pre($pesquisador['artistica']);
 ?>
