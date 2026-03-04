@@ -67,14 +67,7 @@ class ProducaoXML extends Model
         $base['informacoes_adicionais'] = $base['INFORMACOES-ADICIONAIS'] ?? null;
         $idProducao = $ProducaoArtisticaModel->insert($base);
 
-        /*
-        } catch (\Exception $e) {
-            echo '<h1>Erro ao processar produção artística</h1>';
-            pre($D);
-            // Log the exception or handle it as needed
-            return null; // or some error code
-        }
-        */
+
         return $idProducao;
     }
 }
