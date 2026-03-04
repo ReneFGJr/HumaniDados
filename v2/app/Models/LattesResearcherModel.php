@@ -123,26 +123,13 @@ class LattesResearcherModel extends Model
             return $dt;
         } else {
             $ProducaoArtisticaModel = new ProducaoArtisticaModel();
-            $dt = $ProducaoArtisticaModel->select('tipo,count(*) as total')->groupBy('tipo')->findAll();
             $dd = [];
-            foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
-                if ($tipo == 'OUTRO') {
-                    $tipo = 'OUTROS';
-                }
-                $tipo = str_replace('-', ' ', $tipo);
-                $tipo = ucfirst(strtolower($tipo));
-                if (isset($dd[$tipo])) {
-                    $dd[$tipo] += $d['total'];
-                } else {
-                    $dd[$tipo] = $d['total'];
-                }
-            }
-            pre($dt,false);
-            pre($dd);
-            $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dd);
+            $dd['tipo'] = 'OUTROS';
+            $ProducaoArtisticaModel->set($dd)->where('tipo', 'OUTRO')->update();
+            $dt = $ProducaoArtisticaModel->select('tipo,count(*) as total')->groupBy('tipo')->findAll();
+            $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dt);
         }
-        return $dd;
+        return $dt;
     }
 
     function producaoArtisticaCoautoria()
