@@ -174,7 +174,11 @@ class LattesResearcherModel extends Model
             return $dt;
         } else {
             $ArtigosPublicadosModel = new ArtigosPublicadosModel();
-            $dt = $ArtigosPublicadosModel->select('ano,total_autores,count(*) as total')->where('total_autores > 0')->groupBy('ano,total_autores')->findAll();
+            $dt = $ArtigosPublicadosModel
+                ->select('ano,total_autores,count(*) as total')
+                ->where('total_autores > 0')
+                ->where('ano > 1970')
+                ->groupBy('ano,total_autores')->findAll();
             $dd = [];
             foreach ($dt as $d) {
                 $ano = $d['ano'] ?? 'SEM_DATA';
