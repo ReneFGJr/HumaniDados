@@ -28,10 +28,15 @@ class Indicators extends BaseController
 
         $data['producaoAno']['cientifica'] = $LattesResearcherModel->producaoCientificaAno();
         $data['producaoAno']['artistica'] = $LattesResearcherModel->producaoArtisticaAno();
+
+        $data['producaoIdioma']['cientifica'] = $LattesResearcherModel->producaoCientificaIdioma();
+        $data['producaoIdioma']['artistica'] = $LattesResearcherModel->producaoArtisticaIdioma();
+
         echo view('layout/header', $data);
 
         echo view('indicators/geral_tipos', ['dados'=>$data]);
         echo view('indicators/geral_ano', ['dados' => $data]);
+        echo view('indicators/geral_idioma', ['dados' => $data]);
 
         echo view('indicators/index', $data);
         echo view('layout/footer');

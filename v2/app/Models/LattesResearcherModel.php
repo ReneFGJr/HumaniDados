@@ -136,7 +136,70 @@ function producaoArtisticaAno()
         return $dt;
     }
 
-    function producaoCientificaAno()
+    function producaoCientificaIdioma()
+        {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'idioma');
+         if ($dt) {
+            return $dt;
+        } else {
+            $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+            $LivrosCapitulosModel = new LivrosCapitulosModel();
+            $LivrosModel = new LivrosModel();
+            $ProceedingsModel = new ProceedingsModel();
+            $PartiturasModel = new PartiturasModel();
+            $dt = [];
+            $dt['artigos'] = $ArtigosPublicadosModel->select('idioma, count(*) as total')->groupBy('idioma')->findAll();
+            $dt['capitulos'] = $LivrosCapitulosModel->select('idioma, count(*) as total')->groupBy('idioma')->findAll();
+            $dt['livros'] = $LivrosModel->select('idioma, count(*) as total')->groupBy('idioma')->findAll();
+            $dt['partituras'] = $PartiturasModel->select('idioma, count(*) as total')->groupBy('idioma')->findAll();
+            $dt['proceedings'] = $ProceedingsModel->select('idioma, count(*) as total')->groupBy('idioma')->findAll();
+
+            $tipos = ['artigos', 'capitulos', 'livros', 'partituras', 'proceedings'];
+            $dd = [];
+            foreach ($tipos as $tp) {
+                foreach ($dt[$tp] as $d) {
+                    $idioma = $d['idioma'] ?? 'SEM_IDIOMA';
+                    if (isset($dd[$idioma])) {
+                        $dd[$idioma] += $d['total'];
+                    } else {
+                        $dd[$idioma] = $d['total'];
+                    }
+                }
+            }
+            $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'idioma', '', $dd);
+        }
+        return $dd;
+
+    }
+
+    function producaoArtisticaIdioma()
+        {
+            $IndicadoresModel = new IndicadoresModel();
+            $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica', 'idioma');
+             if ($dt) {
+                return $dt;
+            } else {
+                $ProducaoArtisticaModel = new ProducaoArtisticaModel();
+                $dt = $ProducaoArtisticaModel->select('tipo,idioma,count(*) as total')->groupBy('tipo,idioma')->findAll();
+                $dd = [];
+                foreach ($dt as $d) {
+                    $tipo = $d['tipo'] ?? 'OUTROS';
+                    $tipo = str_replace('-', ' ', $tipo);
+                    $tipo = ucfirst(strtolower($tipo));
+                    $idioma = $d['idioma'] ?? 'SEM_IDIOMA';
+                    if (isset($dd[$idioma])) {
+                        $dd[$idioma] += $d['total'];
+                    } else {
+                        $dd[$idioma] = $d['total'];
+                    }
+                }
+                $IndicadoresModel->saveIndicador('producao_total', 'artistica', 'idioma', '', $dd);
+            }
+            return $dd;
+        }
+
+        function producaoCientificaAno()
         {
             $IndicadoresModel = new IndicadoresModel();
             $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica','ano');
