@@ -34,7 +34,18 @@ foreach ($fld as $f) {
         <div class="col-md-3">
             <div class="p-3 bg-hd border border-secondary rounded-3 h-100 text-hd">
                 <h6 class="text-hd-tx">ORCID</h6>
-                <p class="fw-semibold"><?= $pesquisador['orcID'] ?: '—' ?></p>
+                <p class="fw-semibold">
+                    <?php if (!empty($pesquisador['orcID'])): ?>
+                        <a
+                            class="link"
+                            target="_blank"
+                            href="<?= $pesquisador['orcID'] ?>">
+                            <?= str_replace('https://orcid.org/', '', $pesquisador['orcID']) ?>
+                        </a>
+                    <?php else: ?>
+                        Não informado
+                    <?php endif; ?>
+                </p>
             </div>
         </div>
 
