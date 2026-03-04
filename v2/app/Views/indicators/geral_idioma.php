@@ -1,11 +1,11 @@
 <div class="container mt-5">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <h2 class="mb-4">🌍 Produção Científica por Idioma</h2>
             <canvas id="graficoCientificaIdioma" height="120"></canvas>
 
         </div>
-        <div class="col-6">
+        <div class="col-12">
 
             <h2 class="mb-4">🎨 Produção Artística por Idioma</h2>
             <canvas id="graficoArtisticaIdioma" height="120"></canvas>
