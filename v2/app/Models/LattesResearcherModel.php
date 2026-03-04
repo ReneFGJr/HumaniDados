@@ -60,10 +60,10 @@ class LattesResearcherModel extends Model
         return $dt;
     }
 
-function producaoArtisticaAno()
+    function producaoArtisticaAno()
     {
         $IndicadoresModel = new IndicadoresModel();
-        $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica','ano');
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica', 'ano');
         if ($dt) {
             return $dt;
         } else {
@@ -99,13 +99,13 @@ function producaoArtisticaAno()
             foreach ($dt as $d) {
                 $tipo = $d['tipo'] ?? 'OUTROS';
                 $ano = $d['ano'] ?? 'SEM_DATA';
-                 if (isset($dd[$tipo][$ano])) {
+                if (isset($dd[$tipo][$ano])) {
                     $dd[$tipo][$ano] = $d['total'];
                 }
             }
 
             $dt = [];
-            foreach($dd as $tipo => $dados) {
+            foreach ($dd as $tipo => $dados) {
                 $tipoN = str_replace('-', ' ', $tipo);
                 $tipoN = ucfirst(strtolower($tipoN));
                 $dt[$tipoN] = $dados;
@@ -136,11 +136,108 @@ function producaoArtisticaAno()
         return $dt;
     }
 
-    function producaoCientificaIdioma()
+    function producaoArtisticaCoautoria()
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ProducaoArtisticaModel = new ProducaoArtisticaModel();
+            $dt = $ProducaoArtisticaModel->select('tipo,total_autores,count(*) as total')->where('total_autores > 0')->groupBy('tipo,total_autores')->findAll();
+            $dd = [];
+            foreach ($dt as $d) {
+                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = str_replace('-', ' ', $tipo);
+                $tipo = ucfirst(strtolower($tipo));
+                $numAutores = (int)$d['total_autores'];
+                if ($numAutores == 0) {
+                    continue;
+                }
+                if (isset($dd[$tipo][$numAutores])) {
+                    $dd[$tipo][$numAutores] += $d['total'];
+                } else {
+                    $dd[$tipo][$numAutores] = $d['total'];
+                }
+            }
+            ksort($dd);
+            $IndicadoresModel->saveIndicador('producao_total', 'artistica', 'coautoria', '', $dd);
+        }
+        return $dd;
+    }
+
+    function producaoCientificaCoautoriaAno()
         {
         $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria_ano');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+            $dt = $ArtigosPublicadosModel->select('ano,total_autores,count(*) as total')->where('total_autores > 0')->groupBy('ano,total_autores')->findAll();
+            $dd = [];
+            foreach ($dt as $d) {
+                $ano = $d['ano'] ?? 'SEM_DATA';
+                $numAutores = (int)$d['total_autores'];
+                if ($numAutores == 0) {
+                    continue;
+                }
+                if (isset($dd[$ano][$numAutores])) {
+                    $dd[$ano][$numAutores] += $d['total'];
+                } else {
+                    $dd[$ano][$numAutores] = $d['total'];
+                }
+            }
+            ksort($dd);
+            $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'coautoria_ano', '', $dd);
+        }
+        return $dd;
+    }
+
+    function producaoCientificaCoautoria()
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria','');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+            $LivrosCapitulosModel = new LivrosCapitulosModel();
+            $LivrosModel = new LivrosModel();
+            $ProceedingsModel = new ProceedingsModel();
+            $PartiturasModel = new PartiturasModel();
+            $dt = [];
+            $dt['artigos'] = $ArtigosPublicadosModel->select('total_autores, count(*) as total')->where('total_autores > 0')->groupBy('total_autores')->findAll();
+            $dt['capitulos'] = $LivrosCapitulosModel->select('total_autores, count(*) as total')->where('total_autores > 0')->groupBy('total_autores')->findAll();
+            $dt['livros'] = $LivrosModel->select('total_autores, count(*) as total')->where('total_autores > 0')->groupBy('total_autores')->findAll();
+            $dt['partituras'] = $PartiturasModel->select('total_autores, count(*) as total')->where('total_autores > 0')->groupBy('total_autores')->findAll();
+            $dt['proceedings'] = $ProceedingsModel->select('total_autores, count(*) as total')->where('total_autores > 0')->groupBy('total_autores')->findAll();
+
+            $dd = [];
+            foreach ($dt as $tipo => $dados) {
+                foreach ($dados as $d) {
+                    $numAutores = (int)$d['total_autores'];
+                    if ($numAutores == 0) {
+                        continue;
+                    }
+                    if (isset($dd[$tipo][$numAutores])) {
+                        $dd[$tipo][$numAutores] += $d['total'];
+                    } else {
+                        $dd[$tipo][$numAutores] = $d['total'];
+                    }
+                }
+            }
+            ksort($dd);
+            $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'coautoria', '', $dd);
+        }
+        return $dd;
+    }
+
+    function producaoCientificaIdioma()
+    {
+        $IndicadoresModel = new IndicadoresModel();
         $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'idioma');
-         if ($dt) {
+        if ($dt) {
             return $dt;
         } else {
             $ArtigosPublicadosModel = new ArtigosPublicadosModel();
@@ -170,100 +267,99 @@ function producaoArtisticaAno()
             $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'idioma', '', $dd);
         }
         return $dd;
-
     }
 
     function producaoArtisticaIdioma()
-        {
-            $IndicadoresModel = new IndicadoresModel();
-            $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica', 'idioma');
-             if ($dt) {
-                return $dt;
-            } else {
-                $ProducaoArtisticaModel = new ProducaoArtisticaModel();
-                $dt = $ProducaoArtisticaModel->select('tipo,idioma,count(*) as total')->groupBy('tipo,idioma')->findAll();
-                $dd = [];
-                foreach ($dt as $d) {
-                    $tipo = $d['tipo'] ?? 'OUTROS';
-                    $tipo = str_replace('-', ' ', $tipo);
-                    $tipo = ucfirst(strtolower($tipo));
-                    $idioma = $d['idioma'] ?? 'SEM_IDIOMA';
-                    if (isset($dd[$idioma])) {
-                        $dd[$idioma] += $d['total'];
-                    } else {
-                        $dd[$idioma] = $d['total'];
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'artistica', 'idioma');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ProducaoArtisticaModel = new ProducaoArtisticaModel();
+            $dt = $ProducaoArtisticaModel->select('tipo,idioma,count(*) as total')->groupBy('tipo,idioma')->findAll();
+            $dd = [];
+            foreach ($dt as $d) {
+                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = str_replace('-', ' ', $tipo);
+                $tipo = ucfirst(strtolower($tipo));
+                $idioma = $d['idioma'] ?? 'SEM_IDIOMA';
+                if (isset($dd[$idioma])) {
+                    $dd[$idioma] += $d['total'];
+                } else {
+                    $dd[$idioma] = $d['total'];
+                }
+            }
+            $IndicadoresModel->saveIndicador('producao_total', 'artistica', 'idioma', '', $dd);
+        }
+        return $dd;
+    }
+
+    function producaoCientificaAno()
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'ano');
+        if ($dt) {
+            return $dt;
+        } else {
+            $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+            $LivrosCapitulosModel = new LivrosCapitulosModel();
+            $LivrosModel = new LivrosModel();
+            $ProceedingsModel = new ProceedingsModel();
+            $PartiturasModel = new PartiturasModel();
+            $dt = [];
+            $dt['artigos'] = $ArtigosPublicadosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+            $dt['capitulos'] = $LivrosCapitulosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+            $dt['livros'] = $LivrosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+            $dt['partituras'] = $PartiturasModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
+            $dt['proceedings'] = $ProceedingsModel->select('ano_trabalho as ano, count(*) as total')->groupBy('ano')->findAll();
+
+            $dd = [];
+            $year = date('Y') - 11;
+            for ($i = 0; $i < 11; $i++) {
+                $dd['artigos'][$year] = 0;
+                $dd['capitulos'][$year] = 0;
+                $dd['livros'][$year] = 0;
+                $dd['partituras'][$year] = 0;
+                $dd['proceedings'][$year] = 0;
+                $year++;
+            }
+            $tps = ['artigos', 'capitulos', 'livros', 'partituras', 'proceedings'];
+            foreach ($tps as $tp) {
+                foreach ($dt[$tp] as $d) {
+                    if (isset($dd[$tp][$d['ano']])) {
+                        $dd[$tp][$d['ano']] = $d['total'];
                     }
                 }
-                $IndicadoresModel->saveIndicador('producao_total', 'artistica', 'idioma', '', $dd);
             }
-            return $dd;
+            $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'ano', '', $dd);
         }
 
-        function producaoCientificaAno()
-        {
-            $IndicadoresModel = new IndicadoresModel();
-            $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica','ano');
-             if ($dt) {
-                return $dt;
-            } else {
-                $ArtigosPublicadosModel = new ArtigosPublicadosModel();
-                $LivrosCapitulosModel = new LivrosCapitulosModel();
-                $LivrosModel = new LivrosModel();
-                $ProceedingsModel = new ProceedingsModel();
-                $PartiturasModel = new PartiturasModel();
-                $dt = [];
-                $dt['artigos'] = $ArtigosPublicadosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
-                $dt['capitulos'] = $LivrosCapitulosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
-                $dt['livros'] = $LivrosModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
-                $dt['partituras'] = $PartiturasModel->select('ano, count(*) as total')->groupBy('ano')->findAll();
-                $dt['proceedings'] = $ProceedingsModel->select('ano_trabalho as ano, count(*) as total')->groupBy('ano')->findAll();
-
-                $dd = [];
-                $year = date('Y')-11;
-                for ($i=0; $i<11; $i++) {
-                    $dd['artigos'][$year] = 0;
-                    $dd['capitulos'][$year] = 0;
-                    $dd['livros'][$year] = 0;
-                    $dd['partituras'][$year] = 0;
-                    $dd['proceedings'][$year] = 0;
-                    $year++;
-                }
-                $tps = ['artigos', 'capitulos', 'livros', 'partituras', 'proceedings'];
-                foreach ($tps as $tp) {
-                    foreach ($dt[$tp] as $d) {
-                        if (isset($dd[$tp][$d['ano']])) {
-                            $dd[$tp][$d['ano']] = $d['total'];
-                        }
-                    }
-                }
-                $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'ano', '', $dd);
-            }
-
-            return $dd;
-        }
+        return $dd;
+    }
 
     public function producaoCientifica()
-        {
-            $IndicadoresModel = new IndicadoresModel();
-            $dt = $IndicadoresModel->findByArgs('producao_total','cientifica');
-            if ($dt) {
-                return $dt;
-            } else {
-                $ArtigosPublicadosModel = new ArtigosPublicadosModel();
-                $LivrosCapitulosModel = new LivrosCapitulosModel();
-                $LivrosModel = new LivrosModel();
-                $ProceedingsModel = new ProceedingsModel();
-                $PartiturasModel = new PartiturasModel();
-                $dt = [];
-                $dt['artigos'] = $ArtigosPublicadosModel->select('count(*) as total')->first()['total'] ?? 0;
-                $dt['capitulos'] = $LivrosCapitulosModel->select('count(*) as total')->first()['total'] ?? 0;
-                $dt['livros'] = $LivrosModel->select('count(*) as total')->first()['total'] ?? 0;
-                $dt['partituras'] = $PartiturasModel->select('count(*) as total')->first()['total'] ?? 0;
-                $dt['proceedings'] = $ProceedingsModel->select('count(*) as total')->first()['total'] ?? 0;
-                $IndicadoresModel->saveIndicador('producao_total','cientifica', '', '', $dt);
-            }
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica');
+        if ($dt) {
             return $dt;
+        } else {
+            $ArtigosPublicadosModel = new ArtigosPublicadosModel();
+            $LivrosCapitulosModel = new LivrosCapitulosModel();
+            $LivrosModel = new LivrosModel();
+            $ProceedingsModel = new ProceedingsModel();
+            $PartiturasModel = new PartiturasModel();
+            $dt = [];
+            $dt['artigos'] = $ArtigosPublicadosModel->select('count(*) as total')->first()['total'] ?? 0;
+            $dt['capitulos'] = $LivrosCapitulosModel->select('count(*) as total')->first()['total'] ?? 0;
+            $dt['livros'] = $LivrosModel->select('count(*) as total')->first()['total'] ?? 0;
+            $dt['partituras'] = $PartiturasModel->select('count(*) as total')->first()['total'] ?? 0;
+            $dt['proceedings'] = $ProceedingsModel->select('count(*) as total')->first()['total'] ?? 0;
+            $IndicadoresModel->saveIndicador('producao_total', 'cientifica', '', '', $dt);
         }
+        return $dt;
+    }
 
     public function getStatus()
     {
@@ -381,77 +477,74 @@ function producaoArtisticaAno()
     }
 
     public function mudarStatusColetas()
-        {
-            helper(['filesystem']);
-            $dd = [];
+    {
+        helper(['filesystem']);
+        $dd = [];
 
-            $dt = $this->select('idlattes')->findAll();
-            foreach ($dt as $d) {
-                $idlattes = trim($d['idlattes']);
-                $arquivo  = $this->fileLattesPath($idlattes);
-                if (file_exists($arquivo)) {
-                    $this->status('coletado',$idlattes);
-                } else {
-                    $this->status('pendente',$idlattes);
-                }
+        $dt = $this->select('idlattes')->findAll();
+        foreach ($dt as $d) {
+            $idlattes = trim($d['idlattes']);
+            $arquivo  = $this->fileLattesPath($idlattes);
+            if (file_exists($arquivo)) {
+                $this->status('coletado', $idlattes);
+            } else {
+                $this->status('pendente', $idlattes);
             }
-
-
+        }
     }
 
     public function reprocessarTodos()
-        {
-            $IndicadoresModel = new IndicadoresModel();
-            $IndicadoresModel->zeraDados();
-            if (get("zerar") != '')
-                {
-                $this->mudarStatusColetas();
-                }
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $IndicadoresModel->zeraDados();
+        if (get("zerar") != '') {
+            $this->mudarStatusColetas();
+        }
 
-            $pesquisadores = $this
-                ->where('situacao_coleta', 'coletado')
-                ->findAll();
-            $total = count($pesquisadores);
-            $processados = 0;
+        $pesquisadores = $this
+            ->where('situacao_coleta', 'coletado')
+            ->findAll();
+        $total = count($pesquisadores);
+        $processados = 0;
 
-            ini_set('max_execution_time', 0);
-            ini_set('output_buffering', 'off');
-            ini_set('zlib.output_compression', 0);
+        ini_set('max_execution_time', 0);
+        ini_set('output_buffering', 'off');
+        ini_set('zlib.output_compression', 0);
 
-            while (ob_get_level() > 0) {
-                ob_end_flush();
-            }
-            ob_implicit_flush(true);
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+        ob_implicit_flush(true);
 
-            $msgA = "🔎 Verificando {$total} pesquisadores...<br>";
+        $msgA = "🔎 Verificando {$total} pesquisadores...<br>";
 
-            foreach ($pesquisadores as $p) {
-                $idlattes = trim($p['idlattes']);
-                $msg = $this->processarXML($idlattes);
-                $this->status('processado', $idlattes);
+        foreach ($pesquisadores as $p) {
+            $idlattes = trim($p['idlattes']);
+            $msg = $this->processarXML($idlattes);
+            $this->status('processado', $idlattes);
 
-                $msg = $msgA . "<span style='color: white'>📄 Processando XML <b>$idlattes</b>: {$processados} / $total<br>";
-                $processados++;
-                /*
+            $msg = $msgA . "<span style='color: white'>📄 Processando XML <b>$idlattes</b>: {$processados} / $total<br>";
+            $processados++;
+            /*
                         $msg .= "🔎 Verificação em andamento...<br>
                         🔹 Total: {$total}<br>
                         ✅ Processados: {$encontrados}<br>
                         ⚠️ Não encontrados: {$naoEncontrados}<br>";
                         */
-                echo '</span>';
-                echo '<script>';
-                echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
-                echo '</script>';
-                flush();
+            echo '</span>';
+            echo '<script>';
+            echo 'document.getElementById("output").innerHTML = "' . $msg . '";';
+            echo '</script>';
+            flush();
 
-                if ($msg === "Processamento concluído com sucesso.") {
-                    $processados++;
-                    sleep(1);
-                }
+            if ($msg === "Processamento concluído com sucesso.") {
+                $processados++;
+                sleep(1);
             }
-
-            return "Processamento concluído. Total: {$total}. Reprocessados: {$processados}.";
         }
+
+        return "Processamento concluído. Total: {$total}. Reprocessados: {$processados}.";
+    }
 
     public function harvestDados()
     {
@@ -636,7 +729,7 @@ function producaoArtisticaAno()
             $idlattes = trim($p['idlattes']);
             $arquivo  = $this->fileLattesPath($idlattes);
 
-            $msg = $msgA."<span style='color: white'>📄 Processando XML: {$idlattes} / $encontrados<br>";
+            $msg = $msgA . "<span style='color: white'>📄 Processando XML: {$idlattes} / $encontrados<br>";
             /*
                     $msg .= "🔎 Verificação em andamento...<br>
                     🔹 Total: {$total}<br>
@@ -730,7 +823,7 @@ function producaoArtisticaAno()
         /************************** Área do conhecimento */
         $LattesResearchersAreaModel = new LattesResearchersAreaModel();
         $AreasCnpqModel = new AreasCnpqModel();
-        $LattesResearchersAreaModel->extactAreas($xml,$idlattes);
+        $LattesResearchersAreaModel->extactAreas($xml, $idlattes);
 
         /************************* Orientações  */
         $OrientationModel = new OrientationModel();
@@ -744,7 +837,7 @@ function producaoArtisticaAno()
         }
 
         /*** Capitulos */
-        $capitulos = $LivrosCapitulosModel->extrairCapitulos($xml,$idlattes);
+        $capitulos = $LivrosCapitulosModel->extrairCapitulos($xml, $idlattes);
         foreach ($capitulos as $registro) {
             $LivrosCapitulosModel->insert($registro);
         }
