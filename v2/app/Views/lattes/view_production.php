@@ -142,7 +142,7 @@
 
     <div class="mt-3">
         <?php foreach ($pesquisador['livros'] as $l): ?>
-            <div class="ref-item abnt">
+            <li class="ref-item abnt ms-4">
                 <?php
                 echo "<strong>{$l['autor_nome']}</strong>. ";
                 echo "<em>{$l['titulo']}.</em> ";
@@ -152,7 +152,7 @@
                 echo "{$l['nome_editora']}, {$l['ano']}. ";
                 if (!empty($l['isbn'])) echo "ISBN: {$l['isbn']}.";
                 ?>
-            </div>
+            </li>
         <?php endforeach; ?>
     </div>
 
@@ -166,7 +166,7 @@
 
     <div class="mt-3">
         <?php foreach ($pesquisador['capitulos'] as $c): ?>
-            <div class="ref-item abnt">
+            <li class="ref-item abnt ms-4">
                 <?php
                 echo "<strong>{$c['autor_nome']}</strong>. {$c['titulo_capitulo']}. ";
                 echo "In: <strong>{$c['organizadores']}</strong> (Org.). ";
@@ -180,7 +180,7 @@
                 }
                 if (!empty($c['isbn'])) echo "ISBN: {$c['isbn']}.";
                 ?>
-            </div>
+            </li>
         <?php endforeach; ?>
     </div>
 
@@ -194,7 +194,7 @@
 
     <div class="mt-3">
         <?php foreach ($pesquisador['artigos'] as $a): ?>
-            <div class="ref-item abnt">
+            <li class="ref-item abnt ms-4">
                 <?php
                 echo "<strong>{$a['autor_nome']}</strong>. ";
                 echo "{$a['titulo']}. ";
@@ -207,7 +207,7 @@
                 echo "p. {$a['pagina_inicial']}-{$a['pagina_final']}. ";
                 if (!empty($a['doi'])) echo "DOI: {$a['doi']}.";
                 ?>
-            </div>
+            </li>
         <?php endforeach; ?>
     </div>
 
@@ -220,7 +220,7 @@
 
     <div class="mt-3">
         <?php foreach ($pesquisador['partituras'] as $a): ?>
-            <div class="ref-item abnt">
+            <li class="ref-item abnt ms-4">
                 <?php
                 echo "<strong>{$a['autor_nome']}</strong>. ";
                 echo "{$a['titulo']}. ";
@@ -232,7 +232,7 @@
                 if (!empty($a['numero_paginas'])) echo ", {$a['numero_paginas']} pgs. ";
                 if (!empty($a['doi'])) echo "DOI: {$a['doi']}.";
                 ?>
-            </div>
+            </li>
         <?php endforeach; ?>
     </div>
 
@@ -245,7 +245,7 @@
 
     <div class="mt-3">
         <?php foreach ($pesquisador['eventos'] as $a): ?>
-            <div class="ref-item abnt">
+            <li class="ref-item abnt ms-4">
                 <?php
                 echo "<strong>{$a['nome_autores']}</strong>. ";
                 echo "{$a['titulo']}. ";
@@ -257,7 +257,7 @@
                 echo "{$a['ano_trabalho']}, ";
                 if (!empty($a['doi'])) echo "DOI: {$a['doi']}.";
                 ?>
-            </div>
+            </li>
         <?php endforeach; ?>
     </div>
 
