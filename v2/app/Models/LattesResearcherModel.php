@@ -132,11 +132,15 @@ class LattesResearcherModel extends Model
                 }
                 $tipo = str_replace('-', ' ', $tipo);
                 $tipo = ucfirst(strtolower($tipo));
-                $dd[$tipo] = $d['total'];
-            }
-            $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dt);
+                if (isset($dd[$tipo])) {
+                    $dd[$tipo] += $d['total'];
+                } else {
+                    $dd[$tipo] = $d['total'];
+                }
+                }
+            $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dd);
         }
-        return $dt;
+        return $dd;
     }
 
     function producaoArtisticaCoautoria()
