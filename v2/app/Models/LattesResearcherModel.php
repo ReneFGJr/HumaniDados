@@ -127,10 +127,15 @@ class LattesResearcherModel extends Model
             $dd = [];
             foreach ($dt as $d) {
                 $tipo = $d['tipo'] ?? 'OUTROS';
+                if ($tipo == 'OUTRO') {
+                    $tipo = 'OUTROS';
+                }
                 $tipo = str_replace('-', ' ', $tipo);
                 $tipo = ucfirst(strtolower($tipo));
                 $dd[$tipo] = $d['total'];
             }
+
+            pre($dd);
             $IndicadoresModel->saveIndicador('producao_total', 'artistica', '', '', $dt);
         }
         return $dt;
