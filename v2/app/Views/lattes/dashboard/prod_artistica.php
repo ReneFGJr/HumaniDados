@@ -40,6 +40,12 @@
         </div>
     </div>
 
+    <div>
+        <?php
+        pre($pesquisador['artistica'],false);
+        ?>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <?= $gr_sankey; ?>
@@ -88,9 +94,5 @@
         });
     </script>
 
-    <div>
-        <?php
-        pre($pesquisador['artistica']);
-        ?>
-    </div>
+
 </div>
