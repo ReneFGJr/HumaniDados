@@ -1,18 +1,31 @@
 <div class="container mt-5">
     <div class="row">
+
         <div class="col-12">
             <h2 class="mb-4">🌍 Produção Científica por Idioma</h2>
-            <canvas id="graficoCientificaIdioma" height="120"></canvas>
-
+            <div class="grafico-wrapper">
+                <canvas id="graficoCientificaIdioma"></canvas>
+            </div>
         </div>
-        <div class="col-12">
 
+        <div class="col-12 mt-5">
             <h2 class="mb-4">🎨 Produção Artística por Idioma</h2>
-            <canvas id="graficoArtisticaIdioma" height="120"></canvas>
-
+            <div class="grafico-wrapper">
+                <canvas id="graficoArtisticaIdioma"></canvas>
+            </div>
         </div>
+
     </div>
 </div>
+
+<style>
+    .grafico-wrapper {
+        position: relative;
+        height: 500px;
+        /* 🔥 Altura fixa */
+        max-height: 500px;
+    }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -48,6 +61,8 @@
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false, // 🔥 necessário para respeitar os 500px
             plugins: {
                 legend: {
                     position: 'right'
@@ -78,6 +93,8 @@
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false, // 🔥 necessário
             plugins: {
                 legend: {
                     position: 'right'
