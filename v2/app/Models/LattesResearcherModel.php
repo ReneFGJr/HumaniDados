@@ -340,7 +340,11 @@ function producaoArtisticaAno()
         {
             $IndicadoresModel = new IndicadoresModel();
             $IndicadoresModel->zeraDados();
-            $this->mudarStatusColetas();
+            if (get("zerar") != '')
+                {
+                $this->mudarStatusColetas();
+                }
+
             $pesquisadores = $this
                 ->where('situacao_coleta', 'coletado')
                 ->findAll();
