@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h2 class="mb-4">📊 Produção Científica por Ano e Número de Autores</h2>
+    <h2 class="mb-4">📊 Produção Científica por Ano e Número de Autores (Percentualmente %)</h2>
     <canvas id="graficoCoautoriaPercentual"></canvas>
 </div>
 
