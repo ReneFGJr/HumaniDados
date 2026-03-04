@@ -71,7 +71,7 @@ class LattesResearcherModel extends Model
             $dt = $ProducaoArtisticaModel->select('tipo,ano,count(*) as total')->groupBy('tipo,ano')->findAll();
             $dd = [];
             foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = $d['tipo'] ?? 'OUTRO';
                 $tipo = str_replace('-', ' ', $tipo);
                 $tipo = ucfirst(strtolower($tipo));
                 $dd[$tipo] = $d['total'];
@@ -80,7 +80,7 @@ class LattesResearcherModel extends Model
 
             $tps = [];
             foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = $d['tipo'] ?? 'OUTRO';
                 if (!in_array($tipo, $tps)) {
                     $tps[] = $tipo;
                 }
@@ -97,7 +97,7 @@ class LattesResearcherModel extends Model
             }
 
             foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = $d['tipo'] ?? 'OUTRO';
                 $ano = $d['ano'] ?? 'SEM_DATA';
                 if (isset($dd[$tipo][$ano])) {
                     $dd[$tipo][$ano] = $d['total'];
@@ -147,7 +147,7 @@ class LattesResearcherModel extends Model
             $dt = $ProducaoArtisticaModel->select('tipo,total_autores,count(*) as total')->where('total_autores > 0')->groupBy('tipo,total_autores')->findAll();
             $dd = [];
             foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = $d['tipo'] ?? 'OUTRO';
                 $tipo = str_replace('-', ' ', $tipo);
                 $tipo = ucfirst(strtolower($tipo));
                 $numAutores = (int)$d['total_autores'];
@@ -309,7 +309,7 @@ class LattesResearcherModel extends Model
             $dt = $ProducaoArtisticaModel->select('tipo,idioma,count(*) as total')->groupBy('tipo,idioma')->findAll();
             $dd = [];
             foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = $d['tipo'] ?? 'OUTRO';
                 $tipo = str_replace('-', ' ', $tipo);
                 $tipo = ucfirst(strtolower($tipo));
                 $idioma = $d['idioma'] ?? 'SEM_IDIOMA';
@@ -979,7 +979,7 @@ class LattesResearcherModel extends Model
                             break;
                         case 'OUTRA-PRODUCAO-ARTISTICA-CULTURAL':
                             $n = '-DE-OUTRA-PRODUCAO-ARTISTICA-CULTURAL';
-                            $na = 'OUTROS';
+                            $na = 'OUTRO';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
                         case 'ARRANJO-MUSICAL':
@@ -994,7 +994,7 @@ class LattesResearcherModel extends Model
                             break;
                         case 'CURSO-DE-CURTA-DURACAO':
                             $n = '-CURSO-DE-CURTA-DURACAO';
-                            $na = 'OUTROS';
+                            $na = 'OUTRO';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             //pre($outraProducao);
                             break;
@@ -1010,7 +1010,7 @@ class LattesResearcherModel extends Model
                             break;
                         case 'APRESENTACAO-DE-OBRA-ARTISTICA':
                             $n = '-APRESENTACAO-DE-OBRA-ARTISTICA';
-                            $na = 'OUTROS';
+                            $na = 'OUTRO';
                             $ProducaoXML->dadosBasicos($idlattes, $producao, $n, $na);
                             break;
                         /*
