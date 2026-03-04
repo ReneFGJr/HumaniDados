@@ -166,8 +166,33 @@ class LattesResearcherModel extends Model
         return $dd;
     }
 
+    function producaoCientificaCoautoriaPercentual()
+    {
+        $IndicadoresModel = new IndicadoresModel();
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria_ano,', 'percentual');
+        if ($dt) {
+            return $dt;
+        } else {
+            $max = 1;
+            $ddmax = [];
+            $dt = $this->producaoCientificaCoautoriaAno();
+            $dd = [];
+            foreach ($dt as $ano => $dados) {
+                $tot = 0;
+                foreach ($dados as $numAutores => $total) {
+                    $tot += $numAutores * $total;
+                }
+                foreach ($dados as $numAutores => $total) {
+                    $dt[$ano][$numAutores] = round(($numAutores * $total) / $tot * 100, 2);
+                }
+            }
+            $IndicadoresModel->saveIndicador('producao_total', 'cientifica', 'coautoria_ano', 'percentual', $dt);
+        }
+        return $dt;
+    }
+
     function producaoCientificaCoautoriaAno()
-        {
+    {
         $IndicadoresModel = new IndicadoresModel();
         $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria_ano');
         if ($dt) {
@@ -201,7 +226,7 @@ class LattesResearcherModel extends Model
     function producaoCientificaCoautoria()
     {
         $IndicadoresModel = new IndicadoresModel();
-        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria','');
+        $dt = $IndicadoresModel->findByArgs('producao_total', 'cientifica', 'coautoria', '');
         if ($dt) {
             return $dt;
         } else {

@@ -34,6 +34,7 @@ class Indicators extends BaseController
 
         $data['producaoCoautoria']['cientifica'] = $LattesResearcherModel->producaoCientificaCoautoria();
         $data['producaoCoautoriaAno']['cientifica'] = $LattesResearcherModel->producaoCientificaCoautoriaAno();
+        $data['producaoCoautoriaPercentual']['cientifica'] = $LattesResearcherModel->producaoCientificaCoautoriaPercentual();
 
 
         echo view('layout/header', $data);
@@ -43,6 +44,7 @@ class Indicators extends BaseController
         echo view('indicators/geral_idioma', ['dados' => $data]);
         echo view('indicators/geral_coautoria', ['dados' => $data]);
         echo view('indicators/geral_coautoria_ano', ['dados' => $data]);
+        echo view('indicators/geral_coautoria_ano_percentual', ['dados' => $data]);
 
         echo view('indicators/index', $data);
         echo view('layout/footer');
