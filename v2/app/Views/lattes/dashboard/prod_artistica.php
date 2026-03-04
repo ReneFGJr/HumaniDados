@@ -87,8 +87,10 @@
             }
         });
     </script>
-</div>
 
-<?php
-pre($pesquisador['artistica']);
-?>
+    <div>
+        <?php
+        pre($pesquisador['artistica']);
+        ?>
+    </div>
+</div>
