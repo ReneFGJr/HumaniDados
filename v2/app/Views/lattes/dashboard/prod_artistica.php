@@ -88,3 +88,7 @@
         });
     </script>
 </div>
+
+<?php
+pre($artistica);
+?>

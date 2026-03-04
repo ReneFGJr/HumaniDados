@@ -47,6 +47,7 @@ class LattesResearcherModel extends Model
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
         $dt['formacao'] = $LattesFormacaoModel->le($dt['idlattes']);
         $dt['producao_artistica'] = $ProducaoArtisticaModel->resume($dt['idlattes']);
+        $dt['artistica'] = $ProducaoArtisticaModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['livros'] = $LivrosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
