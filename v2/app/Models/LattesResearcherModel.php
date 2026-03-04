@@ -126,7 +126,7 @@ class LattesResearcherModel extends Model
             $dt = $ProducaoArtisticaModel->select('tipo,count(*) as total')->groupBy('tipo')->findAll();
             $dd = [];
             foreach ($dt as $d) {
-                $tipo = $d['tipo'] ?? 'OUTROS';
+                $tipo = $d['tipo'] ?? 'OUTRO';
                 $tipo = str_replace('-', ' ', $tipo);
                 $tipo = ucfirst(strtolower($tipo));
                 $dd[$tipo] = $d['total'];
