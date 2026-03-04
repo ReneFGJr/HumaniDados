@@ -45,6 +45,12 @@ class IndicadoresModel extends Model
         return $this->orderBy('id', 'DESC')->first();
     }
 
+    function zeraDados()
+    {
+        $this->where('id >', 0)->delete();
+        return true;
+    }
+
     /**
      * Busca por combinação de argumentos
      */

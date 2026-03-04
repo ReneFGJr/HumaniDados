@@ -247,15 +247,14 @@
         <?php foreach ($pesquisador['eventos'] as $a): ?>
             <div class="ref-item abnt">
                 <?php
-                echo "<strong>{$a['autor_nome']}</strong>. ";
+                echo "<strong>{$a['nome_autores']}</strong>. ";
                 echo "{$a['titulo']}. ";
-                echo "<em>{$a['periodico']}</em>, ";
+                echo "<em>{$a['nome_evento']}</em>, ";
 
                 if (!empty($a['volume'])) echo "v. {$a['volume']}, ";
                 if (!empty($a['serie'])) echo "n. {$a['serie']}, ";
 
-                echo "{$a['ano']}, ";
-                echo "p. {$a['pagina_inicial']}-{$a['pagina_final']}. ";
+                echo "{$a['ano_trabalho']}, ";
                 if (!empty($a['doi'])) echo "DOI: {$a['doi']}.";
                 ?>
             </div>

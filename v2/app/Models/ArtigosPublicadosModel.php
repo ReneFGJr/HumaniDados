@@ -39,7 +39,14 @@ class ArtigosPublicadosModel extends Model
         $this->where('id_lattes',$idlattes)->delete();
         return true;
     }
-
+function listaPeridoicos($idlattes)
+{
+    return $this->select('periodico, count(*) as total')
+        ->where('id_lattes', $idlattes)
+        ->groupBy('periodico')
+        ->orderBy('total', 'DESC')
+        ->findAll();
+}
 function extrairArtigos($xml)
 {
     $artigos = [];

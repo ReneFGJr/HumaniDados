@@ -42,6 +42,7 @@ class LattesResearcherModel extends Model
         $LattesResearchersAreaModel = new LattesResearchersAreaModel();
         $ProceedingsModel = new ProceedingsModel();
 
+
         $dt = $this->where('id', $id)->first();
         $dt['instituição'] = $InstituicaoLattesModel->where('id', $dt['vinculo_instituicao'])->first();
         $dt['formacao'] = $LattesFormacaoModel->le($dt['idlattes']);
@@ -49,9 +50,9 @@ class LattesResearcherModel extends Model
         $dt['livros'] = $LivrosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['capitulos'] = $LivrosCapitulosModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['artigos'] = $ArtigosPublicadosModel->where('id_lattes', $dt['idlattes'])->findAll();
-        $dt['eventos'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['eventos'] = $ProceedingsModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['partituras'] = $PartiturasModel->where('id_lattes', $dt['idlattes'])->findAll();
-        $dt['proceedings'] = $ProceedingsModel->where('id_lattes', $dt['idlattes'])->findAll();
+        $dt['periodico'] = $ArtigosPublicadosModel->listaPeridoicos($dt['idlattes']);
         $dt['orientacoes'] = $OrientationModel->where('id_lattes', $dt['idlattes'])->findAll();
         $dt['orientacoes_total'] = $OrientationModel->resume($dt['idlattes']);
         $dt['areas_conhecimento'] = $LattesResearchersAreaModel->areasResearcher($dt['idlattes']);
@@ -337,6 +338,8 @@ function producaoArtisticaAno()
 
     public function reprocessarTodos()
         {
+            $IndicadoresModel = new IndicadoresModel();
+            $IndicadoresModel->zeraDados();
             $this->mudarStatusColetas();
             $pesquisadores = $this
                 ->where('situacao_coleta', 'coletado')

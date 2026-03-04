@@ -31,6 +31,7 @@ class ProceedingsModel extends Model
         'flag_relevancia',
         'doi',
         'flag_divulgacao_cientifica',
+        'total_autores',
 
         // Evento
         'classificacao_evento',
@@ -127,6 +128,7 @@ class ProceedingsModel extends Model
                 'doi'                   => (string)$dados['DOI'],
                 'flag_relevancia'       => (string)$dados['FLAG-RELEVANCIA'],
                 'flag_divulgacao'       => (string)$dados['FLAG-DIVULGACAO-CIENTIFICA'],
+                'total_autores'        => count($autores),
 
                 // Detalhamento do evento
                 'classificacao_evento'  => (string)$detalhe['CLASSIFICACAO-DO-EVENTO'],
