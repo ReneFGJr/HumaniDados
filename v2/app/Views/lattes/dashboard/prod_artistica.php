@@ -52,7 +52,6 @@
             echo '. '.$item['ano'];
             echo "</li>";
         }
-        pre($pesquisador['artistica'],false);
         ?>
     </div>
 
