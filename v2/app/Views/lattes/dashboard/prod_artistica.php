@@ -42,6 +42,16 @@
 
     <div>
         <?php
+
+        foreach ($pesquisador['artistica'] as $item) {
+            echo "<li>";
+            echo $item['tipo'];
+            echo ' - ';
+            echo $item['natureza'];
+            echo '. '.$item['titulo'];
+            echo '. '.$item['ano'];
+            echo "</li>";
+        }
         pre($pesquisador['artistica'],false);
         ?>
     </div>
