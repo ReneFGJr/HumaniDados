@@ -102,6 +102,14 @@ class Indicators extends BaseController
             return $b['total'] <=> $a['total'];
         });
 
+        $topNaoUniversidades = array_values(array_filter(
+            $totaisInstituicao,
+            static function (array $item): bool {
+                $nome = mb_strtolower((string)($item['nome'] ?? ''), 'UTF-8');
+                return mb_strpos($nome, 'universidade', 0, 'UTF-8') === false;
+            }
+        ));
+
         arsort($totaisUf);
         arsort($totaisPais);
 
@@ -185,7 +193,8 @@ class Indicators extends BaseController
         $data = [
             'total_registros' => count($rows),
             'total_instituicoes' => count($totaisInstituicao),
-            'top_instituicoes' => array_slice($totaisInstituicao, 0, 15),
+            'top_instituicoes' => array_slice($totaisInstituicao, 0, 50),
+            'top_nao_universidades' => array_slice($topNaoUniversidades, 0, 30),
             'por_uf' => $totaisUf,
             'por_pais' => $totaisPais,
             'lattes_update_buckets' => $lattesUpdateBuckets,

@@ -2,6 +2,7 @@
 $total_registros = (int)($total_registros ?? 0);
 $total_instituicoes = (int)($total_instituicoes ?? 0);
 $top_instituicoes = $top_instituicoes ?? [];
+$top_nao_universidades = $top_nao_universidades ?? [];
 $por_uf = $por_uf ?? [];
 $por_pais = $por_pais ?? [];
 $lattes_update_buckets = $lattes_update_buckets ?? [];
@@ -117,6 +118,42 @@ $lattes_update_reference_date = $lattes_update_reference_date ?? null;
     </div>
 
     <div class="row mt-4">
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <strong>Top Instituicoes por Vinculo (Nao Universidades)</strong>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Instituicao</th>
+                                <th>Codigo</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($top_nao_universidades)): ?>
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-3">Sem dados para exibir.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($top_nao_universidades as $idx => $item): ?>
+                                    <tr>
+                                        <td><?= $idx + 1 ?></td>
+                                        <td><?= esc($item['nome']) ?></td>
+                                        <td><?= esc($item['codigo'] !== '' ? $item['codigo'] : 'N/I') ?></td>
+                                        <td class="text-end"><?= number_format((int) $item['total'], 0, ',', '.') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-header">
