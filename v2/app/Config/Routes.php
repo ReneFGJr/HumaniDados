@@ -64,6 +64,15 @@ $routes->group(
     }
 );
 
+$routes->group(
+    'producao_tecnica',
+    ['namespace' => 'App\Controllers'],
+    function ($routes) {
+        $routes->get('/', 'ProducaoTecnica::index');
+        $routes->get('(:any)', 'ProducaoTecnica::index/$1');
+    }
+);
+
 
 $routes->group(
     'indicators',

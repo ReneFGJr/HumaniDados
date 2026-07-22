@@ -94,9 +94,15 @@ class IndicadoresModel extends Model
         if ($arg1 === null) {
             $arg1 = '';
         }
-        // se result for array → transforma em JSON
-        if (is_array($result)) {
+        // Evita NULL na coluna result e padroniza o armazenamento em JSON.
+        if ($result === null) {
+            $result = [];
+        }
+        if (is_array($result) || is_object($result)) {
             $result = json_encode($result, JSON_UNESCAPED_UNICODE);
+        }
+        if (!is_string($result) || trim($result) === '') {
+            $result = '[]';
         }
 
         $dt = $this->where([
