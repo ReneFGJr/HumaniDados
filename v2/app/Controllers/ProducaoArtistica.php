@@ -30,7 +30,7 @@ class ProducaoArtistica extends BaseController
             $dt = $ProducaoArtisticaModel->getIndicatorByType($pg, $arg1, $arg2, $arg3);
             $IndicadoresModel->saveIndicador($arg0, $arg1, $arg2, $arg3, $dt);
         }
-        
+
         echo view('layout/header');
         $pg = ctype_upper($pg) ? $pg : strtoupper($pg);
         //pre($dt);
@@ -44,14 +44,17 @@ class ProducaoArtistica extends BaseController
                 echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'musica']);
                 break;
             case 'ARTES-CENICAS':
+                echo view('producao_artistica/view_2',['dados'=>$dt, 'pag'=>'ARTES-CENICAS']);
                 echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'ARTES-CENICAS']);
                 break;
             case 'ARTES-VISUAIS':
-                echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'ARTES-CENICAS']);
-                break;      
+                echo view('producao_artistica/view_2',['dados'=>$dt, 'pag'=>'ARTES-VISUAIS']);
+                echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'ARTES-VISUAIS']);
+                break;
             case 'OUTROS':
-                echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'ARTES-CENICAS']);
-                break;                           
+                echo view('producao_artistica/view_2',['dados'=>$dt, 'pag'=>'OUTROS']);
+                echo view('producao_artistica/view',['array'=>$dt, 'pag'=>'OUTROS']);
+                break;
             default:
                 ECHO $pg;
                 break;
