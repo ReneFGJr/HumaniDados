@@ -53,17 +53,16 @@ class InstituicaoLattesModel extends Model
         // 🔎 1. Verificar se já existe no banco
         $existe = $this->where('codigo_instituicao_empresa', $codigo)->first();
 
-        if ($existe)
-            {
-                $nome = trim($dados['NOME-INSTITUICAO-EMPRESA']);
-                if ($nome != $existe['nome_instituicao_empresa'])
-                    {
-                        $existe = false;
-                    }
+        if ($existe) {
+            $nomeNovo = trim((string)($dados['NOME-INSTITUICAO-EMPRESA'] ?? ''));
+            $nomeAtual = trim((string)($existe['nome_instituicao_empresa'] ?? ''));
+
+            if ($nomeNovo !== '' && $nomeNovo !== $nomeAtual) {
+                $this->update($existe['id'], [
+                    'nome_instituicao_empresa' => $nomeNovo,
+                ]);
             }
 
-        
-        if ($existe) {
             return $existe['id']; // já cadastrado
         }
 
@@ -79,17 +78,38 @@ class InstituicaoLattesModel extends Model
         return $this->insert($insertData);
     }
 
-    function pesquisadoresVinculados($id)
+    function pesquisadoresVinculados($id, $codigoInstituicao = null)
     {
         $LattesResearcherModel = new LattesResearcherModel();
-        return $LattesResearcherModel->where('vinculo_instituicao', $id)->orderby('nome_completo')->findAll();
+
+        $codigoInstituicao = trim((string) ($codigoInstituicao ?? ''));
+        if ($codigoInstituicao !== '') {
+            $idsInstituicao = $this
+                ->select('id')
+                ->where('codigo_instituicao_empresa', $codigoInstituicao)
+                ->findColumn('id');
+
+            if (!empty($idsInstituicao)) {
+                return $LattesResearcherModel
+                    ->whereIn('vinculo_instituicao', $idsInstituicao)
+                    ->orderBy('nome_completo')
+                    ->findAll();
+            }
+        }
+
+        return $LattesResearcherModel
+            ->where('vinculo_instituicao', $id)
+            ->orderBy('nome_completo')
+            ->findAll();
     }
 
     function le($id)
     {
         $dt = $this->find($id);
-        $dt['pesquisadores'] = $this->pesquisadoresVinculados($id);
-        $dt['pesquisadores_total'] = count($this->pesquisadoresVinculados($id));
+        $codigo = $dt['codigo_instituicao_empresa'] ?? null;
+        $pesquisadores = $this->pesquisadoresVinculados($id, $codigo);
+        $dt['pesquisadores'] = $pesquisadores;
+        $dt['pesquisadores_total'] = count($pesquisadores);
         return $dt;
     }
 }

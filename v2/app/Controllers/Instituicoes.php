@@ -19,7 +19,24 @@ class Instituicoes extends BaseController
     public function institucicoes()
     {
         $InstituicoesModel = new \App\Models\InstituicaoLattesModel();
-        $data['instituicoes'] = $InstituicoesModel->orderBy('nome_instituicao_empresa', 'ASC')->findAll();
+        $rows = $InstituicoesModel->orderBy('nome_instituicao_empresa', 'ASC')->findAll();
+
+        $unicas = [];
+        $seen = [];
+        foreach ($rows as $inst) {
+            $nome = trim((string) ($inst['nome_instituicao_empresa'] ?? ''));
+            $codigo = trim((string) ($inst['codigo_instituicao_empresa'] ?? ''));
+            $key = strtolower($codigo . '|' . preg_replace('/\s+/', ' ', $nome));
+
+            if (isset($seen[$key])) {
+                continue;
+            }
+
+            $seen[$key] = true;
+            $unicas[] = $inst;
+        }
+
+        $data['instituicoes'] = $unicas;
 
         echo view('layout/header');
         echo view('instituicao/index', $data);
