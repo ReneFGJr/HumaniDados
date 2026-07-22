@@ -88,12 +88,21 @@
                         <li><a class="dropdown-item" href="<?= base_url('producao_cientifica/livros') ?>">Manutenção de Obra artística</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('producao_cientifica/livros') ?>">Outros</a></li>
                     </ul>
-                </li>                
+                </li>
             </ul>
 
             <!-- Segundo grupo -->
             <ul class="navbar-nav ms-3">
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('indicators') ?>">Indicadores</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropIndicators" data-bs-toggle="dropdown">
+                        Indicadores
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropIndicators">
+                        <li><a class="dropdown-item" href="<?= base_url('indicators') ?>">Gerais</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('indicators/instituicao') ?>">Instituição</a></li>
+                    </ul>
+                </li>
                  <!-- PRODUÇÃO TÉCNICA DROPDOWN CORRIGIDA -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropAbout" data-bs-toggle="dropdown">
@@ -105,7 +114,7 @@
                         <li><a class="dropdown-item" href="<?= base_url('about') ?>">Sobre o projeto</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('faq') ?>">FAQ</a></li>
                     </ul>
-                </li>                   
+                </li>
             </ul>
 
             <!-- Login -->

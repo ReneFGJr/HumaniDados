@@ -20,6 +20,7 @@ class Instituicoes extends BaseController
     {
         $InstituicoesModel = new \App\Models\InstituicaoLattesModel();
         $rows = $InstituicoesModel->orderBy('nome_instituicao_empresa', 'ASC')->findAll();
+        $busca = trim((string) $this->request->getGet('q'));
 
         $unicas = [];
         $seen = [];
@@ -36,7 +37,30 @@ class Instituicoes extends BaseController
             $unicas[] = $inst;
         }
 
+        if ($busca !== '') {
+            $buscaNormalizada = mb_strtolower($busca, 'UTF-8');
+
+            $unicas = array_values(array_filter($unicas, static function (array $inst) use ($buscaNormalizada): bool {
+                $campos = [
+                    $inst['nome_instituicao_empresa'] ?? '',
+                    $inst['pais'] ?? '',
+                    $inst['uf'] ?? '',
+                    $inst['cidade'] ?? '',
+                ];
+
+                foreach ($campos as $campo) {
+                    $valor = mb_strtolower(trim((string) $campo), 'UTF-8');
+                    if ($valor !== '' && mb_strpos($valor, $buscaNormalizada, 0, 'UTF-8') !== false) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }));
+        }
+
         $data['instituicoes'] = $unicas;
+        $data['busca'] = $busca;
 
         echo view('layout/header');
         echo view('instituicao/index', $data);

@@ -79,6 +79,7 @@ $routes->group(
     ['namespace' => 'App\Controllers'],
     function ($routes) {
         $routes->get('/', 'Indicators::index');
+        $routes->get('instituicao', 'Indicators::instituicao');
         $routes->get('view/(:num)', 'Indicators::view/$1');
     }
 );
