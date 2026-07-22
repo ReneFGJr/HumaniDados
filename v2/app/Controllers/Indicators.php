@@ -102,11 +102,67 @@ class Indicators extends BaseController
             return $b['total'] <=> $a['total'];
         });
 
+        $universidadeTermos = [
+            'universidade',
+            'universite',
+            'universite ',
+            'universite\'',
+            'university',
+            'centro universitario',
+            'centros universitarios',
+            'centro universitarios',
+            'instituto superior',
+        ];
+
+        $isUniversidade = static function (array $item) use ($universidadeTermos): bool {
+            $nomeOriginal = (string)($item['nome'] ?? '');
+            $nome = mb_strtolower($nomeOriginal, 'UTF-8');
+            $nome = strtr($nome, [
+                'á' => 'a',
+                'à' => 'a',
+                'â' => 'a',
+                'ã' => 'a',
+                'ä' => 'a',
+                'é' => 'e',
+                'è' => 'e',
+                'ê' => 'e',
+                'ë' => 'e',
+                'í' => 'i',
+                'ì' => 'i',
+                'î' => 'i',
+                'ï' => 'i',
+                'ó' => 'o',
+                'ò' => 'o',
+                'ô' => 'o',
+                'õ' => 'o',
+                'ö' => 'o',
+                'ú' => 'u',
+                'ù' => 'u',
+                'û' => 'u',
+                'ü' => 'u',
+                'ç' => 'c',
+            ]);
+
+            foreach ($universidadeTermos as $termo) {
+                if (mb_strpos($nome, $termo, 0, 'UTF-8') !== false) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        $topUniversidades = array_values(array_filter(
+            $totaisInstituicao,
+            static function (array $item) use ($isUniversidade): bool {
+                return $isUniversidade($item);
+            }
+        ));
+
         $topNaoUniversidades = array_values(array_filter(
             $totaisInstituicao,
-            static function (array $item): bool {
-                $nome = mb_strtolower((string)($item['nome'] ?? ''), 'UTF-8');
-                return mb_strpos($nome, 'universidade', 0, 'UTF-8') === false;
+            static function (array $item) use ($isUniversidade): bool {
+                return !$isUniversidade($item);
             }
         ));
 
@@ -193,7 +249,7 @@ class Indicators extends BaseController
         $data = [
             'total_registros' => count($rows),
             'total_instituicoes' => count($totaisInstituicao),
-            'top_instituicoes' => array_slice($totaisInstituicao, 0, 50),
+            'top_instituicoes' => array_slice($topUniversidades, 0, 50),
             'top_nao_universidades' => array_slice($topNaoUniversidades, 0, 30),
             'por_uf' => $totaisUf,
             'por_pais' => $totaisPais,

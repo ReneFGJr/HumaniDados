@@ -45,7 +45,7 @@ $lattes_update_reference_date = $lattes_update_reference_date ?? null;
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-header">
-                    <strong>Top Instituicoes por Vinculo</strong>
+                    <strong>Top Instituicoes por Vinculo (Universidades e Equivalentes)</strong>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm mb-0">
