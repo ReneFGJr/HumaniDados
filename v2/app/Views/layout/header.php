@@ -83,10 +83,10 @@
 
                     <ul class="dropdown-menu" aria-labelledby="dropCientifica">
                         <li><a class="dropdown-item" href="<?= base_url('producao_tecnica/orientacoes') ?>">Orientações</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_cientifica/artigos') ?>">Entrevistas & Mesas redondas</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_cientifica/livros') ?>">Editoração</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_cientifica/livros') ?>">Manutenção de Obra artística</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('producao_cientifica/livros') ?>">Outros</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_tecnica/entrevistas-mesas-redondas') ?>">Entrevistas e Mesas Redondas</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_tecnica/editoracao') ?>">Editoração</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_tecnica/manutencao-obras-artisticas') ?>">Manutenção de obras artísticas</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('producao_tecnica/outros') ?>">Outros</a></li>
                     </ul>
                 </li>
             </ul>

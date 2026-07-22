@@ -14,6 +14,23 @@ class ProducaoTecnica extends BaseController
             $pg = 'orientacoes';
         }
 
+        $paginasEmConstrucao = [
+            'entrevistas-mesas-redondas' => 'Entrevistas e Mesas Redondas',
+            'editoracao' => 'Editoração',
+            'manutencao-obras-artisticas' => 'Manutenção de obras artísticas',
+            'outros' => 'Outros',
+        ];
+
+        if (isset($paginasEmConstrucao[$pg])) {
+            echo view('layout/header');
+            echo view('producao_tecnica/em_construcao', [
+                'titulo' => $paginasEmConstrucao[$pg],
+                'slug' => $pg,
+            ]);
+            echo view('layout/footer');
+            return;
+        }
+
         $arg1 = $this->request->getGet('arg1');
         $arg2 = $this->request->getGet('arg2');
         $arg3 = $this->request->getGet('arg3');
