@@ -12,6 +12,7 @@ $routes->get('about_method', 'Home::about_method');
 
 $routes->get('glossary', 'Home::glossary');
 $routes->get('faq', 'Home::faq');
+$routes->get('ndicators/global', 'GlobalIndicators::index');
 
 $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
     $routes->get('/', 'Admin::index');

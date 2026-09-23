@@ -100,6 +100,7 @@
 
                     <ul class="dropdown-menu" aria-labelledby="dropIndicators">
                         <li><a class="dropdown-item" href="<?= base_url('indicators') ?>">Gerais</a></li>
+                        <li><a class="dropdown-item" href="<?= site_url('ndicators/global') ?>">Indicadores Globais</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('indicators/instituicao') ?>">Instituição</a></li>
                     </ul>
                 </li>
