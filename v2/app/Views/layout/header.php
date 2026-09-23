@@ -120,6 +120,9 @@
             <!-- Login -->
             <ul class="navbar-nav ms-auto">
                 <?php if (session()->get('isLoggedIn')): ?>
+                    <?php if (session()->get('user_perfil') === 'admin'): ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= site_url('admin') ?>">Administração</a></li>
+                    <?php endif; ?>
                     <li class="nav-item"><a class="nav-link"><?= session()->get('user_nome') ?></a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('logout') ?>">Sair</a></li>
                 <?php else: ?>

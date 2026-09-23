@@ -13,6 +13,21 @@ class CurriculoLattesModel extends Model
     protected $useTimestamps = false;
     protected $protectFields = true;
 
+    public function campos(): array
+    {
+        return $this->allowedFields;
+    }
+
+    public function salvarIndicadores(array $dados): string
+    {
+        $existe = $this->find($dados['id_lattes']) !== null;
+        $dados = array_intersect_key($dados, array_flip($this->allowedFields));
+        if (!$this->builder()->upsert($dados)) {
+            throw new \RuntimeException('Não foi possível salvar os indicadores no banco.');
+        }
+        return $existe ? 'atualizado' : 'inserido';
+    }
+
     // O ID deve ser informado como string para preservar os zeros a esquerda.
     protected $allowedFields = [
         'id_lattes',

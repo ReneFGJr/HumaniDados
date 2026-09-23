@@ -101,10 +101,12 @@ class LattesIndicadores
             throw new RuntimeException('Não foi possível ler o arquivo XML.');
         }
 
-        return $this->extrairXml($conteudo);
+        $nome = pathinfo($arquivo, PATHINFO_FILENAME);
+        $idArquivo = preg_match('/^[0-9]{16}$/D', $nome) ? $nome : null;
+        return $this->extrairXml($conteudo, $idArquivo);
     }
 
-    public function extrairXml(string $conteudo): array
+    public function extrairXml(string $conteudo, ?string $idArquivo = null): array
     {
         // O formato Lattes não precisa de DTD nem de entidades externas.
         if (stripos($conteudo, '<!DOCTYPE') !== false || stripos($conteudo, '<!ENTITY') !== false) {
@@ -123,6 +125,11 @@ class LattesIndicadores
         }
 
         $id = trim((string) $xml['NUMERO-IDENTIFICADOR']);
+        if ($id === '' && $idArquivo !== null) {
+            $id = $idArquivo;
+        } elseif ($idArquivo !== null && $id !== $idArquivo) {
+            throw new RuntimeException('O ID do XML é diferente do ID no nome do arquivo.');
+        }
         if (!preg_match('/^[0-9]{16}$/D', $id)) {
             throw new RuntimeException('ID Lattes ausente ou diferente de 16 dígitos.');
         }

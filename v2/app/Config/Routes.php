@@ -13,6 +13,13 @@ $routes->get('about_method', 'Home::about_method');
 $routes->get('glossary', 'Home::glossary');
 $routes->get('faq', 'Home::faq');
 
+$routes->group('admin', ['filter' => 'admin'], static function ($routes) {
+    $routes->get('/', 'Admin::index');
+    $routes->get('export/all', 'Admin::exportAll');
+    $routes->get('inport/alttes', 'Admin::importPage');
+    $routes->post('inport/alttes', 'Admin::importLattes', ['filter' => 'csrf']);
+});
+
 // Grupo de rotas de usuários
 $routes->group(
     'users',
