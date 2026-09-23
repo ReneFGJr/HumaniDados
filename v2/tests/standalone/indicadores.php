@@ -112,10 +112,12 @@ verificar('0000039015885890', $extrator->extrairXml($semId, '0000039015885890')[
 rejeitar(fn () => $extrator->extrairXml($semId), 'Sem ID e sem fallback deve falhar');
 
 // Banco isolado: nunca escreve no banco configurado no .env.
-$db = Config\Database::connect([
+config('Database')->tests = [
     'DBDriver' => 'SQLite3', 'database' => ':memory:', 'DBPrefix' => '', 'DBDebug' => true,
     'foreignKeys' => true, 'busyTimeout' => 1000, 'dateFormat' => ['date' => 'Y-m-d', 'datetime' => 'Y-m-d H:i:s', 'time' => 'H:i:s'],
-], false);
+];
+config('Database')->defaultGroup = 'tests';
+$db = Config\Database::connect('tests');
 $model = new CurriculoLattesModel($db);
 verificar([], array_values(array_diff($model->campos(), array_keys($dados))), 'Todos os campos devem ser extraídos');
 verificar([], array_values(array_diff(array_keys($dados), $model->campos())), 'Sem campos extras');
@@ -155,4 +157,54 @@ foreach (glob(dirname(rtrim(ROOTPATH, '/\\')) . '/database/xml/*.xml') as $arqui
     $real = $extrator->extrairArquivo($arquivo);
     verificar(119, count($real), 'Campos do XML real ' . basename($arquivo));
 }
+
+// Exercita o controller, a exportação em mais de um lote e o controle de acesso.
+$request = Config\Services::incomingrequest(config('App'), false);
+Config\Services::injectMock('request', $request);
+$filter = new App\Filters\Admin();
+session()->remove(['isLoggedIn', 'user_perfil']);
+verificar(302, $filter->before($request)->getStatusCode(), 'Visitante deve ir para login');
+session()->set(['isLoggedIn' => true, 'user_perfil' => 'user']);
+verificar(403, $filter->before($request)->getStatusCode(), 'Usuário comum não pode administrar');
+session()->set('user_perfil', 'admin');
+verificar(null, $filter->before($request), 'Administrador autorizado');
+
+$controller = new App\Controllers\Admin();
+$controller->initController($request, Config\Services::response(null, false), service('logger'));
+$pagina = $controller->index();
+verificar(true, str_contains($pagina, 'Exportação indicadores'), 'Página deve ter botão de exportação');
+verificar(true, str_contains($pagina, 'admin/inport/alttes'), 'Página deve usar a rota solicitada');
+verificar(true, str_contains($pagina, '0000039015885890'), 'Página deve mostrar o ID completo');
+
+$model->update('0000039015885890', ['nome' => '=FORMULA; "teste"']);
+$lote = [];
+for ($i = 1; $i <= 500; $i++) {
+    $lote[] = ['id_lattes' => str_pad((string) $i, 16, '0', STR_PAD_LEFT), 'nome' => 'Teste CSV'];
+}
+$model->insertBatch($lote);
+$download = $controller->exportAll();
+verificar(true, $download instanceof CodeIgniter\HTTP\DownloadResponse, 'Exportação deve retornar download');
+ob_start();
+$download->sendBody();
+$csv = ob_get_clean();
+verificar("\xEF\xBB\xBF", substr($csv, 0, 3), 'CSV deve conter BOM UTF-8');
+$stream = fopen('php://temp', 'w+');
+fwrite($stream, substr($csv, 3));
+rewind($stream);
+verificar($model->campos(), fgetcsv($stream, 0, ';', '"', ''), 'Cabeçalho dos 119 campos');
+$totalCsv = 0;
+$encontrou = false;
+while (($linha = fgetcsv($stream, 0, ';', '"', '')) !== false) {
+    $totalCsv++;
+    verificar(119, count($linha), 'Largura do CSV');
+    if ($linha[0] === "'0000039015885890") {
+        verificar("'=FORMULA; \"teste\"", $linha[1], 'Neutralizar fórmula e preservar delimitadores');
+        $encontrou = true;
+    }
+}
+fclose($stream);
+verificar(501, $totalCsv, 'Exportar todos os registros além do primeiro lote');
+verificar(true, $encontrou, 'Preservar zeros do ID no CSV');
+session()->remove(['isLoggedIn', 'user_perfil']);
+
 echo "OK: $checks verificações (incluindo XMLs locais e banco SQLite em memória)." . PHP_EOL;

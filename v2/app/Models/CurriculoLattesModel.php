@@ -22,7 +22,7 @@ class CurriculoLattesModel extends Model
     {
         $existe = $this->find($dados['id_lattes']) !== null;
         $dados = array_intersect_key($dados, array_flip($this->allowedFields));
-        if (!$this->builder()->upsert($dados)) {
+        if ($this->builder()->upsert($dados) === false) {
             throw new \RuntimeException('Não foi possível salvar os indicadores no banco.');
         }
         return $existe ? 'atualizado' : 'inserido';
